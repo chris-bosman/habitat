@@ -26,8 +26,15 @@
     "chai": "^4.1.2",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
-    "node-sass": "^4.9.0",
-    "sass-loader": "^7.0.1",
+    "jquery": "^3.3.1",
+    "jstransformer-markdown-it": "^2.1.0",
+    "mongoose": "^5.4.1",
+    "node-sass": "^4.11.0",
+    "pug": "^2.0.3",
+    "pug-plain-loader": "^1.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "vue-sidebar-menu": "^2.4.2",
     "vue-template-compiler": "^2.5.21"
   }
 }

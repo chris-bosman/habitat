@@ -5,13 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>habitat</title>
+    <title>Habitat</title>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but habitat doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>This page does not work without Javascript enabled. You must enable it, or use a browser that enables it by default, to use Habitat.</strong>
     </noscript>
-    <div id="app"></div>
     <!-- built files will be auto injected -->
+    <div id="topnav"></div>
+    <div id="sidenav"></div>
+    <div id="content"></div>
   </body>
 </html>
+<script>
+var jQuery = require('jquery');
+let $ = jQuery;
+// Call back our session storage items and save them to variables
+var block = sessionStorage.getItem('currentPage');
+var blockButton = sessionStorage.getItem('currentButton');
+var buttonToHighlight = document.getElementById(blockButton);
+var homeButton = document.getElementById('home')
+var content = document.getElementById('content');
+
+// If this is the first load, go to home, otherwise persist our reload  
+if (block == null) {
+    $(content).load('home');
+    $(homeButton).addClass('active');
+} else {
+    $('.active').removeClass('active');
+    $(content).load(block);
+    $(buttonToHighlight).addClass('active');
+}
+</script>
