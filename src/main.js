@@ -1,11 +1,16 @@
 import Vue from "vue";
-import App from "./Landing.vue";
-import sideNav from "@/components/SideNav.vue";
-import topNav from "@/components/TopNav.vue";
+import App from "./Landing";
+import sideNav from "@/components/SideNav";
+import topNav from "@/components/TopNav";
+import background from "@/components/Background";
 import router from "./router";
 import store from "./store";
 
 Vue.config.productionTip = false;
+
+new Vue({
+  render: h => h(background)
+}).$mount("#bg");
 
 new Vue({
   router,

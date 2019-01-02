@@ -1,6 +1,10 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./Landing.vue";
+import Home from "@/Landing";
+import Admin from "@/views/Admin";
+import Analyze from "@/views/Analyze";
+import Start from "@/views/Start";
+import View from "@/views/View";
 
 Vue.use(Router);
 
@@ -12,6 +16,26 @@ export default new Router({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/Admin",
+      name: "Admin",
+      component: Admin
+    },
+    {
+      path: "/Analyze",
+      name: "Analyze",
+      component: Analyze
+    },
+    {
+      path: "/Start",
+      name: "Start",
+      component: Start
+    },
+    {
+      path: "/View",
+      name: "View",
+      component: View
     }
   ]
 });

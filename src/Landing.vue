@@ -1,9 +1,9 @@
 <!-- Pug Template -->
 <template lang="pug">
 .content
-    .background
-    .home
-        include:markdown-it ./text/home.md
+  .header
+  .home
+      include:markdown-it ./text/home.md
 </template>
 
 <!-- SCSS Styling -->
@@ -19,6 +19,7 @@ html {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  z-index: -3;
 }
 
 body {
@@ -30,7 +31,6 @@ body {
   transition: margin-left 0.5s;
 }
 
-@import "styles/background";
 @import "styles/header";
 @import "styles/content";
 

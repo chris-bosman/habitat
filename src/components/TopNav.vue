@@ -2,10 +2,9 @@
 <template lang="pug">
 .topnav
     mixin link(href, name)
-        a(class!=attributes.class href=href id=href)= name
-    +link('home', 'Home')
-    +link('https://github.com/chris-bosman/habitat.git', 'GitHub')
-    +link('docs', 'Documentation')
+      router-link(class!=attributes.class to=href id=href)= name
+    each val, index in {'Landing': 'Home', 'https://github.com/chris-bosman/habitat.git': 'GitHub', 'Docs': 'Documentation'}
+      +link(index, val)
 </template>
 
 <!-- SCSS Styling-->
@@ -14,7 +13,6 @@
   top: 0;
   margin: 0 10px 0 0;
   padding: 0;
-  z-index: 2;
   background: transparent;
   min-width: 95%;
   height: 75px;

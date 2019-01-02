@@ -5,10 +5,8 @@ span Analyze Dummy Data
 
 <!-- SCSS Styling-->
 <style lang="scss">
-
 </style>
 
 <!-- Javascript-->
 <script>
-
 </script>

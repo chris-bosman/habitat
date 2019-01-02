@@ -14,26 +14,9 @@
     <!-- built files will be auto injected -->
     <div id="topnav"></div>
     <div id="sidenav"></div>
+    <div id="bg"></div>
     <div id="content"></div>
   </body>
 </html>
 <script>
-var jQuery = require('jquery');
-let $ = jQuery;
-// Call back our session storage items and save them to variables
-var block = sessionStorage.getItem('currentPage');
-var blockButton = sessionStorage.getItem('currentButton');
-var buttonToHighlight = document.getElementById(blockButton);
-var homeButton = document.getElementById('home')
-var content = document.getElementById('content');
-
-// If this is the first load, go to home, otherwise persist our reload  
-if (block == null) {
-    $(content).load('home');
-    $(homeButton).addClass('active');
-} else {
-    $('.active').removeClass('active');
-    $(content).load(block);
-    $(buttonToHighlight).addClass('active');
-}
 </script>

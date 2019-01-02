@@ -1,0 +1,25 @@
+<!-- Pug Template -->
+<template lang="pug">
+.background
+</template>
+
+<!-- SCSS Styling-->
+<style lang="scss">
+.background {
+  position: fixed;
+  background-image: url("~@/assets/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+</style>
+
+<!-- Javascript-->
+<script>
+</script>

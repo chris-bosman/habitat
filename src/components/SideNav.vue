@@ -1,18 +1,16 @@
 <!-- Pug Template -->
 <template lang="pug">
-.sidenav
-    button(class='menubttn', id='menubttn', onclick='toggleNav()') &#9776;
-    .menu(id='menu')
+.sidenav(id="sidenav")
+    button(class="menubttn", id="menubttn", v-on:click="menuToggle()") &#9776;
+    .menu(id="menu")
         ul
             mixin link(href, name)
-                a(class!=attributes.class href=href id=href)= name
-            li: +link('Start', 'S T A R T')
-            li: +link('View', 'V I E W')
-            li: +link('Analyze', 'A N A L Y Z E')
-            li: +link('/content/admin', 'C O N F I G U R E')
+              router-link(class!=attributes.class to=href id=href)= name
+            each val, index in {'Start': 'S T A R T', 'View': 'V I E W', 'Analyze': 'A N A L Y Z E', 'Admin': 'C O N F I G U R E'}
+              li: +link(index, val)
         .logo
             center
-                img(src='@/assets/logo.svg' height="150px" style="opacity:0.6;")
+                img(src="@/assets/logo.svg" height="150px" style="opacity:0.6;")
 </template>
 
 <!-- SCSS Styling-->
@@ -88,9 +86,34 @@
   position: absolute;
   bottom: 18%;
   width: 100%;
+  z-index: -1;
 }
 </style>
 
 <!-- Javascript-->
 <script>
+let menuOpen = false;
+
+function toggleMenu() {
+  var sidenav = document.getElementById("sidenav");
+  var menu = document.getElementById("menu");
+  if (menuOpen == false) {
+    menu.style.visibility = "hidden";
+    sidenav.style.width = "3vw";
+  } else if (menuOpen == true) {
+    sidenav.style.width = "11vw";
+    setTimeout(function() {
+      menu.style.visibility = "visible";
+    }, 300);
+  }
+  menuOpen = !menuOpen;
+}
+
+export default {
+  methods: {
+    menuToggle() {
+      toggleMenu();
+    }
+  }
+};
 </script>
