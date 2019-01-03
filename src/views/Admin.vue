@@ -9,4 +9,7 @@ span Config Dummy Data
 
 <!-- Javascript-->
 <script>
+export default {
+    name: "Admin"
+}
 </script>

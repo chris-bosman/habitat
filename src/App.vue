@@ -1,29 +1,63 @@
-<template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+<!-- Pug Template -->
+<template lang="pug">
+.app
+  Background
+  TopNav
+  SideNav
+  .header
+    center
+      img(src="@/assets/header.svg")
+  .content
+    router-view
 </template>
 
+<!-- SCSS Styling-->
 <style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@charset "utf-8";
+@import url("https://fonts.googleapis.com/css?family=Raleway");
+
+html {
+  background-image: linear-gradient(black, rgb(30, 32, 29));
+  color: rgb(235, 234, 229);
+  font-family: "Raleway", sans-serif;
+  font-weight: lighter;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  z-index: -3;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  transition: margin-left 0.5s;
+}
+
+.content {
+  position: relative;
+  margin: 0 200px;
+}
+
+.header {
+  height: 60px;
+  width: 100%;
 }
 </style>
+
+<!-- Javascript-->
+<script>
+import Background from "@/components/Background";
+import SideNav from "@/components/SideNav";
+import TopNav from "@/components/TopNav";
+export default {
+  name: "Home",
+  components: {
+    Background: Background,
+    SideNav: SideNav,
+    TopNav: TopNav
+  }
+};
+</script>

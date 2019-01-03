@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "@/Landing";
+
+import Home from "@/views/Home";
 import Admin from "@/views/Admin";
 import Analyze from "@/views/Analyze";
 import Start from "@/views/Start";
@@ -14,7 +15,12 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
+      name: "Home",
+      component: Home
+    },
+    {
+      path: "/Home",
+      name: "Home",
       component: Home
     },
     {

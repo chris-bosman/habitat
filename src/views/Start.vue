@@ -1,39 +1,43 @@
 <!-- Pug Template -->
 <template lang="pug">
 .gs
+  Modal(v-show="isModalVisible" @close="closeModal" id="Modal")
   .band
-    .header
-      center
-        include:markdown-it ../text/gs.md
+    center
+      include:markdown-it ../text/gs.md
   .cards
     center
       .column
-        .card(id='upload')
+        .card(@click="showModal" id="upload")
           h3 Import
           p Start your Habitat journey by importing your first Terraform state (.tfstate) file.
-        .ico
-          center
-            img(src='@/assets/upload.svg' width="65%" style="opacity:0.6;padding-top:5%;")
+          .ico
+            center
+              img(src='@/assets/upload.svg' width="65%" style="opacity:0.6;padding-top:5%;")
       .column
         a(href='View')
-        .card
-          h3 Visualize
-          p Dig into Habitat's functionality by checking out the visualization tools.
-        .ico
-          center
-            img(src='@/assets/visualize.svg' width="75%" style="opacity:0.6;padding-top:0.5%;")
+          .card
+            h3 Visualize
+            p Dig into Habitat's functionality by checking out the visualization tools.
+            .ico
+              center
+                img(src='@/assets/visualize.svg' width="75%" style="opacity:0.6;padding-top:0.5%;")
       .column
         a(href='Analyze')
-        .card
-          h3 Analyze
-          p Compare the real-world state of your infrastructure against your Terraform code.
-        .ico
-          center
-            img(src='@/assets/analyze.svg' width="90%" style="opacity:0.6;padding-top:7%;")
+          .card
+            h3 Analyze
+            p Compare the real-world state of your infrastructure against your Terraform code.
+            .ico
+              center
+                img(src='@/assets/analyze.svg' width="90%" style="opacity:0.6;padding-top:7%;")
 </template>
 
 <!-- SCSS Styling-->
 <style lang="scss">
+#Modal {
+  z-index: 5;
+}
+
 .gs a {
   text-decoration: none;
   color: rgb(190, 189, 184);
@@ -93,4 +97,24 @@
 
 <!-- Javascript-->
 <script>
+import Modal from "@/components/Upload";
+export default {
+  name: "Start",
+  components: {
+    Modal: Modal
+  },
+  data() {
+    return {
+      isModalVisible: false
+    };
+  },
+  methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    }
+  }
+};
 </script>

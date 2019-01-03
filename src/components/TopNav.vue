@@ -2,9 +2,10 @@
 <template lang="pug">
 .topnav
     mixin link(href, name)
-      router-link(class!=attributes.class to=href id=href)= name
-    each val, index in {'Landing': 'Home', 'https://github.com/chris-bosman/habitat.git': 'GitHub', 'Docs': 'Documentation'}
+      router-link(class!=attributes.class to=href id=href @click="selectNav()")= name
+    each val, index in {"Home": "Home", "Docs": "Documentation"}
       +link(index, val)
+    a(href="https://github.com/chris-bosman/habitat.git" @click="open(this.href, '_blank')") GitHub
 </template>
 
 <!-- SCSS Styling-->
@@ -34,7 +35,7 @@
   color: black;
 }
 
-.topnav a.active {
+.topnav a.router-link-active {
   background-color: rgb(98, 112, 179);
   opacity: 0.8;
 }

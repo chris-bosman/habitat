@@ -9,4 +9,7 @@ span View Dummy Data
 
 <!-- Javascript-->
 <script>
+export default {
+    name: "View"
+}
 </script>
