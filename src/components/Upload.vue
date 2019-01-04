@@ -1,27 +1,26 @@
 <!-- Pug Template -->
 <template lang="pug">
 .modal-wrapper
-    .modal(role="dialog" aria-labelledby="Habitat Upload" aria-describedy="Uplaod Terraform State Files to Habitat")
+    .modal(role="dialog" aria-labelledby="Habitat Upload" aria-describedy="Upload Terraform State Files to Habitat")
         .modal-header
             slot(name="header")
                 .close-button
                     span(@click="close" aria-label="Close modal") &times;
         .modal-body
             slot(name="body")
-                form(enctype="multipart/form-data" novalidate v-if="isInitial || isSaving")
-                    input(type="file" :name="uploadFieldName" accept=".tfstate" class="input-file" multiple id="upload-button" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length")
-                    label(for="upload-button")
-                        .upload-box
-                            center
-                                .text
-                                    span
-                                      p(v-if="isInitial") Drag & Drop or Click to Browse
-                                      p(v-if="isSaving") Uploading {{ fileCount }} files...
-                                      p(v-if="isSuccess") Uploaded {{ uploadedFiles.length }} file(s) successfully.
-                                        a(href="javascript:void(0)" @click="reset()") Upload more files
-                                      p(v-if="isFailed") Upload failed.
-                                        a(href="javascript:void(0)" @click="reset()") Try again
-                                        pre {{ uploadError }}
+              form(enctype="multipart/form-data" novalidate v-if="isInitial || isSaving || isSuccess || isFailed")
+                .upload-box
+                  center
+                    .text
+                        span                                 
+                          p(v-if="isInitial") Drag & Drop or Click to Browse
+                          p(v-if="isSaving") Uploading {{ fileCount }} files...
+                          p(v-if="isSuccess") Uploaded {{ uploadedFiles.length }} file(s) successfully.
+                            a(href="javascript:void(0)" @click="reset()") Upload more files
+                          p(v-if="isFailed") Upload failed.
+                            a(href="javascript:void(0)" @click="reset()") </br> Try again
+                            pre {{ uploadError }}
+                  input(type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept=".tfstate" class="input-file")                                           
 </template>
 
 
@@ -84,21 +83,15 @@ form {
   height: 100%;
 }
 
-label {
+.modal-body input {
   box-sizing: inherit;
-  width: 99%;
-  height: 85%;
   display: flex;
   justify-content: center;
-}
-
-.modal-body input {
-  width: 0.1px;
-  height: 0.1px;
+  align-items: center;
   opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -5;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
 }
 
 .close-button span {
@@ -113,33 +106,37 @@ label {
   outline: 2px dashed rgb(235, 234, 229);
   background: transparent;
   cursor: pointer;
-  width: 95%;
-  height: 100%;
+  margin-left: 1%;
+  width: 98%;
+  height: 95%;
 }
 
 .text {
   box-sizing: inherit;
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   padding-top: 13vh;
-  padding-left: 4%;
-  padding-right: 4%;
+  padding-left: 40%;
+  padding-right: 40%;
 }
 
 .text p {
   box-sizing: inherit;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.submit-button button {
-  background-color: rgb(190, 189, 184);
-  color: black;
-  border: none;
-  border-radius: 1px;
-  width: 5vw;
-  height: 3vh;
+pre {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .text button:active {
@@ -150,7 +147,7 @@ label {
 
 <!-- Javascript-->
 <script>
-import { Upload } from "@/js/upload";
+import { submitFile } from "@/js/uploadService";
 
 const STATUS_INITIAL = 0,
   STATUS_SAVING = 1,
@@ -159,14 +156,6 @@ const STATUS_INITIAL = 0,
 
 export default {
   name: "Modal",
-  data() {
-    return {
-      uploadedFiles: [],
-      uploadError: null,
-      currentStatus: null,
-      uploadFieldName: "stateFiles"
-    };
-  },
   computed: {
     isInitial() {
       return this.currentStatus === STATUS_INITIAL;
@@ -190,10 +179,23 @@ export default {
       this.uploadedFiles = [];
       this.uploadError = null;
     },
-    save(formData) {
-      this.currentStatus = STATUS_SAVING;
+    filesChange(fieldName, fileList) {
+      // handle file changes
+      const formData = new FormData();
+      if (!fileList.length) return;
+      console.log(fieldName);
+      // append the files to FormData
+      Array.from(Array(fileList.length).keys()).map(x => {
+        formData.append(fieldName, fileList[x], fileList[x].name);
+      });
 
-      Upload(formData)
+      // save it
+      this.save(formData);
+    },
+    save(formData) {
+      // upload data to the server
+      this.currentStatus = STATUS_SAVING;
+      submitFile(formData)
         .then(x => {
           this.uploadedFiles = [].concat(x);
           this.currentStatus = STATUS_SUCCESS;
@@ -202,16 +204,15 @@ export default {
           this.uploadError = err.response;
           this.currentStatus = STATUS_FAILED;
         });
-    },
-    filesChange(fieldName, fileList) {
-      const formData = new FormData();
-
-      if (!fileList.length) return;
-      Array.from(Array(fileList.length).keys()).map(x => {
-        formData.append(fieldName, fileList[x], fileList[x].name);
-      });
-      this.save(formData);
     }
+  },
+  data() {
+    return {
+      uploadedFiles: [],
+      uploadError: null,
+      currentStatus: null,
+      uploadFieldName: "stateFiles"
+    };
   },
   mounted() {
     this.reset();
