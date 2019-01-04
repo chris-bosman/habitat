@@ -6,6 +6,7 @@ import Admin from "@/views/Admin";
 import Analyze from "@/views/Analyze";
 import Start from "@/views/Start";
 import View from "@/views/View";
+import Upload from "@/components/Upload";
 
 Vue.use(Router);
 
@@ -42,6 +43,11 @@ export default new Router({
       path: "/View",
       name: "View",
       component: View
+    },
+    {
+      path: "/upload",
+      name: "Upload",
+      component: Upload
     }
   ]
 });

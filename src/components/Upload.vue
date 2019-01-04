@@ -13,23 +13,15 @@
                     label(for="upload-button")
                         .upload-box
                             center
-                                .text(v-if="isInitial")
-                                    p Drag & Drop or Click to Browse
-                                .text(v-if="isSaving")
-                                    span Uploading {{ fileCount }} files...
-                                .text(v-if="isSuccess")
-                                    span Uploaded {{ uploadedFiles.length }} file(s) successfully.
-                                    p
-                                        a(href="javascript:void(0)" @click="reset()") Click here to upload more files.
-                                .text(v-if="isFailed")
-                                    span Upload failed.
-                                    p
-                                        a(href="javascript:void(0)" @click="reset()") Click here to try again.
-                                    pre {{ uploadError }}
-        .modal-footer
-            slot(name="footer")
-                .submit-button
-                    button(type="submit" name="action") Submit
+                                .text
+                                    span
+                                      p(v-if="isInitial") Drag & Drop or Click to Browse
+                                      p(v-if="isSaving") Uploading {{ fileCount }} files...
+                                      p(v-if="isSuccess") Uploaded {{ uploadedFiles.length }} file(s) successfully.
+                                        a(href="javascript:void(0)" @click="reset()") Upload more files
+                                      p(v-if="isFailed") Upload failed.
+                                        a(href="javascript:void(0)" @click="reset()") Try again
+                                        pre {{ uploadError }}
 </template>
 
 
