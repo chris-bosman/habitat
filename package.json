@@ -1,0 +1,22 @@
+{
+  "name": "habitat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "\"\"",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd client && npm run serve",
+    "server": "cd server && npm run start",
+    "start": "npm run server && cd .. && npm run sclient"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chris-bosman/habitat.git"
+  },
+  "author": "Chris Bosman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chris-bosman/habitat/issues"
+  },
+  "homepage": "https://github.com/chris-bosman/habitat#readme"
+}
