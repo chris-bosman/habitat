@@ -38,7 +38,6 @@ const _filesHandler = function (files: any[], options: FileUploaderOption) {
 
     const promises = files.map(x => _fileHandler(x, options));
     return Promise.all(promises);
-    console.log(promises);
 }
 
 const _fileHandler = function (file: any, options: FileUploaderOption) {

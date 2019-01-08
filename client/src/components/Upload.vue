@@ -16,9 +16,9 @@
                           p(v-if="isInitial") Drag & Drop or Click to Browse
                           p(v-if="isSaving") Uploading {{ fileCount }} files...
                           p(v-if="isSuccess") Uploaded {{ uploadedFiles.length }} file(s) successfully.
-                            a(href="javascript:void(0)" @click="reset()") Upload more files
+                            a(href="javascript:void(0)" @click="reset()") <p>Upload more files</p>
                           p(v-if="isFailed") Upload failed.
-                            a(href="javascript:void(0)" @click="reset()") </br> Try again
+                            a(href="javascript:void(0)" @click="reset()") <p>Try again</p>
                             pre {{ uploadError }}
                   input(type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept=".tfstate" class="input-file")                                           
 </template>
