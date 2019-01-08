@@ -2,10 +2,10 @@
 <template lang="pug">
 .topnav
     mixin link(href, name)
-      router-link(class!=attributes.class to=href id=href @click="selectNav()")= name
+      router-link(class!=attributes.class to=href id=href)= name
     each val, index in {"Home": "Home", "Docs": "Documentation"}
       +link(index, val)
-    a(href="https://github.com/chris-bosman/habitat.git" @click="open(this.href, '_blank')") GitHub
+    a(href="https://github.com/chris-bosman/habitat.git" @click.prevent="openNewWindow($event)") GitHub
 </template>
 
 <!-- SCSS Styling-->
@@ -43,4 +43,13 @@
 
 <!-- Javascript-->
 <script>
+export default {
+  name: "TopNav",
+  methods: {
+    openNewWindow: function(event) {
+      const element = event.target;
+      window.open(element.href, '_blank');
+    }
+  }
+};
 </script>

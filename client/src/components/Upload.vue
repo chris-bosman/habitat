@@ -9,16 +9,17 @@
         .modal-body
             slot(name="body")
               form(enctype="multipart/form-data" novalidate v-if="isInitial || isSaving || isSuccess || isFailed")
-                .upload-box
+                div(id="box" @dragenter="dragging=true" @dragend="dragging=false" @dragleave="dragging=false" @click="reset()" :class="['upload-box', dragging ? 'upload-box-over' : '']")
                   center
                     .text
-                        span                                 
-                          p(v-if="isInitial") Drag & Drop or Click to Browse
+                        span
+                          p(v-if="isInitial") Drag & Drop or &nbsp;
+                            span(id="clickToBrowse") Click to Browse
                           p(v-if="isSaving") Uploading {{ fileCount }} files...
-                          p(v-if="isSuccess") Uploaded {{ uploadedFiles.length }} file(s) successfully.
-                            a(href="javascript:void(0)" @click="reset()") <p>Upload more files</p>
-                          p(v-if="isFailed") Upload failed.
-                            a(href="javascript:void(0)" @click="reset()") <p>Try again</p>
+                          p(v-if="isSuccess") Uploaded {{ uploadedFiles.length }} file(s) successfully. &nbsp; 
+                            a(href="javascript:void(0)" @click="reset()") Upload more files
+                          p(v-if="isFailed") Upload failed. &nbsp;
+                            a(href="javascript:void(0)" @click="reset()") Try again
                             pre {{ uploadError }}
                   input(type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept=".tfstate" class="input-file")                                           
 </template>
@@ -111,6 +112,16 @@ form {
   height: 95%;
 }
 
+.upload-box:hover a,
+.upload-box:hover #clickToBrowse {
+  color: gray;
+  text-decoration: underline;
+}
+
+.upload-box-over {
+  background-color: gray;
+}
+
 .text {
   box-sizing: inherit;
   position: absolute;
@@ -118,9 +129,8 @@ form {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  padding-top: 13vh;
-  padding-left: 40%;
-  padding-right: 40%;
+  width: 100%;
+  height: 98%;
 }
 
 .text p {
@@ -176,6 +186,7 @@ export default {
     },
     reset() {
       this.currentStatus = STATUS_INITIAL;
+      this.dragging = false;
       this.uploadedFiles = [];
       this.uploadError = null;
     },
@@ -183,7 +194,6 @@ export default {
       // handle file changes
       const formData = new FormData();
       if (!fileList.length) return;
-      console.log(fileList);
       // append the files to FormData
       for (var i = 0; i < fileList.length; i++) {
         formData.append("stateFile", fileList[i]);
@@ -194,7 +204,6 @@ export default {
     save(formData) {
       // upload data to the server
       this.currentStatus = STATUS_SAVING;
-      console.log(formData.getAll("stateFile"));
       upload(formData)
         .then(x => {
           this.uploadedFiles = [].concat(x);
@@ -211,7 +220,8 @@ export default {
       uploadedFiles: [],
       uploadError: null,
       currentStatus: null,
-      uploadFieldName: "stateFile"
+      uploadFieldName: "stateFile",
+      dragging: false
     };
   },
   mounted() {

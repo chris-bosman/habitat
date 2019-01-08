@@ -12,3 +12,5 @@ interface FileDetails {
     path: string;
     size: number;
 }
+
+export { FileUploaderOption, FileDetails }

@@ -13,7 +13,7 @@
           p Start your Habitat journey by importing your first Terraform state (.tfstate) file.
           .ico
             center
-              img(src='@/assets/upload.svg' width="65%" style="opacity:0.6;padding-top:5%;")
+              img(src='@/assets/upload.svg' width="65%" style="opacity:0.7;padding-top:5%;")
       .column
         a(href='View')
           .card
@@ -21,7 +21,7 @@
             p Dig into Habitat's functionality by checking out the visualization tools.
             .ico
               center
-                img(src='@/assets/visualize.svg' width="75%" style="opacity:0.6;padding-top:0.5%;")
+                img(src='@/assets/visualize.svg' width="75%" style="opacity:0.75;padding-top:0.5%;")
       .column
         a(href='Analyze')
           .card
@@ -29,7 +29,7 @@
             p Compare the real-world state of your infrastructure against your Terraform code.
             .ico
               center
-                img(src='@/assets/analyze.svg' width="90%" style="opacity:0.6;padding-top:7%;")
+                img(src='@/assets/analyze.svg' width="90%" style="opacity:0.8;padding-top:7%;")
 </template>
 
 <!-- SCSS Styling-->
@@ -40,7 +40,7 @@
 
 .gs a {
   text-decoration: none;
-  color: rgb(190, 189, 184);
+  color: rgb(235, 234, 229);
 }
 
 .cards {

@@ -3,20 +3,7 @@ import * as Loki from 'lokijs';
 import * as fs from 'fs';
 import * as uuid from 'uuid';
 
-interface FileUploaderOption {
-    dest: string;
-    fileFilter?(fileName: string): boolean;
-}
-
-interface FileDetails {
-    fieldname: string;
-    originalname: string;
-    filename: string;
-    mimetype: string;
-    destination: string;
-    path: string;
-    size: number;
-}
+import { FileUploaderOption, FileDetails } from './interfaces/fileInt';
 
 const loadCollection = function (colName, db: Loki): Promise<Loki.Collection<any>> {
     return new Promise(resolve => {
