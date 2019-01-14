@@ -9,19 +9,22 @@ var DB_NAME = process.env.DB_NAME;
 
 const connString = 'mongodb://' + DB_HOST + '/' + DB_NAME;
 export const dbConfig: mongoose.ConnectionOptions = {
-    useMongoClient: true,
     useNewUrlParser: true
 };
 
 export async function connectDb() {
-    (<any>mongoose).Promise = global.Promise;
-    try {
-        const conn = await mongoose.connect(connString, dbConfig);
-        mongoose.set('useCreateIndex', true);
-        mongoose.set('debug', true);
+    (<any>mongoose).Promise = Promise;
+    mongoose.connect(connString, dbConfig);
+    mongoose.set('useCreateIndex', true);
+    mongoose.set('debug', true);
 
-        console.log("Connected to Mongo");
-    } catch (error) {
-        console.error("Could Not Connect to Mongo", error);
-    }
+    let mongodb = mongoose.connection;
+
+    mongodb.on("error", () => {
+        console.log("Unable to connect to database");
+    });
+
+    mongodb.once("open", () => {
+        console.log("Connected to database");
+    });
 }

@@ -10,7 +10,7 @@ interface IResourceAttributes extends mongoose.Document {
 }
 
 interface IResource extends mongoose.Document {
-    resourceId: mongoose.Types.ObjectId;
+    resourceId: string;
     resourceName: string;
     resourceProvider: string;
     resourceDependencies: Array<IResourceDependency>;

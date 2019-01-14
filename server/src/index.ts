@@ -1,30 +1,17 @@
 import * as Hapi from 'hapi';
 import * as Boom from 'boom';
-import * as path from 'path'
-import * as fs from 'fs';
-import * as Loki from 'lokijs';
 import * as mongoose from 'mongoose';
+import * as uuidv4 from 'uuid/v4';
 
-import {
-    loadCollection, uploader
-} from './utils';
+import { connectDb } from './db';
+import { Resource } from './models/resource';
 
-// setup
-const DB_NAME = 'habitat.json';
-const COLLECTION_NAME = 'resources';
-const UPLOAD_PATH = 'uploads';
-const fileOptions = { dest: `${UPLOAD_PATH}/` };
-const db = new Loki(`${UPLOAD_PATH}/${DB_NAME}`, { persistenceMethod: 'fs' });
-const resource = require('./models/resource');
-
-// create folder for upload if not exist
-if (!fs.existsSync(UPLOAD_PATH)) fs.mkdirSync(UPLOAD_PATH);
-
-// app
 const app = new Hapi.Server({
     port: 3000, host: 'localhost',
     routes: { cors: true }
 });
+
+const db = require("./db").db;
 
 app.route({
     method: 'POST',
@@ -32,26 +19,38 @@ app.route({
     options: {
         payload: {
             output: 'stream',
-            allow: 'multipart/form-data' // important
+            allow: 'multipart/form-data'
         }
     },
     handler: async function (request, reply) {
         try {
             const data = request.payload;
-            const file = data['stateFile']; // accept a field call avatar
-            // save the file
-            const fileDetails = await uploader(file, fileOptions);
+            const name = data["resourceName"];
+            const provider = data["resourceProvider"];
 
-            // save data to database
-            const col = await loadCollection(COLLECTION_NAME, db);
-            const result = [].concat(col.insert(fileDetails));
-            db.saveDatabase();
+            const attributesRaw = data["resourceAttributes"];
+            const attributes = Object.keys(attributesRaw).map(function(key) {
+                return [String(key), attributesRaw[key]];
+            });
 
-            // return result
-            return result.map(x => ({ id: x.$loki, fileName: x.filename, originalName: x.originalname }));
+            const dependencies = data["resourceDependencies"];
 
+        
+            var newResource = new Resource({
+                resourceId: uuidv4(),
+                resourceName: name,
+                resourceProvider: provider,
+                resourceDependencies: dependencies,
+                resourceAttributes: attributes,
+            });
+
+            newResource.save(function (error) {
+                if (error) {
+                    console.log(error);
+                } else return "Successful document upload";
+            });
+ 
         } catch (err) {
-            // error handling
             throw Boom.badRequest(err.message, err);
         }
     }

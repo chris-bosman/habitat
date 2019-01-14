@@ -8,7 +8,7 @@
                     span(@click="close" aria-label="Close modal") &times;
         .modal-body
             slot(name="body")
-              form(enctype="multipart/form-data" novalidate v-if="isInitial || isSaving || isSuccess || isFailed")
+              .container(v-if="isInitial || isSaving || isSuccess || isFailed")
                 div(id="box" @dragenter="dragging=true" @dragend="dragging=false" @dragleave="dragging=false" @click="reset()" :class="['upload-box', dragging ? 'upload-box-over' : '']")
                   center
                     .text
@@ -21,7 +21,7 @@
                           p(v-if="isFailed") Upload failed. &nbsp;
                             a(href="javascript:void(0)" @click="reset()") Try again
                             pre {{ uploadError }}
-                  input(type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept=".tfstate" class="input-file")                                           
+                  input(type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event); fileCount = $event.target.files.length" accept=".tfstate" class="input-file")                                           
 </template>
 
 
@@ -78,7 +78,7 @@
   height: 100%;
 }
 
-form {
+.container {
   box-sizing: inherit;
   width: 100%;
   height: 100%;
@@ -190,20 +190,51 @@ export default {
       this.uploadedFiles = [];
       this.uploadError = null;
     },
-    filesChange(fieldName, fileList) {
-      // handle file changes
-      const formData = new FormData();
-      if (!fileList.length) return;
-      // append the files to FormData
-      for (var i = 0; i < fileList.length; i++) {
-        formData.append("stateFile", fileList[i]);
-        formData.append("fileName", fileList[i].name);
-      }
-      this.save(formData);
+    filesChange(event) {
+      this.currentStatus = STATUS_SAVING;
+      var reader = new FileReader();
+      var that = this;
+      reader.onload = function parser(event) {
+        var tfFile = JSON.parse(event.target.result);
+        var resourceNames = Object.keys(tfFile.modules[0].resources);
+        var dependencies = [];
+        var resources = tfFile.modules[0].resources;
+
+        for (var i = 0; i < resourceNames.length; i++) {
+          var name = resourceNames[i];
+
+          if (!name.startsWith("data")) {
+            var resource = resources[name];
+            var provider = resource.provider.split(".")[1];
+            var attributeData = resource.primary.attributes;
+            var attributes = Object.keys(attributeData);
+            var resourceAttributes = {};
+            for (var j = 0; j < attributes.length; j++) {
+              var attributeName = attributes[j];
+              var attributeNameOld = attributeName;
+              if (attributeName.includes(".")) {
+                attributeName = attributeName
+                  .replace(/\./g, "_")
+                  .replace(/[0-9]/g, "")
+                  .replace("__", "_");
+              }
+              resourceAttributes[attributeName] =
+                attributeData[attributeNameOld];
+            }
+          } else {
+            dependencies.push(resources[name].primary.attributes.name);
+          }
+        }
+        const formData = new FormData();
+        formData.append("resourceName", name);
+        formData.append("resourceProvider", provider);
+        formData.append("resourceAttributes", resourceAttributes);
+        formData.append("resourceDependencies", dependencies);
+        that.save(formData);
+      };
+      reader.readAsText(event.target.files[0]);
     },
     save(formData) {
-      // upload data to the server
-      this.currentStatus = STATUS_SAVING;
       upload(formData)
         .then(x => {
           this.uploadedFiles = [].concat(x);

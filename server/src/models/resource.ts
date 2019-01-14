@@ -3,7 +3,7 @@ import { IResource } from '../interfaces/schemaInt'
 
 export var resourceSchema = new mongoose.Schema({
     resourceId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         unique: true,
         required: true
     },

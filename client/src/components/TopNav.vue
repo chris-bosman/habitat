@@ -48,7 +48,7 @@ export default {
   methods: {
     openNewWindow: function(event) {
       const element = event.target;
-      window.open(element.href, '_blank');
+      window.open(element.href, "_blank");
     }
   }
 };
