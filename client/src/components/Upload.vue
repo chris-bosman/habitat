@@ -208,7 +208,7 @@ export default {
             var provider = resource.provider.split(".")[1];
             var attributeData = resource.primary.attributes;
             var attributes = Object.keys(attributeData);
-            var resourceAttributes = {};
+            var resourceAttributesObject = {};
             for (var j = 0; j < attributes.length; j++) {
               var attributeName = attributes[j];
               var attributeNameOld = attributeName;
@@ -218,13 +218,15 @@ export default {
                   .replace(/[0-9]/g, "")
                   .replace("__", "_");
               }
-              resourceAttributes[attributeName] =
+              resourceAttributesObject[attributeName] =
                 attributeData[attributeNameOld];
             }
           } else {
             dependencies.push(resources[name].primary.attributes.name);
           }
         }
+        var resourceAttributes = JSON.stringify(resourceAttributesObject);
+        console.log(resourceAttributes);
         const formData = new FormData();
         formData.append("resourceName", name);
         formData.append("resourceProvider", provider);

@@ -28,4 +28,4 @@ export var resourceSchema = new mongoose.Schema({
 })
 
 
-export const Resource = mongoose.model<IResource>("Resource", resourceSchema, "habitat");
+export const Resource = mongoose.model<IResource>("Resource", resourceSchema, "resources");
