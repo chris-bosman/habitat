@@ -3,7 +3,6 @@ require('dotenv').config();
 import * as Hapi from 'hapi';
 import * as Boom from 'boom';
 import * as mongoose from 'mongoose';
-import * as uuidv4 from 'uuid/v4';
 
 import { Resource } from './models/resource';
 
@@ -24,8 +23,8 @@ mongoose.set('debug', true);
 
 let mongodb = mongoose.connection;
 
-mongodb.on("error", error => {
-    console.log("Unable to connect to database", error);
+mongodb.on("error", err => {
+    console.log("Unable to connect to database", err);
 });
 
 mongodb.once("open", () => {
@@ -44,33 +43,45 @@ app.route({
     handler: async function (request, reply) {
         try {
             const data = request.payload;
+            const serial = data["resourceSerial"];
+            const lineage = data["resourceLineage"];
+            const type = data["resourceType"];
             const name = data["resourceName"];
             const provider = data["resourceProvider"];
             const attributesRaw = data["resourceAttributes"];
             const dependencies = data["resourceDependencies"];
+            const id = type + "." + name;
             const attributes = JSON.parse(attributesRaw);
-        
+
             var newResource = new Resource({
-                resourceId: uuidv4(),
+                resourceId: id,
+                resourceType: type,
                 resourceName: name,
                 resourceProvider: provider,
                 resourceDependencies: dependencies,
                 resourceAttributes: attributes,
+                resourceSerial: serial,
+                resourceLineage: lineage,
             });
 
-            newResource.save();
+            const query = { resourceId: id, resourceSerial: { $lt: serial }};
 
-            return "Successfully saved document";
- 
+            await Resource.findOneAndUpdate(query, newResource, { upsert: true, new: true }, function(err) { });
+
+            return { message: "Successfully saved document" };
+
         } catch (err) {
-            throw Boom.badRequest(err.message, err);
+            console.log(err.code);
+            if (err.code = 11000) {
+                throw new Boom(err.errmsg);
+            }
+            throw Boom.badRequest(err.errmsg, err);
         }
     }
 });
 
 // start our app
 const init = async () => {
-
     await app.start();
     console.log(`Server running at: ${app.info.uri}`);
 };

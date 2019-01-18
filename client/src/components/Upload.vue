@@ -196,12 +196,15 @@ export default {
       var that = this;
       reader.onload = function parser(event) {
         var tfFile = JSON.parse(event.target.result);
+        var lineage = tfFile.lineage;
+        var serial = tfFile.serial;
         var resourceNames = Object.keys(tfFile.modules[0].resources);
         var dependencies = [];
         var resources = tfFile.modules[0].resources;
 
         for (var i = 0; i < resourceNames.length; i++) {
           var name = resourceNames[i];
+          var type = name.split(".")[0];
 
           if (!name.startsWith("data")) {
             var resource = resources[name];
@@ -226,8 +229,11 @@ export default {
           }
         }
         var resourceAttributes = JSON.stringify(resourceAttributesObject);
-        console.log(resourceAttributes);
+
         const formData = new FormData();
+        formData.append("resourceSerial", serial);
+        formData.append("resourceLineage", lineage);
+        formData.append("resourceType", type);
         formData.append("resourceName", name);
         formData.append("resourceProvider", provider);
         formData.append("resourceAttributes", resourceAttributes);
@@ -238,12 +244,18 @@ export default {
     },
     save(formData) {
       upload(formData)
+        .then(function(response) {
+          if (!response.ok) {
+            throw Error(response.statusText);
+          }
+          return response;
+        })
         .then(x => {
           this.uploadedFiles = [].concat(x);
           this.currentStatus = STATUS_SUCCESS;
         })
         .catch(err => {
-          this.uploadError = err.response;
+          this.uploadError = "Error: " + err.message;
           this.currentStatus = STATUS_FAILED;
         });
     }

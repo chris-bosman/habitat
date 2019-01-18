@@ -7,6 +7,10 @@ export var resourceSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
+    resourceType: {
+        type: String,
+        required: true
+    },
     resourceName: {
         type: String,
         required: true
@@ -24,6 +28,14 @@ export var resourceSchema = new mongoose.Schema({
         required: true,
         type: Map,
         of: String
+    },
+    resourceSerial: {
+        required: true,
+        type: Number
+    },
+    resourceLineage: {
+        required: true,
+        type: String
     }
 })
 
