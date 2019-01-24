@@ -38,11 +38,12 @@ body {
 
 .content {
   position: relative;
-  margin: 0 200px;
+  margin: 0 5vw 0 13vw;
 }
 
 .header {
   height: 60px;
+  margin: 0 4vw;
   width: 100%;
 }
 </style>

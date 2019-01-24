@@ -23,12 +23,11 @@
   top: 0;
   left: 0;
   background: transparent;
-  padding-top: 30px;
+  padding: 30px 0 0 0;
   transition: 0.5s;
   box-shadow: 0px 0px 3px 0px rgb(30, 32, 29) inset;
-  white-space: nowrap;
   margin: 0;
-  padding-left: 0;
+  box-sizing: border-box;
 }
 
 .sidenav button {
@@ -66,6 +65,12 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+
+.menu li {
+  box-sizing: inherit;
+  width: 100%;
+  font-size: 1vw;
 }
 
 .menu a {

@@ -10,17 +10,18 @@
             slot(name="body")
               .container(v-if="isInitial || isSaving || isSuccess || isFailed")
                 div(id="box" @dragenter="dragging=true" @dragend="dragging=false" @dragleave="dragging=false" @click="reset()" :class="['upload-box', dragging ? 'upload-box-over' : '']")
-                  center
-                    .text
-                        span
-                          p(v-if="isInitial") Drag & Drop or &nbsp;
-                            span(id="clickToBrowse") Click to Browse
-                          p(v-if="isSaving") Uploading {{ fileCount }} files...
-                          p(v-if="isSuccess") Uploaded {{ uploadedFiles.length }} file(s) successfully. &nbsp; 
-                            a(href="javascript:void(0)" @click="reset()") Upload more files
-                          p(v-if="isFailed") Upload failed. &nbsp;
-                            a(href="javascript:void(0)" @click="reset()") Try again
-                            pre {{ uploadError }}
+                  .text
+                      span
+                        template(v-if="isInitial")
+                          p Drag & Drop or Click to Browse
+                        template(v-if="isSaving")
+                          p Uploading {{ fileCount }} files...
+                        template(v-if="isSuccess")
+                          p Uploaded {{ uploadedFiles.length }} file(s) successfully. #[a(href="javascript:void(0)" @click="reset()") Upload more files]
+                        template(v-if="isFailed")
+                          center
+                            p Upload failed. #[a(href="javascript:void(0)" @click="reset()") Try again]
+                          p(id="error") {{ uploadError }}
                   input(type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event); fileCount = $event.target.files.length" accept=".tfstate" class="input-file")                                           
 </template>
 
@@ -80,8 +81,11 @@
 
 .container {
   box-sizing: inherit;
+  display: flex;
   width: 100%;
   height: 100%;
+  justify-content: center;
+  align-content: center;
 }
 
 .modal-body input {
@@ -96,19 +100,19 @@
 }
 
 .close-button span {
-  margin: -5vh -2vw;
+  margin: -4vh -2vw;
   float: right;
-  font-size: 3vw;
+  font-size: 3.5vw;
   cursor: pointer;
 }
 
 .upload-box {
   box-sizing: inherit;
+  display: flex;
   outline: 2px dashed rgb(235, 234, 229);
   background: transparent;
   cursor: pointer;
-  margin-left: 1%;
-  width: 98%;
+  width: 95%;
   height: 95%;
 }
 
@@ -123,30 +127,19 @@
 }
 
 .text {
+  cursor: pointer;
   box-sizing: inherit;
+  width: 100%;
+  height: 100%;
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  width: 100%;
-  height: 98%;
 }
 
-.text p {
-  box-sizing: inherit;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-pre {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#error {
+  font-size: 1.25vw;
+  max-width: 20vw;
 }
 
 .text button:active {
@@ -191,6 +184,11 @@ export default {
       this.uploadError = null;
     },
     filesChange(event) {
+      if (event.target.result = null) {
+        throw Error("No files selected")
+        this.currentStatus = STATUS_FAILED;
+        this.uploadError = "Error: " + err.message;
+      };
       this.currentStatus = STATUS_SAVING;
       var reader = new FileReader();
       var that = this;
@@ -245,16 +243,21 @@ export default {
     save(formData) {
       upload(formData)
         .then(function(response) {
-          if (!response.ok) {
-            throw Error(response.statusText);
-          }
-          return response;
+          return response.json().then(function(jsonResponse) {
+            if (!response.ok) {
+              console.log(jsonResponse);
+              throw Error(jsonResponse.message);
+            }
+
+            return response;
+          });
         })
         .then(x => {
           this.uploadedFiles = [].concat(x);
           this.currentStatus = STATUS_SUCCESS;
         })
         .catch(err => {
+          //console.log(err);
           this.uploadError = "Error: " + err.message;
           this.currentStatus = STATUS_FAILED;
         });

@@ -6,30 +6,26 @@
     center
       include:markdown-it ../text/gs.md
   .cards
-    center
-      .column
-        .card(@click="showModal" id="upload")
-          h3 Import
-          p Start your Habitat journey by importing your first Terraform state (.tfstate) file.
+    .column
+      .card(@click="showModal" id="upload")
+        h3 Import
+        p Start your Habitat journey by importing your first Terraform state (.tfstate) file.
+        .ico
+          img(src='@/assets/upload.svg' width="65%" style="opacity:0.7;")
+    .column
+      a(href='View')
+        .card
+          h3 Visualize
+          p Dig into Habitat's functionality by checking out the visualization tools.
           .ico
-            center
-              img(src='@/assets/upload.svg' width="65%" style="opacity:0.7;padding-top:5%;")
-      .column
-        a(href='View')
-          .card
-            h3 Visualize
-            p Dig into Habitat's functionality by checking out the visualization tools.
-            .ico
-              center
-                img(src='@/assets/visualize.svg' width="75%" style="opacity:0.75;padding-top:0.5%;")
-      .column
-        a(href='Analyze')
-          .card
-            h3 Analyze
-            p Compare the real-world state of your infrastructure against your Terraform code.
-            .ico
-              center
-                img(src='@/assets/analyze.svg' width="90%" style="opacity:0.8;padding-top:7%;")
+            img(src='@/assets/visualize.svg' width="75%" style="opacity:0.75;")
+    .column
+      a(href='Analyze')
+        .card
+          h3 Analyze
+          p Compare the real-world state of your infrastructure against your Terraform code.
+          .ico
+            img(src='@/assets/analyze.svg' width="90%" style="opacity:0.8;")
 </template>
 
 <!-- SCSS Styling-->
@@ -41,11 +37,16 @@
 .gs a {
   text-decoration: none;
   color: rgb(235, 234, 229);
+  box-sizing: inherit;
 }
 
 .cards {
   box-sizing: border-box;
-  margin: 50px -5px 0 -5px;
+  display: flex;
+  justify-content: center;
+  height: 60vh;
+  width: 100%;
+  margin-top: 7vh;
 }
 
 .cards:after {
@@ -55,23 +56,30 @@
 }
 
 .column {
+  box-sizing: inherit;
   float: left;
-  width: 30%;
   padding: 0 10px;
+  height: 40vh;
+  max-height: 400px;
+  width: 25%;
+  margin-right: 1vw;
 }
 
 .card {
+  box-sizing: inherit;
   box-shadow: 1px 1px 1px 1px rgba(190, 189, 184, 0.3);
   padding: 16px;
   background-color: rgba(30, 32, 29, 0.8);
-  width: 60%;
-  height: 300px;
+  height: 100%;
   border-radius: 16px;
   text-align: left;
   border-style: solid;
   border-width: 0.5px;
   border-color: rgb(190, 189, 184);
   transition: transform 0.1s;
+  min-width: 15vw;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
@@ -88,10 +96,12 @@
 }
 
 .ico {
-  margin-left: auto;
-  margin-right: auto;
+  box-sizing: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  padding-top: 12%;
+  flex-grow: 1;
 }
 </style>
 

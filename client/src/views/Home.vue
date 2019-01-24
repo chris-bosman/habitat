@@ -10,7 +10,7 @@
 <!-- SCSS Styling -->
 <style lang="scss">
 .home-text {
-  margin: 5vh 7vw 0px 7vw;
+  margin: 5vh 3vw;
 }
 
 .home-text p {

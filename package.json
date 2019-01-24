@@ -5,6 +5,7 @@
   "main": "\"\"",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd client && npm i && cd .. && cd server && npm i",
     "client": "cd client && npm run serve",
     "server": "cd server && npm run start",
     "start": "npm run server && cd .. && npm run server",

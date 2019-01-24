@@ -71,10 +71,6 @@ app.route({
             return { message: "Successfully saved document" };
 
         } catch (err) {
-            console.log(err.code);
-            if (err.code = 11000) {
-                throw new Boom(err.errmsg);
-            }
             throw Boom.badRequest(err.errmsg, err);
         }
     }

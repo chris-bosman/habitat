@@ -10,6 +10,6 @@ span Analyze Dummy Data
 <!-- Javascript-->
 <script>
 export default {
-    name: "Analyze"
-}
+  name: "Analyze"
+};
 </script>
