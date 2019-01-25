@@ -13,7 +13,8 @@
                   .text
                       span
                         template(v-if="isInitial")
-                          p Drag & Drop or Click to Browse
+                          p Drag & Drop or &nbsp;
+                            div(id="clickToBrowse") Click to Browse
                         template(v-if="isSaving")
                           p Uploading {{ fileCount }} files...
                         template(v-if="isSuccess")
@@ -138,8 +139,10 @@
 }
 
 #error {
-  font-size: 1.25vw;
-  max-width: 20vw;
+  font-size: 1vw;
+  font-family: "IBM Plex Mono", monospace;
+  word-break: break-all;
+  max-width: 34vw;
 }
 
 .text button:active {
@@ -184,61 +187,66 @@ export default {
       this.uploadError = null;
     },
     filesChange(event) {
-      if (event.target.result = null) {
-        throw Error("No files selected")
-        this.currentStatus = STATUS_FAILED;
-        this.uploadError = "Error: " + err.message;
-      };
-      this.currentStatus = STATUS_SAVING;
-      var reader = new FileReader();
-      var that = this;
-      reader.onload = function parser(event) {
-        var tfFile = JSON.parse(event.target.result);
-        var lineage = tfFile.lineage;
-        var serial = tfFile.serial;
-        var resourceNames = Object.keys(tfFile.modules[0].resources);
-        var dependencies = [];
-        var resources = tfFile.modules[0].resources;
+      try {
+        this.currentStatus = STATUS_SAVING;
 
-        for (var i = 0; i < resourceNames.length; i++) {
-          var name = resourceNames[i];
-          var type = name.split(".")[0];
-
-          if (!name.startsWith("data")) {
-            var resource = resources[name];
-            var provider = resource.provider.split(".")[1];
-            var attributeData = resource.primary.attributes;
-            var attributes = Object.keys(attributeData);
-            var resourceAttributesObject = {};
-            for (var j = 0; j < attributes.length; j++) {
-              var attributeName = attributes[j];
-              var attributeNameOld = attributeName;
-              if (attributeName.includes(".")) {
-                attributeName = attributeName
-                  .replace(/\./g, "_")
-                  .replace(/[0-9]/g, "")
-                  .replace("__", "_");
-              }
-              resourceAttributesObject[attributeName] =
-                attributeData[attributeNameOld];
-            }
-          } else {
-            dependencies.push(resources[name].primary.attributes.name);
-          }
+        if (!event.target) {
+          throw Error("No file selected");
         }
-        var resourceAttributes = JSON.stringify(resourceAttributesObject);
 
-        const formData = new FormData();
-        formData.append("resourceSerial", serial);
-        formData.append("resourceLineage", lineage);
-        formData.append("resourceType", type);
-        formData.append("resourceName", name);
-        formData.append("resourceProvider", provider);
-        formData.append("resourceAttributes", resourceAttributes);
-        formData.append("resourceDependencies", dependencies);
-        that.save(formData);
-      };
-      reader.readAsText(event.target.files[0]);
+        var reader = new FileReader();
+        var that = this;
+        reader.onload = function parser(event) {
+          var tfFile = JSON.parse(event.target.result);
+          var lineage = tfFile.lineage;
+          var serial = tfFile.serial;
+          var resourceNames = Object.keys(tfFile.modules[0].resources);
+          var dependencies = [];
+          var resources = tfFile.modules[0].resources;
+
+          for (var i = 0; i < resourceNames.length; i++) {
+            var name = resourceNames[i];
+            var type = name.split(".")[0];
+
+            if (!name.startsWith("data")) {
+              var resource = resources[name];
+              var provider = resource.provider.split(".")[1];
+              var attributeData = resource.primary.attributes;
+              var attributes = Object.keys(attributeData);
+              var resourceAttributesObject = {};
+              for (var j = 0; j < attributes.length; j++) {
+                var attributeName = attributes[j];
+                var attributeNameOld = attributeName;
+                if (attributeName.includes(".")) {
+                  attributeName = attributeName
+                    .replace(/\./g, "_")
+                    .replace(/[0-9]/g, "")
+                    .replace("__", "_");
+                }
+                resourceAttributesObject[attributeName] =
+                  attributeData[attributeNameOld];
+              }
+            } else {
+              dependencies.push(resources[name].primary.attributes.name);
+            }
+          }
+          var resourceAttributes = JSON.stringify(resourceAttributesObject);
+
+          const formData = new FormData();
+          formData.append("resourceSerial", serial);
+          formData.append("resourceLineage", lineage);
+          formData.append("resourceType", type);
+          formData.append("resourceName", name);
+          formData.append("resourceProvider", provider);
+          formData.append("resourceAttributes", resourceAttributes);
+          formData.append("resourceDependencies", dependencies);
+          that.save(formData);
+        };
+        reader.readAsText(event.target.files[0]);
+      } catch (err) {
+        this.uploadError = "Error: " + err.message;
+        this.currentStatus = STATUS_FAILED;
+      }
     },
     save(formData) {
       upload(formData)
