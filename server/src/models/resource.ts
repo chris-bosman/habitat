@@ -1,10 +1,14 @@
 import * as mongoose from 'mongoose';
-import { IResource } from '../interfaces/schemaInt'
+import { IResource } from '../interfaces/resource'
 
 export var resourceSchema = new mongoose.Schema({
-    resourceId: {
+    _id: {
         type: String,
-        unique: true,
+        required: true,
+        unique: true
+    },
+    resource: {
+        type: String,
         required: true
     },
     resourceType: {

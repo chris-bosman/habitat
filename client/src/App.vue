@@ -14,7 +14,7 @@
 <!-- SCSS Styling-->
 <style lang="scss">
 @charset "utf-8";
-@import url("https://fonts.googleapis.com/css?family=Raleway");
+@import url("https://fonts.googleapis.com/css?family=Raleway|IBM+Plex+Mono");
 
 html {
   background-image: linear-gradient(black, rgb(30, 32, 29));

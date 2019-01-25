@@ -50,11 +50,13 @@ app.route({
             const provider = data["resourceProvider"];
             const attributesRaw = data["resourceAttributes"];
             const dependencies = data["resourceDependencies"];
-            const id = type + "." + name;
+            const id = type + "." + name + "." + lineage + ".v" + serial;
+            const resource = type + "." + name;
             const attributes = JSON.parse(attributesRaw);
 
             var newResource = new Resource({
-                resourceId: id,
+                _id: id,
+                resource: resource,
                 resourceType: type,
                 resourceName: name,
                 resourceProvider: provider,
@@ -64,13 +66,14 @@ app.route({
                 resourceLineage: lineage,
             });
 
-            const query = { resourceId: id, resourceSerial: { $lt: serial }};
+            const query = { _id: id, resourceSerial: { $lt: serial }};
 
-            await Resource.findOneAndUpdate(query, newResource, { upsert: true, new: true }, function(err) { });
+            await Resource.findOneAndUpdate(query, newResource, { upsert: true, new: true });
 
             return { message: "Successfully saved document" };
 
         } catch (err) {
+            console.log(err);
             throw Boom.badRequest(err.errmsg, err);
         }
     }
@@ -83,8 +86,6 @@ const init = async () => {
 };
 
 process.on('unhandledRejection', (err) => {
-
-    console.log(err);
     process.exit(1);
 });
 

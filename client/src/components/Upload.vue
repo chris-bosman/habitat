@@ -200,9 +200,9 @@ export default {
           var tfFile = JSON.parse(event.target.result);
           var lineage = tfFile.lineage;
           var serial = tfFile.serial;
-          var resourceNames = Object.keys(tfFile.modules[0].resources);
-          var dependencies = [];
           var resources = tfFile.modules[0].resources;
+          var resourceNames = Object.keys(resources);
+          var dependencies = [];
 
           for (var i = 0; i < resourceNames.length; i++) {
             var name = resourceNames[i];
@@ -229,18 +229,17 @@ export default {
             } else {
               dependencies.push(resources[name].primary.attributes.name);
             }
+            var resourceAttributes = JSON.stringify(resourceAttributesObject);
+            const formData = new FormData();
+            formData.append("resourceSerial", serial);
+            formData.append("resourceLineage", lineage);
+            formData.append("resourceType", type);
+            formData.append("resourceName", name);
+            formData.append("resourceProvider", provider);
+            formData.append("resourceAttributes", resourceAttributes);
+            formData.append("resourceDependencies", dependencies);
+            that.save(formData);
           }
-          var resourceAttributes = JSON.stringify(resourceAttributesObject);
-
-          const formData = new FormData();
-          formData.append("resourceSerial", serial);
-          formData.append("resourceLineage", lineage);
-          formData.append("resourceType", type);
-          formData.append("resourceName", name);
-          formData.append("resourceProvider", provider);
-          formData.append("resourceAttributes", resourceAttributes);
-          formData.append("resourceDependencies", dependencies);
-          that.save(formData);
         };
         reader.readAsText(event.target.files[0]);
       } catch (err) {
