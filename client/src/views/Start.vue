@@ -16,7 +16,7 @@
       a(href='View')
         .card
           h3 Visualize
-          p Dig into Habitat's functionality by checking out the visualization tools.
+          p Dig into Habitat's functionality by checking out our visualization tools.
           .ico
             img(src='@/assets/visualize.svg' width="75%" style="opacity:0.75;")
     .column

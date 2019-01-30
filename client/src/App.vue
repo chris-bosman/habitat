@@ -36,6 +36,10 @@ body {
   transition: margin-left 0.5s;
 }
 
+.app {
+  height: 100%;
+}
+
 .content {
   position: relative;
   margin: 0 5vw 0 13vw;

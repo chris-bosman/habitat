@@ -4,10 +4,10 @@
     button(class="menubttn", id="menubttn", @click="menuToggle()") &#9776;
     .menu(id="menu")
         ul
-            mixin link(href, name)
-              router-link(class!=attributes.class to=href id=href)= name
-            each val, index in {'Start': 'S T A R T', 'View': 'V I E W', 'Analyze': 'A N A L Y Z E', 'Admin': 'C O N F I G U R E'}
-              li: +link(index, val)
+          mixin link(href, name)
+            router-link(class!=attributes.class to=href id=href)= name
+          each val, index in {'Start': 'S T A R T', 'View': 'V I E W', 'Analyze': 'A N A L Y Z E', 'Admin': 'C O N F I G U R E'}
+            li: +link(index, val)
         .logo
             center
                 img(src="@/assets/logo.svg" height="150px" style="opacity:0.6;")

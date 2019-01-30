@@ -66,15 +66,20 @@ app.route({
                 resourceLineage: lineage,
             });
 
-            const query = { _id: id, resourceSerial: { $lt: serial }};
+            const query = { _id: id, resourceSerial: { $lt: serial }, resourceLineage: { $ne: lineage }};
 
             await Resource.findOneAndUpdate(query, newResource, { upsert: true, new: true });
 
             return { message: "Successfully saved document" };
 
         } catch (err) {
-            console.log(err);
-            throw Boom.badRequest(err.errmsg, err);
+            if (err.code == 11000) {
+                return reply.response("This Resource already exists in your Habitat database").code(222);
+            } else if (err.message) {
+                throw Boom.badRequest(err.message, err);
+            } else if (err.errmsg) {
+                throw Boom.badRequest(err.errmsg, err);
+            }
         }
     }
 });

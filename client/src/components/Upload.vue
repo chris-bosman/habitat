@@ -8,7 +8,7 @@
                     span(@click="close" aria-label="Close modal") &times;
         .modal-body
             slot(name="body")
-              .container(v-if="isInitial || isSaving || isSuccess || isFailed")
+              .container(v-if="isInitial || isSaving || isSuccess || isFailed || isDuplicate")
                 div(id="box" @dragenter="dragging=true" @dragend="dragging=false" @dragleave="dragging=false" @click="reset()" :class="['upload-box', dragging ? 'upload-box-over' : '']")
                   .text
                       span
@@ -18,11 +18,17 @@
                         template(v-if="isSaving")
                           p Uploading {{ fileCount }} files...
                         template(v-if="isSuccess")
-                          p Uploaded {{ uploadedFiles.length }} file(s) successfully. #[a(href="javascript:void(0)" @click="reset()") Upload more files]
+                          p Uploaded {{ uploadedFiles.length }} file(s) successfully. 
+                          p #[a(href="javascript:void(0)" @click="reset()") Upload more files]
                         template(v-if="isFailed")
                           center
-                            p Upload failed. #[a(href="javascript:void(0)" @click="reset()") Try again]
+                            p Upload failed. 
+                            p #[a(href="javascript:void(0)" @click="reset()") Try again]
                           p(id="error") {{ uploadError }}
+                        template(v-if="isDuplicate")
+                          p(id="duplicate") {{ uploadResponse }}
+                          center
+                            p #[a(href="javascript:void(0)" @click="reset()") Upload more files]
                   input(type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event); fileCount = $event.target.files.length" accept=".tfstate" class="input-file")                                           
 </template>
 
@@ -145,6 +151,12 @@
   max-width: 34vw;
 }
 
+#duplicate {
+  font-size: 1vw;
+  font-family: "IBM Plex Mono", monospace;
+  max-width: 34vw;
+}
+
 .text button:active {
   transform: translateY(2px);
   background-color: rgb(235, 234, 229);
@@ -158,7 +170,8 @@ import { upload } from "@/js/uploadService";
 const STATUS_INITIAL = 0,
   STATUS_SAVING = 1,
   STATUS_SUCCESS = 2,
-  STATUS_FAILED = 3;
+  STATUS_FAILED = 3,
+  STATUS_DUPLICATE = 4;
 
 export default {
   name: "Modal",
@@ -174,6 +187,9 @@ export default {
     },
     isFailed() {
       return this.currentStatus === STATUS_FAILED;
+    },
+    isDuplicate() {
+      return this.currentStatus === STATUS_DUPLICATE;
     }
   },
   methods: {
@@ -185,6 +201,7 @@ export default {
       this.dragging = false;
       this.uploadedFiles = [];
       this.uploadError = null;
+      this.uploadResponse = null;
     },
     filesChange(event) {
       try {
@@ -250,23 +267,32 @@ export default {
     save(formData) {
       upload(formData)
         .then(function(response) {
-          return response.json().then(function(jsonResponse) {
-            if (!response.ok) {
-              console.log(jsonResponse);
+          if (!response.ok) {
+            return response.json().then(function(jsonResponse) {
               throw Error(jsonResponse.message);
-            }
-
+            });
+          } else if (response.status == 222) {
+            var error = new Error(
+              "This version of this resource already exists in your Habitat!"
+            );
+            error.code = 222;
+            throw error;
+          } else {
             return response;
-          });
+          }
         })
         .then(x => {
           this.uploadedFiles = [].concat(x);
           this.currentStatus = STATUS_SUCCESS;
         })
         .catch(err => {
-          //console.log(err);
-          this.uploadError = "Error: " + err.message;
-          this.currentStatus = STATUS_FAILED;
+          if (err.code == 222) {
+            this.uploadResponse = err.message;
+            this.currentStatus = STATUS_DUPLICATE;
+          } else {
+            this.uploadError = "Error: " + err.message;
+            this.currentStatus = STATUS_FAILED;
+          }
         });
     }
   },
@@ -274,6 +300,7 @@ export default {
     return {
       uploadedFiles: [],
       uploadError: null,
+      uploadResponse: null,
       currentStatus: null,
       uploadFieldName: "stateFile",
       dragging: false
