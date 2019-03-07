@@ -2,33 +2,12 @@ require('dotenv').config();
 
 import * as Hapi from 'hapi';
 import * as Boom from 'boom';
-import * as mongoose from 'mongoose';
 
-import { Resource } from './models/resource';
+import { resourceRoute } from './components/uploadHandler';
 
 const app = new Hapi.Server({
     port: 3000, host: 'localhost',
     routes: { cors: true }
-});
-
-const connString = 'mongodb://localhost:27017/habitat';
-const dbConfig: mongoose.ConnectionOptions = {
-    useNewUrlParser: true
-};
-
-(<any>mongoose).Promise = Promise;
-mongoose.connect(connString, dbConfig);
-mongoose.set('useCreateIndex', true);
-mongoose.set('debug', true);
-
-let mongodb = mongoose.connection;
-
-mongodb.on("error", err => {
-    console.log("Unable to connect to database", err);
-});
-
-mongodb.once("open", () => {
-    console.log("Connected to database");
 });
 
 app.route({
@@ -40,38 +19,9 @@ app.route({
             allow: 'multipart/form-data'
         }
     },
-    handler: async function (request, reply) {
+    handler: async function(request, reply) {
         try {
-            const data = request.payload;
-            const serial = data["resourceSerial"];
-            const lineage = data["resourceLineage"];
-            const type = data["resourceType"];
-            const name = data["resourceName"];
-            const provider = data["resourceProvider"];
-            const attributesRaw = data["resourceAttributes"];
-            const dependencies = data["resourceDependencies"];
-            const id = type + "." + name + "." + lineage + ".v" + serial;
-            const resource = type + "." + name;
-            const attributes = JSON.parse(attributesRaw);
-
-            var newResource = new Resource({
-                _id: id,
-                resource: resource,
-                resourceType: type,
-                resourceName: name,
-                resourceProvider: provider,
-                resourceDependencies: dependencies,
-                resourceAttributes: attributes,
-                resourceSerial: serial,
-                resourceLineage: lineage,
-            });
-
-            const query = { _id: id, resourceSerial: { $lt: serial }, resourceLineage: { $ne: lineage }};
-
-            await Resource.findOneAndUpdate(query, newResource, { upsert: true, new: true });
-
-            return { message: "Successfully saved document" };
-
+            resourceRoute(request);
         } catch (err) {
             if (err.code == 11000) {
                 return reply.response("This Resource already exists in your Habitat database").code(222);
