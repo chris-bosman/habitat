@@ -166,6 +166,7 @@
 <!-- Javascript-->
 <script>
 import { upload } from "@/js/uploadService";
+import { parser } from "@/js/genericParser";
 
 const STATUS_INITIAL = 0,
   STATUS_SAVING = 1,
@@ -210,56 +211,11 @@ export default {
         if (!event.target) {
           throw Error("No file selected");
         }
-
-        var reader = new FileReader();
-        var that = this;
-        reader.onload = function parser(event) {
-          var tfFile = JSON.parse(event.target.result);
-          var lineage = tfFile.lineage;
-          var serial = tfFile.serial;
-          var resources = tfFile.modules[0].resources;
-          var resourceNames = Object.keys(resources);
-          var dependencies = [];
-
-          for (var i = 0; i < resourceNames.length; i++) {
-            var name = resourceNames[i];
-            var type = name.split(".")[0];
-
-            if (!name.startsWith("data")) {
-              var resource = resources[name];
-              var provider = resource.provider.split(".")[1];
-              var attributeData = resource.primary.attributes;
-              var attributes = Object.keys(attributeData);
-              var resourceAttributesObject = {};
-              for (var j = 0; j < attributes.length; j++) {
-                var attributeName = attributes[j];
-                var attributeNameOld = attributeName;
-                if (attributeName.includes(".")) {
-                  attributeName = attributeName
-                    .replace(/\./g, "_")
-                    .replace(/[0-9]/g, "")
-                    .replace("__", "_");
-                }
-                resourceAttributesObject[attributeName] =
-                  attributeData[attributeNameOld];
-              }
-            } else {
-              dependencies.push(resources[name].primary.attributes.name);
-            }
-            var resourceAttributes = JSON.stringify(resourceAttributesObject);
-            const formData = new FormData();
-            formData.append("resourceSerial", serial);
-            formData.append("resourceLineage", lineage);
-            formData.append("resourceType", type);
-            formData.append("resourceName", name);
-            formData.append("resourceProvider", provider);
-            formData.append("resourceAttributes", resourceAttributes);
-            formData.append("resourceDependencies", dependencies);
-            that.save(formData);
-          }
-        };
-        reader.readAsText(event.target.files[0]);
+        const formData = new FormData();
+        parser(event, formData);
+        this.save(formData);
       } catch (err) {
+        console.log(err.message);
         this.uploadError = "Error: " + err.message;
         this.currentStatus = STATUS_FAILED;
       }
@@ -286,6 +242,7 @@ export default {
           this.currentStatus = STATUS_SUCCESS;
         })
         .catch(err => {
+          console.log(err.message);
           if (err.code == 222) {
             this.uploadResponse = err.message;
             this.currentStatus = STATUS_DUPLICATE;
