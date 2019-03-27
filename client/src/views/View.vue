@@ -109,7 +109,7 @@ export default {
     },
     selectView(event) {
       console.log(event);
-      const view = event.target.innerText
+      //const view = event.target.innerText
     }
   }
 };

@@ -21,7 +21,7 @@ app.route({
     },
     handler: async function(request, reply) {
         try {
-            resourceRoute(request);
+            await resourceRoute(request);
         } catch (err) {
             if (err.code == 11000) {
                 return reply.response("This Resource already exists in your Habitat database").code(222);

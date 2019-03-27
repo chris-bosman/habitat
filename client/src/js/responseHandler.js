@@ -1,6 +1,7 @@
-import * as customResponseCodes from "../json/customResponseCodes.json";
+import codes from "../json/customResponseCodes.json";
 
 function responseHandler(response) {
+  console.log(codes);
   if (!response.ok) {
     return response.json().then(function(jsonResponse) {
       throw Error(jsonResponse.message);

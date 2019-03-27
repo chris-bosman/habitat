@@ -1,5 +1,7 @@
-function tfStateParser(event, formData) {
-  var tfFile = JSON.parse(event.target.result);
+import { upload } from "./uploadService";
+
+function tfStateParser(formData, reader) {
+  var tfFile = JSON.parse(reader.result);
   var lineage = tfFile.lineage;
   var serial = tfFile.serial;
   var resources = tfFile.modules[0].resources;
@@ -43,6 +45,7 @@ function tfStateParser(event, formData) {
     formData.append("resourceAttributes", resourceAttributes);
     formData.append("resourceDependencies", dependencies);
   }
+  upload(formData);
 }
 
 export { tfStateParser };

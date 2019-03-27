@@ -1,0 +1,7 @@
+organization=chris-bosman-github
+projectKey=habitat
+serverUrl=https://sonarcloud.io
+serverVersion=7.7.0.23020
+dashboardUrl=https://sonarcloud.io/dashboard?id=habitat
+ceTaskId=AWm7ohLw9XBIOzEJZvce
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AWm7ohLw9XBIOzEJZvce

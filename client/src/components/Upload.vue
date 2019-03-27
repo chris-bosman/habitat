@@ -208,14 +208,13 @@ export default {
       try {
         this.currentStatus = STATUS_SAVING;
 
+        const formData = new FormData();
+
         if (!event.target) {
           throw Error("No file selected");
         }
-        const formData = new FormData();
         parser(event, formData);
-        this.save(formData);
       } catch (err) {
-        console.log(err.message);
         this.uploadError = "Error: " + err.message;
         this.currentStatus = STATUS_FAILED;
       }
