@@ -1,6 +1,8 @@
-import { upload } from "./uploadService";
+import { save } from "../components/Upload";
 
-function tfStateParser(formData, reader) {
+function tfStateParser(reader) {
+  const formData = new FormData();
+
   var tfFile = JSON.parse(reader.result);
   var lineage = tfFile.lineage;
   var serial = tfFile.serial;
@@ -45,7 +47,7 @@ function tfStateParser(formData, reader) {
     formData.append("resourceAttributes", resourceAttributes);
     formData.append("resourceDependencies", dependencies);
   }
-  upload(formData);
+  save(formData);
 }
 
 export { tfStateParser };

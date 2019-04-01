@@ -208,12 +208,10 @@ export default {
       try {
         this.currentStatus = STATUS_SAVING;
 
-        const formData = new FormData();
-
         if (!event.target) {
           throw Error("No file selected");
         }
-        parser(event, formData);
+        parser(event);
       } catch (err) {
         this.uploadError = "Error: " + err.message;
         this.currentStatus = STATUS_FAILED;
@@ -221,21 +219,6 @@ export default {
     },
     save(formData) {
       upload(formData)
-        .then(function(response) {
-          if (!response.ok) {
-            return response.json().then(function(jsonResponse) {
-              throw Error(jsonResponse.message);
-            });
-          } else if (response.status == 222) {
-            var error = new Error(
-              "This version of this resource already exists in your Habitat!"
-            );
-            error.code = 222;
-            throw error;
-          } else {
-            return response;
-          }
-        })
         .then(x => {
           this.uploadedFiles = [].concat(x);
           this.currentStatus = STATUS_SUCCESS;

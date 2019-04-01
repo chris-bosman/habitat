@@ -4,6 +4,7 @@ function responseHandler(response) {
   console.log(codes);
   if (!response.ok) {
     return response.json().then(function(jsonResponse) {
+      console.log(jsonResponse);
       throw Error(jsonResponse.message);
     });
   } else if (response.status == 222) {
