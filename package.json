@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/chris-bosman/habitat/issues"
   },
-  "homepage": "https://github.com/chris-bosman/habitat#readme"
+  "homepage": "https://github.com/chris-bosman/habitat#readme",
+  "dependencies": {
+    "json-query": "^2.2.2"
+  }
 }

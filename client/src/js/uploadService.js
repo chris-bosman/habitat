@@ -1,4 +1,3 @@
-import { responseHandler } from "./responseHandler";
 const BASE_URL = "http://localhost:3000";
 
 function upload(formData) {
@@ -9,8 +8,6 @@ function upload(formData) {
       Accept: "application/json"
     },
     body: formData
-  }).then(function(response) {
-    responseHandler(response);
   });
 }
 

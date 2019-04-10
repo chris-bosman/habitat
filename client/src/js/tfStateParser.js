@@ -1,4 +1,4 @@
-import { save } from "../components/Upload";
+import store from "../store";
 
 function tfStateParser(reader) {
   const formData = new FormData();
@@ -47,7 +47,7 @@ function tfStateParser(reader) {
     formData.append("resourceAttributes", resourceAttributes);
     formData.append("resourceDependencies", dependencies);
   }
-  save(formData);
+  store.dispatch("uploadResult", formData);
 }
 
 export { tfStateParser };

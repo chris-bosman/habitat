@@ -8,7 +8,7 @@
                     span(@click="close" aria-label="Close modal") &times;
         .modal-body
             slot(name="body")
-              .container(v-if="isInitial || isSaving || isSuccess || isFailed || isDuplicate")
+              .container(v-if="isInitial || isSaving || isSuccess || isFailed || isServerResponse")
                 div(id="box" @dragenter="dragging=true" @dragend="dragging=false" @dragleave="dragging=false" @click="reset()" :class="['upload-box', dragging ? 'upload-box-over' : '']")
                   .text
                       span
@@ -19,16 +19,16 @@
                           p Uploading {{ fileCount }} files...
                         template(v-if="isSuccess")
                           p Uploaded {{ uploadedFiles.length }} file(s) successfully. 
-                          p #[a(href="javascript:void(0)" @click="reset()") Upload more files]
+                          center
+                            p #[a(href="javascript:void(0)" @click="reset()") Upload more files?]
                         template(v-if="isFailed")
+                          p(id="error") {{ uploadResponse }}
                           center
-                            p Upload failed. 
-                            p #[a(href="javascript:void(0)" @click="reset()") Try again]
-                          p(id="error") {{ uploadError }}
-                        template(v-if="isDuplicate")
-                          p(id="duplicate") {{ uploadResponse }}
+                            p #[a(href="javascript:void(0)" @click="reset()") Reset upload form?]
+                        template(v-if="isServerResponse")
+                          p(id="error") {{ this.$store.state.responseResult }}
                           center
-                            p #[a(href="javascript:void(0)" @click="reset()") Upload more files]
+                            p #[a(href="javascript:void(0)" @click="reset()") Reset upload form?]
                   input(type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event); fileCount = $event.target.files.length" accept=".tfstate" class="input-file")                                           
 </template>
 
@@ -147,13 +147,8 @@
 #error {
   font-size: 1vw;
   font-family: "IBM Plex Mono", monospace;
+  font-color: red;
   word-break: break-all;
-  max-width: 34vw;
-}
-
-#duplicate {
-  font-size: 1vw;
-  font-family: "IBM Plex Mono", monospace;
   max-width: 34vw;
 }
 
@@ -165,14 +160,13 @@
 
 <!-- Javascript-->
 <script>
-import { upload } from "@/js/uploadService";
 import { parser } from "@/js/genericParser";
 
 const STATUS_INITIAL = 0,
   STATUS_SAVING = 1,
   STATUS_SUCCESS = 2,
   STATUS_FAILED = 3,
-  STATUS_DUPLICATE = 4;
+  STATUS_SERVERRESPONDED = 4;
 
 export default {
   name: "Modal",
@@ -189,8 +183,8 @@ export default {
     isFailed() {
       return this.currentStatus === STATUS_FAILED;
     },
-    isDuplicate() {
-      return this.currentStatus === STATUS_DUPLICATE;
+    isServerResponse() {
+      return this.currentStatus === STATUS_SERVERRESPONDED;
     }
   },
   methods: {
@@ -201,44 +195,28 @@ export default {
       this.currentStatus = STATUS_INITIAL;
       this.dragging = false;
       this.uploadedFiles = [];
-      this.uploadError = null;
       this.uploadResponse = null;
+      this.fileCount = null;
     },
     filesChange(event) {
+      this.currentStatus = STATUS_SAVING;
+      if (!event.target) {
+        this.currentStatus = STATUS_FAILED;
+        throw Error("No file selected");
+      }
       try {
-        this.currentStatus = STATUS_SAVING;
-
-        if (!event.target) {
-          throw Error("No file selected");
-        }
         parser(event);
       } catch (err) {
-        this.uploadError = "Error: " + err.message;
+        this.uploadResponse = err;
         this.currentStatus = STATUS_FAILED;
+      } finally {
+        this.currentStatus = STATUS_SERVERRESPONDED;
       }
-    },
-    save(formData) {
-      upload(formData)
-        .then(x => {
-          this.uploadedFiles = [].concat(x);
-          this.currentStatus = STATUS_SUCCESS;
-        })
-        .catch(err => {
-          console.log(err.message);
-          if (err.code == 222) {
-            this.uploadResponse = err.message;
-            this.currentStatus = STATUS_DUPLICATE;
-          } else {
-            this.uploadError = "Error: " + err.message;
-            this.currentStatus = STATUS_FAILED;
-          }
-        });
     }
   },
   data() {
     return {
       uploadedFiles: [],
-      uploadError: null,
       uploadResponse: null,
       currentStatus: null,
       uploadFieldName: "stateFile",
