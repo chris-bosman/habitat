@@ -7,9 +7,9 @@
         include:markdown-it ../text/view.md
     .tabs
       ul
-        li #[a(href="javascript:void(0)" @click="selectView($event)") Map]
-        li #[a(href="javascript:void(0)" @click="selectView($event)") Tree]
-        li #[a(href="javascript:void(0)" @click="selectView($event)") List]
+        a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isMap ? 'selected':''")  Map]
+        a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isTree ? 'selected':''") Tree]
+        a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isList ? 'selected':''")  List]
     .viz(v-if="isMap || isTree || isList")
       template(v-if="isMap")
         p isMap
@@ -42,14 +42,15 @@
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     cursor: pointer;
-    & a {
-      text-decoration: none;
-      color: rgb(190, 189, 184);
-    }
-    & .selected {
-      background-color: rgba(95, 95, 92, 0.4);
-    }
   }
+  & a {
+    text-decoration: none;
+    color: rgb(190, 189, 184);
+  }
+}
+
+.selected {
+  background-color: rgba(95, 95, 92, 0.4);
 }
 
 .viz {
@@ -59,11 +60,11 @@
   width: 100%;
   border-style: solid;
   border-width: 0.5px;
-  border-color: rgba(190, 189, 184, 0.6);
+  border-color: rgba(190, 189, 184, 0.8);
   border-radius: 24px;
-  box-shadow: inset 0 0 3vw rgba(190, 189, 184, 0.9);
+  box-shadow: inset 0 0 3vw rgba(110, 110, 110, 0.4);
   padding: 16px;
-  background-color: rgba(95, 95, 92, 0.4);
+  background-color: rgba(80, 80, 80, 0.4);
 }
 </style>
 
@@ -71,21 +72,19 @@
 <script>
 import Modal from "@/components/Upload";
 
-const STATUS_MAP = 0,
-  STATUS_TREE = 1,
-  STATUS_LIST = 2;
+var view;
 
 export default {
   name: "Map",
   computed: {
     isMap() {
-      return this.currentStatus === STATUS_MAP;
+      return this.currentStatus === "Map" || this.initialStatus === "Map";
     },
     isTree() {
-      return this.currentStatus === STATUS_TREE;
+      return this.currentStatus === "Tree";
     },
     isList() {
-      return this.currentStatus === STATUS_LIST;
+      return this.currentStatus === "List";
     }
   },
   components: {
@@ -94,11 +93,16 @@ export default {
   data() {
     return {
       isModalVisible: false,
-      currentStatus: null
+      currentStatus: null,
+      initialStatus: null
     };
   },
   mounted() {
-    this.currentStatus = STATUS_MAP;
+    if (localStorage.getItem("vizView")) {
+      this.currentStatus = localStorage.getItem("vizView");
+    } else {
+      this.currentStatus = "Map";
+    }
   },
   methods: {
     showModal() {
@@ -108,8 +112,9 @@ export default {
       this.isModalVisible = false;
     },
     selectView(event) {
-      console.log(event);
-      //const view = event.target.innerText
+      view = event.srcElement.innerText;
+      localStorage.setItem("vizView", view);
+      this.currentStatus = view;
     }
   }
 };

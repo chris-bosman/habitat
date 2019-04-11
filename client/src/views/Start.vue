@@ -78,7 +78,7 @@
   border-color: rgb(190, 189, 184);
   transition: transform 0.1s;
   min-width: 15vw;
-  max-width: 18vw;
+  max-width: 16vw;
   display: flex;
   flex-direction: column;
 }

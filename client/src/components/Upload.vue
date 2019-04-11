@@ -9,7 +9,7 @@
         .modal-body
             slot(name="body")
               .container(v-if="isInitial || isSaving || isSuccess || isFailed || isServerResponse")
-                div(id="box" @dragenter="dragging=true" @dragend="dragging=false" @dragleave="dragging=false" @click="reset()" :class="['upload-box', dragging ? 'upload-box-over' : '']")
+                div(id="box" @dragover="dragging=true" @dragleave="dragging=false" @click="reset()" :class="['upload-box', dragging ? 'upload-box-over' : '']")
                   .text
                       span
                         template(v-if="isInitial")
@@ -29,7 +29,7 @@
                           p(id="error") {{ this.$store.state.responseResult }}
                           center
                             p #[a(href="javascript:void(0)" @click="reset()") Reset upload form?]
-                  input(type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event); fileCount = $event.target.files.length" accept=".tfstate" class="input-file")                                           
+                  input(v-if="isInitial" type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event); fileCount = $event.target.files.length" accept=".tfstate" class="input-file")                                           
 </template>
 
 
@@ -125,12 +125,11 @@
 
 .upload-box:hover a,
 .upload-box:hover #clickToBrowse {
-  color: gray;
   text-decoration: underline;
 }
 
 .upload-box-over {
-  background-color: gray;
+  background-color: dimgray;
 }
 
 .text {
@@ -147,7 +146,7 @@
 #error {
   font-size: 1vw;
   font-family: "IBM Plex Mono", monospace;
-  font-color: red;
+  color: red;
   word-break: break-all;
   max-width: 34vw;
 }
