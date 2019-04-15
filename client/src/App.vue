@@ -1,14 +1,13 @@
 <!-- Pug Template -->
 <template lang="pug">
 .app
+  link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous")
   Background
   TopNav
   SideNav
-  .header
-    center
-      img(src="@/assets/header.svg")
-  .content
-    router-view
+  .body
+    .content
+      router-view
 </template>
 
 <!-- SCSS Styling-->
@@ -40,15 +39,16 @@ body {
   height: 100%;
 }
 
-.content {
-  position: relative;
-  margin: 0 5vw 0 13vw;
+.body {
+  margin: 0 5vw;
 }
 
-.header {
-  height: 60px;
-  margin: 0 4vw;
-  width: 100%;
+.content {
+  position: relative;
+}
+
+.head {
+  margin-left: 5vw;
 }
 </style>
 
@@ -57,12 +57,18 @@ body {
 import Background from "@/components/Background";
 import SideNav from "@/components/SideNav";
 import TopNav from "@/components/TopNav";
+
 export default {
   name: "Home",
   components: {
     Background: Background,
     SideNav: SideNav,
     TopNav: TopNav
+  },
+  computed: {
+    collapsedState() {
+      return this.$store.state.collapsed;
+    }
   }
 };
 </script>

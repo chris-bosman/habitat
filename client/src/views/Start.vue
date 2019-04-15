@@ -2,9 +2,8 @@
 <template lang="pug">
 .gs
   Modal(v-show="isModalVisible" @close="closeModal" id="Modal")
-  .band
-    center
-      include:markdown-it ../text/gs.md
+  .head
+    include:markdown-it ../text/gs.md
   .cards
     .column
       .card(@click="showModal" id="upload")
@@ -32,6 +31,10 @@
 <style lang="scss">
 #Modal {
   z-index: 5;
+}
+
+.gs {
+  margin-left: 15vw;
 }
 
 .gs a {

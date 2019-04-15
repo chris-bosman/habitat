@@ -8,11 +8,15 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    responseResult: []
+    responseResult: [],
+    collapsed: null
   },
   mutations: {
     UPLOAD_RESULT(state, responseResult) {
       state.responseResult = responseResult;
+    },
+    COLLAPSE_STATE(state, collapsed) {
+      state.collapsed = collapsed;
     }
   },
   actions: {
@@ -29,6 +33,9 @@ const store = new Vuex.Store({
           commit("UPLOAD_RESULT", responseResult);
         }
       });
+    },
+    registerCollapse({ commit }, collapsed) {
+      commit("COLLAPSE_STATE", collapsed);
     }
   }
 });

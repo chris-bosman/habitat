@@ -2,27 +2,25 @@
 <template lang="pug">
 .view
     Modal(v-show="isModalVisible" @close="closeModal" id="Modal")
-    .band
-      center
-        include:markdown-it ../text/view.md
     .tabs
       ul
         a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isMap ? 'selected':''")  Map]
         a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isTree ? 'selected':''") Tree]
         a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isList ? 'selected':''")  List]
     .viz(v-if="isMap || isTree || isList")
-      template(v-if="isMap")
-        p isMap
-      template(v-if="isTree")
-        p isTree
-      template(v-if="isList")
-        p isList
+      MapViz(v-if="isMap")
+      TreeViz(v-if="isTree")
+      ListViz(v-if="isList")
 </template>
 
 <!-- SCSS Styling-->
 <style lang="scss">
 #Modal {
   z-index: 5;
+}
+
+.view {
+  margin-left: 20vw;
 }
 
 .tabs {
@@ -56,7 +54,7 @@
 .viz {
   box-sizing: border-box;
   display: flex;
-  height: 60vh;
+  height: 70vh;
   width: 100%;
   border-style: solid;
   border-width: 0.5px;
@@ -71,6 +69,9 @@
 <!-- Javascript-->
 <script>
 import Modal from "@/components/Upload";
+import ListViz from "@/components/visualizations/ListViz";
+import MapViz from "@/components/visualizations/MapViz";
+import TreeViz from "@/components/visualizations/TreeViz";
 
 var view;
 
@@ -88,7 +89,10 @@ export default {
     }
   },
   components: {
-    Modal: Modal
+    Modal: Modal,
+    MapViz: MapViz,
+    ListViz: ListViz,
+    TreeViz: TreeViz
   },
   data() {
     return {

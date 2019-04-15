@@ -22,6 +22,9 @@
   },
   "homepage": "https://github.com/chris-bosman/habitat#readme",
   "dependencies": {
-    "json-query": "^2.2.2"
+    "filepond": "^4.4.0",
+    "json-query": "^2.2.2",
+    "vue-filepond": "^5.1.0",
+    "vue-sidebar-menu": "^3.6.3"
   }
 }
