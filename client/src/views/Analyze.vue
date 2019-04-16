@@ -1,6 +1,7 @@
 <!-- Pug Template -->
 <template lang="pug">
-span Analyze Dummy Data
+.analyze
+  span Analyze Dummy Data
 </template>
 
 <!-- SCSS Styling-->

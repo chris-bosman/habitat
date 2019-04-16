@@ -1,6 +1,7 @@
 <!-- Pug Template -->
 <template lang="pug">
-span Config Dummy Data
+.config
+  span Config Dummy Data
 </template>
 
 <!-- SCSS Styling-->

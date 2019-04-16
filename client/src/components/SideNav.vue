@@ -1,23 +1,21 @@
 <!-- Pug Template -->
 <template lang="pug">
-.sidenav(id="sidenav")
+.sidenav(:style="{ width: this.$store.state.menuOpen ? '4vw' : '15vw' }")
     button(class="menubttn", id="menubttn", @click="menuToggle()") &#9776;
-    .menu(id="menu")
-        ul
-          mixin link(href, name)
-            router-link(class!=attributes.class to=href id=href)= name
-          each val, index in {'Start': 'S T A R T', 'View': 'V I E W', 'Analyze': 'A N A L Y Z E', 'Admin': 'C O N F I G U R E'}
-            li: +link(index, val)
-        .logo
-            center
-                img(src="@/assets/logo.svg" height="150px" style="opacity:0.6;")
+    .menu
+      transition(name="slide" mode="out-in")
+        Header(v-show="!this.$store.state.menuOpen" style="width: 10vw; margin-left: 2vw")
+      ul
+        router-link(to="/Start" id="Start") #[li] #[i(v-show="this.$store.state.menuOpen" class="fas fa-power-off")] #[span(v-show="!this.$store.state.menuOpen")  S T A R T]
+        router-link(to="/View" id="View") #[li] #[i(v-show="this.$store.state.menuOpen" class="fas fa-tv")] #[span(v-show="!this.$store.state.menuOpen") V I E W]
+        router-link(to="/Analyze" id="Analyze") #[li] #[i(v-show="this.$store.state.menuOpen" class="fas fa-flask")] #[span(v-show="!this.$store.state.menuOpen") A N A L Y Z E]
+        router-link(to="/Admin" id="Admin") #[li] #[i(v-show="this.$store.state.menuOpen" class="fas fa-cogs")] #[span(v-show="!this.$store.state.menuOpen") C O N F I G U R E]
 </template>
 
 <!-- SCSS Styling-->
 <style lang="scss">
 .sidenav {
   height: 100%;
-  width: 11vw;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -34,7 +32,7 @@
   position: absolute;
   top: 0;
   right: 5px;
-  font-size: 30px;
+  font-size: 20px;
   margin-left: 50px;
   border: none;
   background: transparent;
@@ -42,35 +40,44 @@
   cursor: pointer;
 }
 
+.slide-enter-active {
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.slide-enter,
+.slide-leave-to {
+  opacity: 0;
+}
+
 .sidenav a {
   padding: 4px 0px 4px 0px;
   text-decoration: none;
-  font-size: 99%;
+  font-size: 1.2vw;
   display: block;
   color: rgb(190, 189, 184);
 }
 
 .sidenav ul {
-  margin-left: 20px;
+  margin-left: 0.8vw;
+  margin-top: 10vh;
   padding-left: 0;
 }
 
 .menu {
   width: 92%;
   margin-left: 5px;
-  padding-top: 30%;
+  padding-top: 8vh;
 }
 
 .menu ul li {
   list-style-type: none;
   padding: 0;
-  margin: 0;
 }
 
 .menu li {
   box-sizing: inherit;
   width: 100%;
-  font-size: 1vw;
+  font-size: 1.25vw;
 }
 
 .menu a {
@@ -97,27 +104,19 @@
 
 <!-- Javascript-->
 <script>
+import Header from "@/components/Header";
+import store from "../store";
+
 let menuOpen = false;
 
-function toggleMenu() {
-  var sidenav = document.getElementById("sidenav");
-  var menu = document.getElementById("menu");
-  if (menuOpen == false) {
-    menu.style.visibility = "hidden";
-    sidenav.style.width = "3vw";
-  } else if (menuOpen == true) {
-    sidenav.style.width = "11vw";
-    setTimeout(function() {
-      menu.style.visibility = "visible";
-    }, 300);
-  }
-  menuOpen = !menuOpen;
-}
-
 export default {
+  components: {
+    Header: Header
+  },
   methods: {
     menuToggle() {
-      toggleMenu();
+      menuOpen = !menuOpen;
+      store.dispatch("registerCollapse", menuOpen);
     }
   }
 };

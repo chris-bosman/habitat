@@ -5,7 +5,7 @@
   Background
   TopNav
   SideNav
-  .body
+  .body(:style="{ margin: this.$store.state.menuOpen ? '0 7vw' : '0 5vw 0 20vw' }")
     .content
       router-view
 </template>
@@ -20,6 +20,7 @@ html {
   color: rgb(235, 234, 229);
   font-family: "Raleway", sans-serif;
   font-weight: lighter;
+  font-size: 1.1vw;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
@@ -40,15 +41,26 @@ body {
 }
 
 .body {
-  margin: 0 5vw;
+  transition: 0.5s;
 }
 
 .content {
   position: relative;
 }
 
-.head {
-  margin-left: 5vw;
+a {
+  color: rgb(190, 189, 184);
+}
+
+a:hover {
+  background-color: rgb(190, 189, 184);
+  opacity: 0.8;
+  color: black;
+}
+
+a.router-link-active {
+  background-color: rgb(98, 112, 179);
+  opacity: 0.8;
 }
 </style>
 
@@ -64,11 +76,6 @@ export default {
     Background: Background,
     SideNav: SideNav,
     TopNav: TopNav
-  },
-  computed: {
-    collapsedState() {
-      return this.$store.state.collapsed;
-    }
   }
 };
 </script>

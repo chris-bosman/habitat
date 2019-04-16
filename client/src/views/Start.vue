@@ -2,7 +2,7 @@
 <template lang="pug">
 .gs
   Modal(v-show="isModalVisible" @close="closeModal" id="Modal")
-  .head
+  .gs-head
     include:markdown-it ../text/gs.md
   .cards
     .column
@@ -31,10 +31,6 @@
 <style lang="scss">
 #Modal {
   z-index: 5;
-}
-
-.gs {
-  margin-left: 15vw;
 }
 
 .gs a {
@@ -80,7 +76,7 @@
   border-width: 0.5px;
   border-color: rgb(190, 189, 184);
   transition: transform 0.1s;
-  min-width: 15vw;
+  min-width: 125px;
   max-width: 16vw;
   display: flex;
   flex-direction: column;

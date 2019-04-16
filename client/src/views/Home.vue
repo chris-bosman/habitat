@@ -9,10 +9,6 @@
 
 <!-- SCSS Styling -->
 <style lang="scss">
-.home-text {
-  margin: 5vh 3vw;
-}
-
 .home-text p {
   padding: 2vh 0;
 }

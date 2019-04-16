@@ -1,26 +1,24 @@
 <!-- Pug Template -->
 <template lang="pug">
 .view
-    Modal(v-show="isModalVisible" @close="closeModal" id="Modal")
-    .tabs
-      ul
-        a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isMap ? 'selected':''")  Map]
-        a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isTree ? 'selected':''") Tree]
-        a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isList ? 'selected':''")  List]
-    .viz(v-if="isMap || isTree || isList")
-      MapViz(v-if="isMap")
-      TreeViz(v-if="isTree")
-      ListViz(v-if="isList")
+  Modal(v-show="isModalVisible" @close="closeModal" id="Modal")
+  .head
+    include:markdown-it ../text/view.md
+  .tabs
+    ul
+      a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isMap ? 'selected':''")  Map]
+      a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isTree ? 'selected':''") Tree]
+      a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isList ? 'selected':''")  List]
+  .viz(v-if="isMap || isTree || isList")
+    MapViz(v-if="isMap")
+    TreeViz(v-if="isTree")
+    ListViz(v-if="isList")
 </template>
 
 <!-- SCSS Styling-->
 <style lang="scss">
 #Modal {
   z-index: 5;
-}
-
-.view {
-  margin-left: 20vw;
 }
 
 .tabs {
@@ -60,7 +58,7 @@
   border-width: 0.5px;
   border-color: rgba(190, 189, 184, 0.8);
   border-radius: 24px;
-  box-shadow: inset 0 0 3vw rgba(110, 110, 110, 0.4);
+  box-shadow: inset 0 0 10vw 0 rgb(0, 0, 0);
   padding: 16px;
   background-color: rgba(80, 80, 80, 0.4);
 }
