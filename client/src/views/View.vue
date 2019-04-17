@@ -42,11 +42,13 @@
   & a {
     text-decoration: none;
     color: rgb(190, 189, 184);
+    & .selected {
+      background-color: rgba(95, 95, 92, 0.4);
+    }
+    &:hover {
+      background-color: rgba(0, 0, 0, 0);
+    }
   }
-}
-
-.selected {
-  background-color: rgba(95, 95, 92, 0.4);
 }
 
 .viz {

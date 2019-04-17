@@ -1,15 +1,16 @@
 <!-- Pug Template -->
 <template lang="pug">
-.sidenav(:style="{ width: this.$store.state.menuOpen ? '4vw' : '15vw' }")
+.sidenav(:class="this.$store.state.menuCollapsed ? 'collapsed' : ''")
     button(class="menubttn", id="menubttn", @click="menuToggle()") &#9776;
     .menu
-      transition(name="slide" mode="out-in")
-        Header(v-show="!this.$store.state.menuOpen" style="width: 10vw; margin-left: 2vw")
+      .spacer
+        transition(name="slide" mode="out-in")
+          Header(v-show="!this.$store.state.menuCollapsed" style="width: 10vw; margin-left: 2vw")
       ul
-        router-link(to="/Start" id="Start") #[li] #[i(v-show="this.$store.state.menuOpen" class="fas fa-power-off")] #[span(v-show="!this.$store.state.menuOpen")  S T A R T]
-        router-link(to="/View" id="View") #[li] #[i(v-show="this.$store.state.menuOpen" class="fas fa-tv")] #[span(v-show="!this.$store.state.menuOpen") V I E W]
-        router-link(to="/Analyze" id="Analyze") #[li] #[i(v-show="this.$store.state.menuOpen" class="fas fa-flask")] #[span(v-show="!this.$store.state.menuOpen") A N A L Y Z E]
-        router-link(to="/Admin" id="Admin") #[li] #[i(v-show="this.$store.state.menuOpen" class="fas fa-cogs")] #[span(v-show="!this.$store.state.menuOpen") C O N F I G U R E]
+        router-link(to="/Start" id="Start") #[li] #[i(class="fas fa-power-off")] #[span(v-show="!this.$store.state.menuCollapsed")  S T A R T]
+        router-link(to="/View" id="View") #[li] #[i(class="fas fa-tv")] #[span(v-show="!this.$store.state.menuCollapsed") V I E W]
+        router-link(to="/Analyze" id="Analyze") #[li] #[i(class="fas fa-flask")] #[span(v-show="!this.$store.state.menuCollapsed") A N A L Y Z E]
+        router-link(to="/Admin" id="Admin") #[li] #[i(class="fas fa-cogs")] #[span(v-show="!this.$store.state.menuCollapsed") C O N F I G U R E]
 </template>
 
 <!-- SCSS Styling-->
@@ -18,6 +19,7 @@
   height: 100%;
   position: fixed;
   z-index: 1;
+  width: 15vw;
   top: 0;
   left: 0;
   background: transparent;
@@ -26,18 +28,59 @@
   box-shadow: 0px 0px 3px 0px rgb(30, 32, 29) inset;
   margin: 0;
   box-sizing: border-box;
-}
-
-.sidenav button {
-  position: absolute;
-  top: 0;
-  right: 5px;
-  font-size: 20px;
-  margin-left: 50px;
-  border: none;
-  background: transparent;
-  color: rgb(235, 234, 229);
-  cursor: pointer;
+  &.collapsed {
+    width: 5vw;
+    & .menu ul a {
+      margin-right: 18%;
+    }
+  }
+  & button {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 20px;
+    margin-left: 50px;
+    border: none;
+    background: transparent;
+    color: rgb(235, 234, 229);
+    cursor: pointer;
+  }
+  & a {
+    padding: 4px 0px 4px 0px;
+    text-decoration: none;
+    font-size: 1.2vw;
+    display: block;
+    border-radius: 4px;
+    padding: 10px 0px 10px 7px;
+  }
+  & ul li {
+    list-style-type: none;
+    padding: 0;
+  }
+  & ul {
+    margin-left: 0.8vw;
+    margin-top: 10vh;
+    padding-left: 0;
+  }
+  & li {
+    box-sizing: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 1.25vw;
+  }
+  & span {
+    margin-left: 1vw;
+  }
+  & .menu {
+    width: 92%;
+    margin-left: 5px;
+    padding-top: 8vh;
+    & .spacer {
+      height: 4vh;
+    }
+  }
 }
 
 .slide-enter-active {
@@ -48,58 +91,6 @@
 .slide-leave-to {
   opacity: 0;
 }
-
-.sidenav a {
-  padding: 4px 0px 4px 0px;
-  text-decoration: none;
-  font-size: 1.2vw;
-  display: block;
-  color: rgb(190, 189, 184);
-}
-
-.sidenav ul {
-  margin-left: 0.8vw;
-  margin-top: 10vh;
-  padding-left: 0;
-}
-
-.menu {
-  width: 92%;
-  margin-left: 5px;
-  padding-top: 8vh;
-}
-
-.menu ul li {
-  list-style-type: none;
-  padding: 0;
-}
-
-.menu li {
-  box-sizing: inherit;
-  width: 100%;
-  font-size: 1.25vw;
-}
-
-.menu a {
-  border-radius: 4px;
-  padding: 10px 0px 10px 7px;
-}
-
-.menu a:hover {
-  background-color: rgb(190, 189, 184);
-  color: black;
-}
-
-.menu ul li a.router-link-active {
-  background-color: rgb(98, 112, 179);
-}
-
-.logo {
-  position: absolute;
-  bottom: 18%;
-  width: 100%;
-  z-index: -1;
-}
 </style>
 
 <!-- Javascript-->
@@ -107,7 +98,7 @@
 import Header from "@/components/Header";
 import store from "../store";
 
-let menuOpen = false;
+let menuCollapsed = false;
 
 export default {
   components: {
@@ -115,8 +106,8 @@ export default {
   },
   methods: {
     menuToggle() {
-      menuOpen = !menuOpen;
-      store.dispatch("registerCollapse", menuOpen);
+      menuCollapsed = !menuCollapsed;
+      store.dispatch("registerCollapse", menuCollapsed);
     }
   }
 };

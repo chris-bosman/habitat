@@ -9,20 +9,20 @@
 
 <!-- SCSS Styling -->
 <style lang="scss">
-.home-text p {
-  padding: 2vh 0;
-}
-
-.home-text a {
-  color: rgb(122, 122, 119);
-  text-decoration: none;
-}
-
-.home-text a:hover {
-  color: rgb(30, 32, 29);
-  background-color: rgb(235, 234, 229);
-  border-radius: 2px;
-  opacity: 0.4;
+.home-text {
+  & p {
+    padding: 2vh 0;
+  }
+  & a {
+    color: rgb(122, 122, 119);
+    text-decoration: none;
+    &:hover {
+      color: rgb(30, 32, 29);
+      background-color: rgb(235, 234, 229);
+      border-radius: 2px;
+      opacity: 0.4;
+    }
+  }
 }
 </style>
 

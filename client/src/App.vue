@@ -5,7 +5,7 @@
   Background
   TopNav
   SideNav
-  .body(:style="{ margin: this.$store.state.menuOpen ? '0 7vw' : '0 5vw 0 20vw' }")
+  .body(:class="this.$store.state.menuCollapsed ? 'collapsed' : ''")
     .content
       router-view
 </template>
@@ -38,29 +38,28 @@ body {
 
 .app {
   height: 100%;
-}
-
-.body {
-  transition: 0.5s;
-}
-
-.content {
-  position: relative;
-}
-
-a {
-  color: rgb(190, 189, 184);
-}
-
-a:hover {
-  background-color: rgb(190, 189, 184);
-  opacity: 0.8;
-  color: black;
-}
-
-a.router-link-active {
-  background-color: rgb(98, 112, 179);
-  opacity: 0.8;
+  & .body {
+    margin: 0 5vw 0 20vw;
+    transition: 0.5s;
+    &.collapsed {
+      margin: 0 7vw;
+    }
+    & .content {
+      position: relative;
+    }
+  }
+  & a {
+    color: rgb(190, 189, 184);
+    &:hover {
+      background-color: rgb(190, 189, 184);
+      opacity: 0.8;
+      color: black;
+    }
+    &.router-link-active {
+      background-color: rgb(98, 112, 179);
+      opacity: 0.8;
+    }
+  }
 }
 </style>
 

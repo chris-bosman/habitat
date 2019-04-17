@@ -17,16 +17,14 @@
   background: transparent;
   min-width: 95%;
   height: 8vh;
-}
-
-.topnav a {
-  float: right;
-  color: rgb(190, 189, 184);
-  text-align: center;
-  padding: 2vh 1vw;
-  text-decoration: none;
-  font-size: 1.3vw;
-  border-radius: 4px;
+  & a {
+    float: right;
+    text-align: center;
+    padding: 2vh 1vw;
+    text-decoration: none;
+    font-size: 1.3vw;
+    border-radius: 4px;
+  }
 }
 </style>
 
