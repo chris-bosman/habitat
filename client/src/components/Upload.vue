@@ -9,26 +9,26 @@
         .modal-body
             slot(name="body")
               .container(v-if="isInitial || isSaving || isSuccess || isFailed || isServerResponse")
-                div(id="box" @dragover="dragging=true" @dragleave="dragging=false" @click="reset()" :class="['upload-box', dragging ? 'upload-box-over' : '']")
+                div(@dragover="dragging=true" @dragleave="dragging=false" @click="reset()" :class="['upload-box', dragging ? 'upload-box-over' : '']")
                   .text
                       span
                         template(v-if="isInitial")
                           p Drag & Drop or &nbsp;
-                            div(id="clickToBrowse") Click to Browse
+                            div(id="clickable") Click to Browse
                         template(v-if="isSaving")
                           p Uploading {{ fileCount }} files...
                         template(v-if="isSuccess")
                           p Uploaded {{ uploadedFiles.length }} file(s) successfully. 
                           center
-                            p #[a(href="javascript:void(0)" @click="reset()") Upload more files?]
+                            p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Upload more files?]
                         template(v-if="isFailed")
-                          p(id="error") {{ uploadResponse }}
+                          p(class="error") {{ uploadResponse }}
                           center
-                            p #[a(href="javascript:void(0)" @click="reset()") Reset upload form?]
+                            p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Reset upload form?]
                         template(v-if="isServerResponse")
-                          p(id="error") {{ this.$store.state.responseResult }}
+                          p(class="error") {{ this.$store.state.responseResult }}
                           center
-                            p #[a(href="javascript:void(0)" @click="reset()") Reset upload form?]
+                            p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Reset upload form?]
                   input(v-if="isInitial" type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event); fileCount = $event.target.files.length" accept=".tfstate" class="input-file")                                           
 </template>
 
@@ -47,113 +47,87 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.modal {
-  box-sizing: border-box;
-  background-color: rgb(30, 32, 29);
-  width: 40vw;
-  height: 40vh;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-header,
-.modal-footer {
-  box-sizing: inherit;
-  display: flex;
-}
-
-.modal-header {
-  justify-content: flex-end;
-  height: 5%;
-}
-
-.modal-footer {
-  justify-content: center;
-  height: 4vh;
-  margin-top: -4vh;
-  margin-bottom: 1vh;
-}
-
-.modal-body {
-  display: flex;
-  box-sizing: inherit;
-  position: relative;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-
-.container {
-  box-sizing: inherit;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-content: center;
-}
-
-.modal-body input {
-  box-sizing: inherit;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
-
-.close-button span {
-  margin: -4vh -2vw;
-  float: right;
-  font-size: 3.5vw;
-  cursor: pointer;
-}
-
-.upload-box {
-  box-sizing: inherit;
-  display: flex;
-  outline: 2px dashed rgb(235, 234, 229);
-  background: transparent;
-  cursor: pointer;
-  width: 95%;
-  height: 95%;
-}
-
-.upload-box:hover a,
-.upload-box:hover #clickToBrowse {
-  text-decoration: underline;
-}
-
-.upload-box-over {
-  background-color: dimgray;
-}
-
-.text {
-  cursor: pointer;
-  box-sizing: inherit;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#error {
-  font-size: 1vw;
-  font-family: "IBM Plex Mono", monospace;
-  color: red;
-  word-break: break-all;
-  max-width: 34vw;
-}
-
-.text button:active {
-  transform: translateY(2px);
-  background-color: rgb(235, 234, 229);
+  & .modal {
+    box-sizing: border-box;
+    background-color: rgb(30, 32, 29);
+    width: 40vw;
+    height: 40vh;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    & .modal-header {
+      justify-content: flex-end;
+      height: 5%;
+      & .close-button {
+        margin: -4vh -2vw;
+        float: right;
+        font-size: 3.5vw;
+        cursor: pointer;
+      }
+    }
+    & .modal-body {
+      display: flex;
+      box-sizing: inherit;
+      position: relative;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      &:hover #clickable {
+        text-decoration: underline;
+      }
+      & .container {
+        box-sizing: inherit;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-content: center;
+        & .upload-box {
+          box-sizing: inherit;
+          display: flex;
+          outline: 2px dashed rgb(235, 234, 229);
+          background: transparent;
+          cursor: pointer;
+          width: 95%;
+          height: 95%;
+        }
+        & .upload-box-over {
+          background-color: dimgray;
+        }
+        & .text {
+          cursor: pointer;
+          box-sizing: inherit;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          & .error {
+            font-size: 1vw;
+            font-family: "IBM Plex Mono", monospace;
+            color: red;
+            word-break: break-all;
+            max-width: 34vw;
+          }
+          & button:active {
+            transform: translateY(2px);
+            background-color: rgb(235, 234, 229);
+          }
+        }
+      }
+      & input {
+        box-sizing: inherit;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+    }
+  }
 }
 </style>
 

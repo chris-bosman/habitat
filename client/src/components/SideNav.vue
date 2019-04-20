@@ -7,10 +7,10 @@
         transition(name="slide" mode="out-in")
           Header(v-show="!this.$store.state.menuCollapsed" style="width: 10vw; margin-left: 2vw")
       ul
-        router-link(to="/Start" id="Start") #[li] #[i(class="fas fa-power-off")] #[span(v-show="!this.$store.state.menuCollapsed")  S T A R T]
-        router-link(to="/View" id="View") #[li] #[i(class="fas fa-tv")] #[span(v-show="!this.$store.state.menuCollapsed") V I E W]
-        router-link(to="/Analyze" id="Analyze") #[li] #[i(class="fas fa-flask")] #[span(v-show="!this.$store.state.menuCollapsed") A N A L Y Z E]
-        router-link(to="/Admin" id="Admin") #[li] #[i(class="fas fa-cogs")] #[span(v-show="!this.$store.state.menuCollapsed") C O N F I G U R E]
+        router-link(to="/Start" id="Start") #[li] #[i(class="fas fa-power-off" style="font-size: 1.45vw; margin-left: 0.15vw")] #[span(v-show="!this.$store.state.menuCollapsed")  S T A R T]
+        router-link(to="/View" id="View") #[li] #[i(class="fas fa-tv" style="font-size: 1.4vw")] #[span(v-show="!this.$store.state.menuCollapsed") V I E W]
+        router-link(to="/Analyze" id="Analyze") #[li] #[i(class="fas fa-flask" style="font-size: 1.5vw; margin-left: 0.2vw")] #[span(v-show="!this.$store.state.menuCollapsed") A N A L Y Z E]
+        router-link(to="/Admin" id="Admin") #[li] #[i(class="fas fa-cogs" style="font-size: 1.2vw; margin-left: 0.15vw")] #[span(v-show="!this.$store.state.menuCollapsed") C O N F I G U R E]
 </template>
 
 <!-- SCSS Styling-->
@@ -31,15 +31,17 @@
   &.collapsed {
     width: 5vw;
     & .menu ul a {
-      margin-right: 18%;
+      margin-right: 1.1vw;
+    }
+    & button {
+      right: 1.5vw;
     }
   }
   & button {
     position: absolute;
     top: 0;
-    right: 5px;
-    font-size: 20px;
-    margin-left: 50px;
+    right: 0.5vw;
+    font-size: 1.5vw;
     border: none;
     background: transparent;
     color: rgb(235, 234, 229);
@@ -52,6 +54,14 @@
     display: block;
     border-radius: 4px;
     padding: 10px 0px 10px 7px;
+    &:hover {
+      background-color: rgb(190, 189, 184);
+      opacity: 0.8;
+      color: black;
+    }
+    & i {
+      margin-top: 0.4vh;
+    }
   }
   & ul li {
     list-style-type: none;

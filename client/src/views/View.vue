@@ -45,9 +45,6 @@
     & .selected {
       background-color: rgba(95, 95, 92, 0.4);
     }
-    &:hover {
-      background-color: rgba(0, 0, 0, 0);
-    }
   }
 }
 

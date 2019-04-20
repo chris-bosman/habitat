@@ -50,11 +50,6 @@ body {
   }
   & a {
     color: rgb(190, 189, 184);
-    &:hover {
-      background-color: rgb(190, 189, 184);
-      opacity: 0.8;
-      color: black;
-    }
     &.router-link-active {
       background-color: rgb(98, 112, 179);
       opacity: 0.8;

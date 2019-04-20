@@ -24,6 +24,11 @@
     text-decoration: none;
     font-size: 1.3vw;
     border-radius: 4px;
+    &:hover {
+      background-color: rgb(190, 189, 184);
+      opacity: 0.8;
+      color: black;
+    }
   }
 }
 </style>

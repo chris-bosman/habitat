@@ -84,7 +84,7 @@
           text-align: center;
           margin: 0;
         }
-        & #uploadCard {
+        &#uploadCard {
           cursor: pointer;
         }
         & .ico {
