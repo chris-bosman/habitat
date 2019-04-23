@@ -1,6 +1,7 @@
 import codes from "../json/customResponseCodes.json";
 
 function responseHandler(response) {
+  console.log(response);
   var customResponses = codes.responseCodes.map(a => a.code);
   if (customResponses.indexOf(response.status) !== -1) {
     var i;
@@ -12,10 +13,7 @@ function responseHandler(response) {
       }
     }
   } else {
-    if (!response.ok) {
-      console.log(response);
-      return response;
-    }
+    return response;
   }
 }
 

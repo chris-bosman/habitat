@@ -8,10 +8,14 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    uploadSuccess: false,
     responseResult: [],
     menuCollapsed: null
   },
   mutations: {
+    UPLOAD_SUCCESS(state, uploadSuccess) {
+      state.uploadSuccess = uploadSuccess;
+    },
     UPLOAD_RESULT(state, responseResult) {
       state.responseResult = responseResult;
     },
@@ -22,14 +26,23 @@ const store = new Vuex.Store({
   actions: {
     uploadResult({ commit }, formData) {
       upload(formData).then(response => {
-        var responseResult;
+        var responseResult, uploadSuccess;
         try {
           responseHandler(response);
         } catch (err) {
+          uploadSuccess = false;
           responseResult = err;
+          commit("UPLOAD_SUCCESS", uploadSuccess);
           commit("UPLOAD_RESULT", responseResult);
         } finally {
-          responseResult = "Error: " + response.statusText;
+          if (!response.ok) {
+            uploadSuccess = false;
+            responseResult = "Error: " + response.statusText;
+          } else {
+            uploadSuccess = true;
+            responseResult = "Success!";
+          }
+          commit("UPLOAD_SUCCESS", uploadSuccess);
           commit("UPLOAD_RESULT", responseResult);
         }
       });

@@ -1,19 +1,16 @@
 import { Resource } from '../models/resource';
 
-async function resourceRoute(request) {
+async function createResource(request) {
     const data = request.payload;
     const serial = data["resourceSerial"];
     const lineage = data["resourceLineage"];
     const type = data["resourceType"];
     const name = data["resourceName"];
     const provider = data["resourceProvider"];
-    const attributesRaw = data["resourceAttributes"];
+    const attributes= data["resourceAttributes"];
     const dependencies = data["resourceDependencies"];
     const id = type + "." + name + "." + lineage + ".v" + serial;
     const resource = type + "." + name;
-    const attributes = JSON.parse(attributesRaw);
-
-    console.log(request.payload);
 
     var newResource = new Resource({
         _id: id,
@@ -21,17 +18,16 @@ async function resourceRoute(request) {
         resourceType: type,
         resourceName: name,
         resourceProvider: provider,
-        resourceDependencies: dependencies,
         resourceAttributes: attributes,
+        resourceDependencies: dependencies,
         resourceSerial: serial,
-        resourceLineage: lineage,
+        resourceLineage: lineage
     });
 
-    const query = { _id: id, resourceSerial: { $lt: serial }, resourceLineage: { $ne: lineage }};
+    var query = { _id: id }
+    var options = { new: true, upsert: true, runValidators: true }
 
-    await Resource.findOneAndUpdate(query, newResource, { upsert: true, new: true });
-
-    return "Success";
+    await Resource.findOneAndUpdate(query, newResource, options);
 }
 
-export { resourceRoute }
+export { createResource }

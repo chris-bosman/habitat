@@ -10,19 +10,25 @@ function tfStateParser(reader) {
   var resourceNames = Object.keys(resources);
   var dependencies = [];
   var resourceAttributesObject = {};
-  var provider = "";
-  var type = "";
-  var name = "";
+
+  formData.append("resourceSerial", serial);
+  formData.append("resourceLineage", lineage);
 
   for (var i = 0; i < resourceNames.length; i++) {
-    name = resourceNames[i];
-    type = name.split(".")[0];
+    var name = resourceNames[i];
 
     if (!name.startsWith("data")) {
+      var type = name.split(".")[0];
       var resource = resources[name];
-      provider = resource.provider.split(".")[1];
+      var provider = resource.provider.split(".")[1];
       var attributeData = resource.primary.attributes;
+      var resourceName = attributeData.name;
       var attributes = Object.keys(attributeData);
+
+      formData.append("resourceName", resourceName);
+      formData.append("resourceProvider", provider);
+      formData.append("resourceType", type);
+
       for (var j = 0; j < attributes.length; j++) {
         var attributeName = attributes[j];
         var attributeNameOld = attributeName;
@@ -32,21 +38,25 @@ function tfStateParser(reader) {
             .replace(/[0-9]/g, "")
             .replace("__", "_");
         }
+
+        if (attributeName.includes("%")) {
+          attributeName = attributeName.replace("%", "number");
+        }
+
+        if (attributeName.includes("#")) {
+          attributeName = attributeName.replace("#", "number");
+        }
+
         resourceAttributesObject[attributeName] =
           attributeData[attributeNameOld];
       }
     } else {
       dependencies.push(resources[name].primary.attributes.name);
+      formData.append("resourceDependencies", dependencies);
     }
-    var resourceAttributes = JSON.stringify(resourceAttributesObject);
-    formData.append("resourceSerial", serial);
-    formData.append("resourceLineage", lineage);
-    formData.append("resourceType", type);
-    formData.append("resourceName", name);
-    formData.append("resourceProvider", provider);
-    formData.append("resourceAttributes", resourceAttributes);
-    formData.append("resourceDependencies", dependencies);
   }
+  var resourceAttributes = JSON.stringify(resourceAttributesObject);
+  formData.append("resourceAttributes", resourceAttributes);
   store.dispatch("uploadResult", formData);
 }
 

@@ -17,21 +17,20 @@
                             div(id="clickable") Click to Browse
                         template(v-if="isSaving")
                           p Uploading {{ fileCount }} files...
-                        template(v-if="isSuccess")
-                          p Uploaded {{ uploadedFiles.length }} file(s) successfully. 
+                        template(v-if="this.$store.state.uploadSuccess")
+                          p Uploaded {{ fileCount }} file(s) successfully. 
                           center
                             p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Upload more files?]
                         template(v-if="isFailed")
                           p(class="error") {{ uploadResponse }}
                           center
                             p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Reset upload form?]
-                        template(v-if="isServerResponse")
+                        template(v-if="isServerResponse && !this.$store.state.uploadSuccess")
                           p(class="error") {{ this.$store.state.responseResult }}
                           center
                             p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Reset upload form?]
-                  input(v-if="isInitial" type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event); fileCount = $event.target.files.length" accept=".tfstate" class="input-file")                                           
+                  input(v-if="isInitial" type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event)" accept=".tfstate" class="input-file")                                           
 </template>
-
 
 <!-- SCSS Styling-->
 <style lang="scss">
@@ -106,7 +105,6 @@
           & .error {
             font-size: 1vw;
             font-family: "IBM Plex Mono", monospace;
-            color: red;
             word-break: break-all;
             max-width: 34vw;
           }
@@ -167,11 +165,12 @@ export default {
     reset() {
       this.currentStatus = STATUS_INITIAL;
       this.dragging = false;
-      this.uploadedFiles = [];
       this.uploadResponse = null;
       this.fileCount = null;
+      this.$store.state.uploadSuccess = false;
     },
     filesChange(event) {
+      this.fileCount = event.target.files.length;
       this.currentStatus = STATUS_SAVING;
       if (!event.target) {
         this.currentStatus = STATUS_FAILED;
@@ -189,11 +188,11 @@ export default {
   },
   data() {
     return {
-      uploadedFiles: [],
       uploadResponse: null,
       currentStatus: null,
       uploadFieldName: "stateFile",
-      dragging: false
+      dragging: false,
+      uploadSuccess: false
     };
   },
   mounted() {

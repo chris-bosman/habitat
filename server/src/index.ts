@@ -2,12 +2,34 @@ require('dotenv').config();
 
 import * as Hapi from 'hapi';
 import * as Boom from 'boom';
+import * as mongoose from 'mongoose';
 
-import { resourceRoute } from './components/uploadHandler';
+import { createResource } from './components/uploadHandler';
 
 const app = new Hapi.Server({
     port: 3000, host: 'localhost',
     routes: { cors: true }
+});
+
+const connString = 'mongodb://localhost:27017/habitat';
+const dbConfig: mongoose.ConnectionOptions = {
+    useNewUrlParser: true
+};
+
+(<any>mongoose).Promise = Promise;
+mongoose.connect(connString, dbConfig);
+mongoose.set('useCreateIndex', true);
+mongoose.set('debug', true);
+mongoose.set('useFindAndModify', false);
+
+let mongodb = mongoose.connection;
+
+mongodb.on("error", err => {
+    console.log("Unable to connect to database", err);
+});
+
+mongodb.once("open", () => {
+    console.log("Connected to database");
 });
 
 app.route({
@@ -19,17 +41,12 @@ app.route({
             allow: 'multipart/form-data'
         }
     },
-    handler: async function(request, reply) {
+    handler: async function(request, h) {
         try {
-            await resourceRoute(request);
-        } catch (err) {
-            if (err.code == 11000) {
-                return reply.response("This Resource already exists in your Habitat database").code(222);
-            } else if (err.message) {
-                throw Boom.badRequest(err.message, err);
-            } else if (err.errmsg) {
-                throw Boom.badRequest(err.errmsg, err);
-            }
+            await createResource(request);
+            return h.response();
+        } catch(err) {
+            throw Boom.badData(err.message);
         }
     }
 });

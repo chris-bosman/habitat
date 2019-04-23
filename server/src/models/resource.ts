@@ -23,15 +23,14 @@ export var resourceSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    resourceAttributes: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true
+    },
     resourceDependencies: {
         type: Array,
         default: undefined,
         required: false
-    },
-    resourceAttributes: {
-        required: true,
-        type: Map,
-        of: String
     },
     resourceSerial: {
         required: true,
