@@ -5,91 +5,99 @@
     .menu
       .spacer
         transition(name="slide" mode="out-in")
-          Header(v-show="!this.$store.state.menuCollapsed" style="width: 10vw; margin-left: 2vw")
+          Header(v-show="!this.$store.state.menuCollapsed" style="width: 10vw")
       ul
-        router-link(to="/Start" id="Start") #[li] #[i(class="fas fa-power-off" style="font-size: 1.45vw; margin-left: 0.15vw")] #[span(v-if="!this.$store.state.menuCollapsed")  S T A R T]
-        router-link(to="/View" id="View") #[li] #[i(class="fas fa-tv" style="font-size: 1.4vw" @mouseover="hover = true" @mouseleave="hover = false")] #[span(v-if="!this.$store.state.menuCollapsed || hover") V I E W]
-        router-link(to="/Analyze" id="Analyze") #[li] #[i(class="fas fa-flask" style="font-size: 1.5vw; margin-left: 0.2vw")] #[span(v-if="!this.$store.state.menuCollapsed") A N A L Y Z E]
-        router-link(to="/Admin" id="Admin") #[li] #[i(class="fas fa-cogs" style="font-size: 1.2vw; margin-left: 0.15vw")] #[span(v-if="!this.$store.state.menuCollapsed") C O N F I G U R E]
+        router-link(to="/Start")
+          li
+            i(class="fas fa-power-off")
+            span(v-if="!this.$store.state.menuCollapsed")  S T A R T
+        router-link(to="/View")
+          li
+            i(class="fas fa-tv")
+            span(v-if="!this.$store.state.menuCollapsed") V I E W
+        router-link(to="/Analyze")
+          li
+            i(class="fas fa-flask")
+            span(v-if="!this.$store.state.menuCollapsed") A N A L Y Z E
+        router-link(to="/Admin")
+          li
+            i(class="fas fa-cogs")
+            span(v-if="!this.$store.state.menuCollapsed") C O N F I G U R E
 </template>
 
 <!-- SCSS Styling-->
 <style lang="scss">
 .sidenav {
-  height: 100%;
-  position: fixed;
   z-index: 1;
+  box-sizing: border-box;
+  height: 100%;
   width: 15vw;
-  top: 0;
-  left: 0;
   background: transparent;
-  padding: 30px 0 0 0;
+  position: fixed;
+  top: 0;
   transition: 0.5s;
   box-shadow: 0px 0px 3px 0px rgb(30, 32, 29) inset;
-  margin: 0;
-  box-sizing: border-box;
-  &.collapsed {
-    width: 5vw;
-    & .menu ul a {
-      margin-right: 1.1vw;
-    }
-    & button {
-      right: 1.5vw;
-    }
-  }
   & button {
     position: absolute;
     top: 0;
     right: 0.5vw;
-    font-size: 1.5vw;
-    border: none;
     background: transparent;
+    border: none;
     color: rgb(235, 234, 229);
+    font-size: 1.5vw;
     cursor: pointer;
   }
-  & a {
-    padding: 4px 0px 4px 0px;
-    text-decoration: none;
-    font-size: 1.2vw;
-    display: block;
-    border-radius: 4px;
-    padding: 10px 0px 10px 7px;
-    &:hover {
-      background-color: rgb(190, 189, 184);
-      opacity: 0.8;
-      color: black;
-      width: 15vw;
-    }
-    & i {
-      margin-top: 0.4vh;
-    }
-  }
-  & ul li {
-    list-style-type: none;
-    padding: 0;
-  }
-  & ul {
-    margin-left: 0.8vw;
-    margin-top: 10vh;
-    padding-left: 0;
-  }
-  & li {
-    box-sizing: inherit;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    font-size: 1.25vw;
-  }
-  & span {
-    margin-left: 1vw;
-  }
   & .menu {
-    width: 92%;
-    margin-left: 5px;
-    padding-top: 8vh;
+    box-sizing: inherit;
+    padding: 12vh 0;
+    height: 100%;
     & .spacer {
+      box-sizing: inherit;
       height: 4vh;
+      display: flex;
+      justify-content: center;
+    }
+    & ul {
+      box-sizing: inherit;
+      width: 100%;
+      list-style-type: none;
+      padding: 0;
+      margin-top: 8vh;
+      & a {
+        text-decoration: none;
+        & li {
+          box-sizing: inherit;
+          display: flex;
+          margin: 1vh 0;
+          width: 90%;
+          margin-left: 1vw;
+          border-radius: 4px;
+          height: 4vh;
+          & i {
+            align-self: center;
+            margin-left: 0.5vw;
+          }
+          & span {
+            font-size: 1.2vw;
+            margin-left: 1vw;
+            align-self: center;
+          }
+          &:hover {
+            background-color: rgb(190, 189, 184);
+            opacity: 0.8;
+            color: black;
+          }
+        }
+      }
+    }
+  }
+  &.collapsed {
+    width: 5vw;
+    & .menu ul a li:hover {
+      width: 13vw;
+    }
+    & button {
+      right: 1.5vw;
     }
   }
 }
