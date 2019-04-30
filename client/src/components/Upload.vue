@@ -22,11 +22,11 @@
                           center
                             p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Upload more files?]
                         template(v-if="isFailed")
-                          p(class="error") {{ uploadResponse }} + "error"
+                          p(class="error") {{ uploadResponse }}
                           center
                             p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Reset upload form?]
                         template(v-if="isServerResponse && !this.$store.state.uploadSuccess")
-                          p(class="error")
+                          p(class="error") {{ this.$store.state.responseResult }}
                           center
                             p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Reset upload form?]
                   input(v-if="isInitial" type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event)" accept=".tfstate" class="input-file")                                           

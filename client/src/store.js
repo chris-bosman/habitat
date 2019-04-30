@@ -30,12 +30,13 @@ const store = new Vuex.Store({
         upload(formData, event).then(response => {
           responseHandler(response);
           if (!response.ok) {
+            console.log(response);
             uploadSuccess = false;
-            responseResult = "Error: " + response.statusText;
+            // eslint-disable-next-line
+            responseResult = `Error attempting to reach ${response.url}: ${response.status} ${response.statusText}`;
             commit("UPLOAD_SUCCESS", uploadSuccess);
             commit("UPLOAD_RESULT", responseResult);
           } else {
-            console.log(response);
             uploadSuccess = true;
             responseResult = "Success!";
             commit("UPLOAD_SUCCESS", uploadSuccess);
