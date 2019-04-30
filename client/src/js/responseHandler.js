@@ -1,7 +1,6 @@
 import codes from "../json/customResponseCodes.json";
 
 function responseHandler(response) {
-  console.log(response);
   var customResponses = codes.responseCodes.map(a => a.code);
   if (customResponses.indexOf(response.status) !== -1) {
     var i;

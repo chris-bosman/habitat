@@ -5,24 +5,13 @@
     .menu
       .spacer
         transition(name="slide" mode="out-in")
-          Header(v-show="!this.$store.state.menuCollapsed" style="width: 10vw")
-      ul
-        router-link(to="/Start")
-          li
-            i(class="fas fa-power-off")
-            span(v-if="!this.$store.state.menuCollapsed")  S T A R T
-        router-link(to="/View")
-          li
-            i(class="fas fa-tv")
-            span(v-if="!this.$store.state.menuCollapsed") V I E W
-        router-link(to="/Analyze")
-          li
-            i(class="fas fa-flask")
-            span(v-if="!this.$store.state.menuCollapsed") A N A L Y Z E
-        router-link(to="/Admin")
-          li
-            i(class="fas fa-cogs")
-            span(v-if="!this.$store.state.menuCollapsed") C O N F I G U R E
+          Header(v-show="!this.$store.state.menuCollapsed")
+      .items
+        router-link(v-for="(item,index) in menu" :to="item.href" :key="item.href")
+          ul(@mouseenter="item.hovering = true" @mouseleave="item.hovering = false")
+            li
+              i(:class="item.icon")
+              span(v-show="!$store.state.menuCollapsed || item.hovering") {{ item.text }}
 </template>
 
 <!-- SCSS Styling-->
@@ -31,11 +20,11 @@
   z-index: 1;
   box-sizing: border-box;
   height: 100%;
-  width: 15vw;
+  width: 10vw;
   background: transparent;
   position: fixed;
   top: 0;
-  transition: 0.5s;
+  transition: 0.5s all;
   box-shadow: 0px 0px 3px 0px rgb(30, 32, 29) inset;
   & button {
     position: absolute;
@@ -54,51 +43,78 @@
     & .spacer {
       box-sizing: inherit;
       height: 4vh;
+      margin-bottom: 8vh;
       display: flex;
       justify-content: center;
     }
-    & ul {
-      box-sizing: inherit;
-      width: 100%;
-      list-style-type: none;
-      padding: 0;
-      margin-top: 8vh;
+    & .items {
       & a {
         text-decoration: none;
-        & li {
-          box-sizing: inherit;
-          display: flex;
-          margin: 1vh 0;
-          width: 90%;
-          margin-left: 1vw;
+        &.router-link-active ul {
+          align-content: center;
+          background-color: rgb(98, 112, 179);
+          opacity: 0.8;
           border-radius: 4px;
-          height: 4vh;
-          & i {
-            align-self: center;
-            margin-left: 0.5vw;
-          }
-          & span {
-            font-size: 1.2vw;
-            margin-left: 1vw;
-            align-self: center;
-          }
-          &:hover {
-            background-color: rgb(190, 189, 184);
-            opacity: 0.8;
-            color: black;
+          height: 5vh;
+        }
+        & ul {
+          box-sizing: inherit;
+          list-style-type: none;
+          padding: 0;
+          align-self: center;
+          & li {
+            box-sizing: inherit;
+            display: flex;
+            margin: 1vh 0;
+            height: 5vh;
+            border-radius: 4px;
+            & i {
+              align-self: center;
+              margin-left: 0.5vw;
+            }
+            & span {
+              margin-left: 1vw;
+              align-self: center;
+            }
+            &:hover {
+              background-color: rgb(190, 189, 184);
+              color: black;
+            }
           }
         }
       }
     }
   }
   &.collapsed {
-    width: 5vw;
-    & .menu ul a li:hover {
-      width: 13vw;
+    width: 4vw;
+    & .menu .items {
+      transition: 0.5s all;
+      margin-left: 0.5vw;
+      & a {
+        width: 100%;
+        & ul {
+          width: 80%;
+          & i {
+            margin-left: 0.8vw;
+          }
+          &:hover {
+            animation: slideout 0.2s linear 0s 1 normal forwards running;
+          }
+        }
+      }
     }
     & button {
-      right: 1.5vw;
+      right: 1vw;
     }
+  }
+}
+
+@keyframes slideout {
+  from {
+    width: 5vw;
+  }
+  to {
+    width: 14vw;
   }
 }
 
@@ -131,7 +147,32 @@ export default {
   },
   data() {
     return {
-      hover: false
+      menu: [
+        {
+          href: "/Start",
+          icon: "fas fa-power-off",
+          text: "S T A R T",
+          hovering: null
+        },
+        {
+          href: "/View",
+          icon: "fas fa-tv",
+          text: "V I E W",
+          hovering: null
+        },
+        {
+          href: "/Analyze",
+          icon: "fas fa-flask",
+          text: "A N A L Y Z E",
+          hovering: null
+        },
+        {
+          href: "/Admin",
+          icon: "fas fa-cogs",
+          text: "C O N F I G U R E",
+          hovering: null
+        }
+      ]
     };
   }
 };

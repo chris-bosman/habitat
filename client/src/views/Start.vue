@@ -10,21 +10,21 @@
         h3 Import
         p Start your Habitat journey by importing your first Terraform state (.tfstate) file.
         .ico
-          img(src='@/assets/upload.svg' width="65%" style="opacity:0.7;")
+          img(src='@/assets/upload.svg')
     .column
       a(href='View')
         .card
           h3 Visualize
           p Dig into Habitat's functionality by checking out our visualization tools.
           .ico
-            img(src='@/assets/visualize.svg' width="75%" style="opacity:0.75;")
+            img(src='@/assets/visualize.svg')
     .column
       a(href='Analyze')
         .card
           h3 Analyze
           p Compare the real-world state of your infrastructure against your Terraform code.
           .ico
-            img(src='@/assets/analyze.svg' width="90%" style="opacity:0.8;")
+            img(src='@/assets/analyze.svg')
 </template>
 
 <!-- SCSS Styling-->
@@ -43,8 +43,6 @@
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    height: 60vh;
-    width: 100%;
     margin-top: 7vh;
     &:after {
       display: table;
@@ -53,12 +51,9 @@
     }
     & .column {
       box-sizing: inherit;
-      float: left;
-      padding: 0 10px;
-      height: 40vh;
+      height: 30vh;
       max-height: 400px;
-      width: 25%;
-      margin-right: 1vw;
+      width: 25vw;
       & .card {
         color: rgb(190, 189, 184);
         box-sizing: inherit;
@@ -73,7 +68,7 @@
         border-color: rgb(190, 189, 184);
         transition: transform 0.1s;
         min-width: 125px;
-        max-width: 16vw;
+        max-width: 14vw;
         display: flex;
         flex-direction: column;
         &:hover {
@@ -94,6 +89,11 @@
           align-items: center;
           width: 100%;
           flex-grow: 1;
+          & img {
+            opacity: 0.8;
+            width: 90%;
+            height: 40%;
+          }
         }
       }
     }

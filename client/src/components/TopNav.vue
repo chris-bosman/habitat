@@ -1,10 +1,8 @@
 <!-- Pug Template -->
 <template lang="pug">
 .topnav
-    mixin link(href, name)
-      router-link(class!=attributes.class to=href id=href)= name
-    each val, index in {"Home": "Home", "Docs": "Documentation"}
-      +link(index, val)
+    router-link(to="/Home") Home
+    router-link(to="/Docs") Documentation
     a(href="https://github.com/chris-bosman/habitat.git" @click.prevent="openNewWindow($event)") GitHub
 </template>
 
@@ -22,7 +20,6 @@
     text-align: center;
     padding: 2vh 1vw;
     text-decoration: none;
-    font-size: 1.3vw;
     border-radius: 4px;
     &:hover {
       background-color: rgb(190, 189, 184);

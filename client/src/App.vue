@@ -20,7 +20,7 @@ html {
   color: rgb(235, 234, 229);
   font-family: "Raleway", sans-serif;
   font-weight: lighter;
-  font-size: 1.1vw;
+  font-size: 0.8vw;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
@@ -39,7 +39,7 @@ body {
 .app {
   height: 100%;
   & .body {
-    margin: 0 5vw 0 20vw;
+    margin: 0 5vw 0 14vw;
     transition: 0.5s;
     &.collapsed {
       margin: 0 7vw;

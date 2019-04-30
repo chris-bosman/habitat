@@ -48,6 +48,13 @@ export default new Router({
       path: "/upload",
       name: "Upload",
       component: Upload
+    },
+    {
+      path: "/GitHub",
+      beforeEnter() {
+        location.href = "https://github.com/chris-bosman/habitat.git";
+      },
+      name: "GitHub"
     }
   ]
 });

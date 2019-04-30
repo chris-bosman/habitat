@@ -1,6 +1,6 @@
 import store from "../store";
 
-function tfStateParser(reader) {
+function tfStateParser(reader, event) {
   const formData = new FormData();
 
   var tfFile = JSON.parse(reader.result);
@@ -57,7 +57,7 @@ function tfStateParser(reader) {
   }
   var resourceAttributes = JSON.stringify(resourceAttributesObject);
   formData.append("resourceAttributes", resourceAttributes);
-  store.dispatch("uploadResult", formData);
+  store.dispatch("uploadResult", { formData, event });
 }
 
 export { tfStateParser };

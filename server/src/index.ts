@@ -34,7 +34,7 @@ mongodb.once("open", () => {
 
 app.route({
     method: 'POST',
-    path: '/upload',
+    path: '/api/v1/tfstate',
     options: {
         payload: {
             output: 'stream',

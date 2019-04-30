@@ -8,7 +8,7 @@ function parser(event) {
 
   if (tfStateRegEx.test(file.name)) {
     reader.onload = function tfState() {
-      return tfStateParser(reader);
+      return tfStateParser(reader, event);
     };
     reader.readAsText(file);
   }

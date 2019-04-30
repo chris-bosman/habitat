@@ -24,32 +24,34 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    uploadResult({ commit }, formData) {
-      upload(formData).then(response => {
-        var responseResult, uploadSuccess;
-        try {
+    uploadResult({ commit }, { formData, event }) {
+      var responseResult, uploadSuccess;
+      try {
+        upload(formData, event).then(response => {
           responseHandler(response);
-        } catch (err) {
-          uploadSuccess = false;
-          responseResult = err;
-          commit("UPLOAD_SUCCESS", uploadSuccess);
-          commit("UPLOAD_RESULT", responseResult);
-        } finally {
           if (!response.ok) {
             uploadSuccess = false;
             responseResult = "Error: " + response.statusText;
+            commit("UPLOAD_SUCCESS", uploadSuccess);
+            commit("UPLOAD_RESULT", responseResult);
           } else {
+            console.log(response);
             uploadSuccess = true;
             responseResult = "Success!";
+            commit("UPLOAD_SUCCESS", uploadSuccess);
+            commit("UPLOAD_RESULT", responseResult);
           }
-          commit("UPLOAD_SUCCESS", uploadSuccess);
-          commit("UPLOAD_RESULT", responseResult);
-        }
-      });
-    },
-    registerCollapse({ commit }, menuCollapsed) {
-      commit("COLLAPSE_STATE", menuCollapsed);
+        });
+      } catch (err) {
+        uploadSuccess = false;
+        responseResult = err;
+        commit("UPLOAD_SUCCESS", uploadSuccess);
+        commit("UPLOAD_RESULT", responseResult);
+      }
     }
+  },
+  registerCollapse({ commit }, menuCollapsed) {
+    commit("COLLAPSE_STATE", menuCollapsed);
   }
 });
 
