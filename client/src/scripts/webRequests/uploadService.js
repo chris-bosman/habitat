@@ -1,5 +1,3 @@
-const BASE_URL = "http://localhost:3000";
-
 var tfStateRegEx = new RegExp("(.+?).tfstate");
 
 function upload(formData, event) {
@@ -7,7 +5,7 @@ function upload(formData, event) {
   var url;
 
   if (tfStateRegEx.test(file.name)) {
-    url = `${BASE_URL}/api/v1/tfstate`;
+    url = `${process.env.VUE_APP_SERVER}/api/v1/tfstate`;
   }
   return fetch(url, {
     method: "POST",

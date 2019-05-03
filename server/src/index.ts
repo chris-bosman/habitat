@@ -6,11 +6,11 @@ import mongodb from "./components/db";
 var routes = require('./routes');
 
 const app = new Hapi.Server({
-    port: 3000, host: 'localhost',
+    port: process.env.PORT, host: process.env.HOST,
     routes: { cors: true }
 });
 
-//app.route(routes);
+app.route(routes);
 
 mongodb.on("error", err => {
     console.log("Unable to connect to database", err);

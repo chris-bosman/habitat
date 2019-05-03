@@ -3,7 +3,7 @@
 .gs
   Modal(v-show="isModalVisible" @close="closeModal" id="Modal")
   .gs-head
-    include:markdown-it ../text/gs.md
+    include:markdown-it ../data/text/gs.md
   .cards
     .column
       .card(@click="showModal" id="uploadCard")

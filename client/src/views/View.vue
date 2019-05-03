@@ -3,7 +3,7 @@
 .view
   Modal(v-show="isModalVisible" @close="closeModal" id="Modal")
   .head
-    include:markdown-it ../text/view.md
+    include:markdown-it ../data/text/view.md
   .tabs
     ul
       a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isMap ? 'selected':''")  Map]
@@ -70,6 +70,8 @@ import ListViz from "@/components/visualizations/ListViz";
 import MapViz from "@/components/visualizations/MapViz";
 import TreeViz from "@/components/visualizations/TreeViz";
 
+import { fetchResources } from "@/scripts/webRequests/fetchResources";
+
 var view;
 
 export default {
@@ -99,6 +101,7 @@ export default {
     };
   },
   mounted() {
+    this.getResources();
     if (localStorage.getItem("vizView")) {
       this.currentStatus = localStorage.getItem("vizView");
     } else {
@@ -116,6 +119,13 @@ export default {
       view = event.srcElement.innerText;
       localStorage.setItem("vizView", view);
       this.currentStatus = view;
+    },
+    getResources() {
+      fetchResources()
+        .then(resourceData => resourceData.json())
+        .then(json => {
+          console.log(json[0]);
+        });
     }
   }
 };

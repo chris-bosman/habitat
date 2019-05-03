@@ -3,8 +3,10 @@
 .home
   .home-text
     h2 Welcome to your Habitat!
-    p.
+    p(v-if="this.$store.state.authenticated").
       Why waste any time? #[router-link(to="/Start") Get Started Now!]
+    p(v-else).
+      Please #[a(to="javascript:void()" @click="login()") Login now]
 </template>
 
 <!-- SCSS Styling -->
@@ -21,6 +23,7 @@
       background-color: rgb(235, 234, 229);
       border-radius: 2px;
       opacity: 0.4;
+      cursor: pointer;
     }
   }
 }
@@ -29,6 +32,11 @@
 <!-- Javascript -->
 <script>
 export default {
-  name: "Home"
+  name: "Home",
+  methods: {
+    login() {
+      this.$auth.loginRedirect("/");
+    }
+  }
 };
 </script>

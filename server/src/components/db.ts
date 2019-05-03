@@ -1,6 +1,8 @@
 import * as mongoose from 'mongoose';
 
-const connString = 'mongodb://localhost:27017/habitat';
+require('dotenv').config();
+
+const connString = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 const dbConfig: mongoose.ConnectionOptions = {
     useNewUrlParser: true
 };

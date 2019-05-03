@@ -103,7 +103,6 @@
           align-items: center;
           justify-content: center;
           & .error {
-            font-size: 1vw;
             font-family: "IBM Plex Mono", monospace;
             word-break: break-all;
             max-width: 34vw;
@@ -131,7 +130,7 @@
 
 <!-- Javascript-->
 <script>
-import { parser } from "@/js/genericParser";
+import { parser } from "@/scripts/fileParsing/genericParser";
 
 const STATUS_INITIAL = 0,
   STATUS_SAVING = 1,

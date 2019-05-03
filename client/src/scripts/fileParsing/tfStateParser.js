@@ -1,4 +1,4 @@
-import store from "../store";
+import store from "../../store";
 
 function tfStateParser(reader, event) {
   const formData = new FormData();

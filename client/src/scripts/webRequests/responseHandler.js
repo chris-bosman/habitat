@@ -1,4 +1,4 @@
-import codes from "../json/customResponseCodes.json";
+import codes from "../../data/json/customResponseCodes.json";
 
 function responseHandler(response) {
   var customResponses = codes.responseCodes.map(a => a.code);

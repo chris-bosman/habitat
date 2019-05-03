@@ -142,7 +142,7 @@ export default {
   methods: {
     menuToggle() {
       menuCollapsed = !menuCollapsed;
-      store.dispatch("registerCollapse", menuCollapsed);
+      store.dispatch("registerMenuChange", menuCollapsed);
     }
   },
   data() {

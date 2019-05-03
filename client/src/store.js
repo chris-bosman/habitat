@@ -1,5 +1,5 @@
-import { upload } from "./js/uploadService";
-import { responseHandler } from "./js/responseHandler";
+import { upload } from "./scripts/webRequests/uploadService";
+import { responseHandler } from "./scripts/webRequests/responseHandler";
 
 import Vue from "vue";
 import Vuex from "vuex";
@@ -10,7 +10,8 @@ const store = new Vuex.Store({
   state: {
     uploadSuccess: false,
     responseResult: [],
-    menuCollapsed: null
+    menuCollapsed: null,
+    authenticated: false
   },
   mutations: {
     UPLOAD_SUCCESS(state, uploadSuccess) {
@@ -21,6 +22,9 @@ const store = new Vuex.Store({
     },
     COLLAPSE_STATE(state, menuCollapsed) {
       state.menuCollapsed = menuCollapsed;
+    },
+    AUTH_STATE(state, authenticated) {
+      state.authenticated = authenticated;
     }
   },
   actions: {
@@ -49,10 +53,13 @@ const store = new Vuex.Store({
         commit("UPLOAD_SUCCESS", uploadSuccess);
         commit("UPLOAD_RESULT", responseResult);
       }
+    },
+    registerMenuChange({ commit }, menuCollapsed) {
+      commit("COLLAPSE_STATE", menuCollapsed);
+    },
+    registerAuth({ commit }, authenticated) {
+      commit("AUTH_STATE", authenticated);
     }
-  },
-  registerCollapse({ commit }, menuCollapsed) {
-    commit("COLLAPSE_STATE", menuCollapsed);
   }
 });
 
