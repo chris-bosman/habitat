@@ -34,7 +34,6 @@ const store = new Vuex.Store({
         upload(formData, event).then(response => {
           responseHandler(response);
           if (!response.ok) {
-            console.log(response);
             uploadSuccess = false;
             // eslint-disable-next-line
             responseResult = `Error attempting to reach ${response.url}: ${response.status} ${response.statusText}`;

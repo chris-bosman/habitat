@@ -124,7 +124,7 @@ export default {
       fetchResources()
         .then(resourceData => resourceData.json())
         .then(json => {
-          console.log(json[0]);
+          var returnedResource = (json[0]);
         });
     }
   }

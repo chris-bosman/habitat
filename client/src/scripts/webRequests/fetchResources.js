@@ -7,7 +7,7 @@ async function fetchResources() {
     });
     return resourceData;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 }
 

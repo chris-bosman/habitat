@@ -15,15 +15,8 @@ resource "mongodbatlas_project" "deployment" {
     name    = "${var.atlas_org_name}"
 }
 
-resource "mongodbatlas_container" "deployment" {
-    group               = "${mongodbatlas_project.deployment.id}"
-    atlas_cidr_block    = ""
-    provider_name       = "${var.atlas_provider}"
-    region              = "${var.atlas_region}"
-}
-
 resource "mongodbatlas_cluster" "deployment" {
-    name                    = "${var.atlas_org_name}"
+    name                    = "${var.atlas_org_name}-HQ"
     group                   = "${mongodbatlas_project.deployment.id}"
     mongodb_major_version   = "4.0"
     provider_name           = "TENANT"

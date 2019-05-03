@@ -70,9 +70,6 @@ export default {
     Background: Background,
     SideNav: SideNav,
     TopNav: TopNav
-  },
-  mounted() {
-    console.log(process.env);
   }
 };
 </script>
