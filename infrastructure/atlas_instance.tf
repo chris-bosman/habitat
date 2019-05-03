@@ -5,6 +5,14 @@ variable "atlas_org_name" {}
 variable "atlas_provider" {}
 variable "atlas_region" {}
 
+terraform {
+    backend "s3" {
+        bucket  = "habitat-tf-state"
+        key     = "tfstate"
+        region  = "us-east-1"
+    }
+}
+
 provider "mongodbatlas" {
     username    = "${var.atlas_username}"
     api_key     = "${var.atlas_api_key}"

@@ -1,9 +1,10 @@
-version: 2
+version: 2.1
+
 jobs:
   build:
     docker:
-      - image: circleci/node:10
-    working_directory: ~/repo
+      - image: circleci/node
+    working_directory: /tmp
     steps:
       - checkout
       - restore_cache:
@@ -12,8 +13,36 @@ jobs:
             - v1-dependencies-
       - run: npm i
       - run: npm run build
+      - run: cp 
       - save_cache:
           paths:
-            - client\node_modules
-            - server\node_modules
+            - ./client/node_modules
+            - ./server/node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - client/dist
+            - server/habitat.zip
+  deploy:
+    docker:
+      - image: circleci/python
+    working_directory: /tmp
+    steps:
+      - attach_workspace:
+          at: /tmp
+      - run: sudo pip install awscli
+      - run: aws s3 sync server/habitat.zip s3://habitat-deployments-prd-eastus/habitat.zip --delete
+
+workflows:
+  version: 2
+    build-deploy:
+      jobs:
+        - build
+        - deploy
+            requires:
+              - build
+            filters:
+              branches:
+                only: master
+    
