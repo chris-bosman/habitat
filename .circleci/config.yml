@@ -5,16 +5,9 @@ orbs:
 
 jobs:
   build_client:
-    parameters:
-      work_dir:
-        default: "client"
-        type: string
-      client_package:
-        default: "client/dist"
-        type: string
     docker:
       - image: circleci/node
-    working_directory: ~/<< parameters.work_dir >>
+    working_directory: ~/repo
     steps:
       - checkout
       - restore_cache:
@@ -28,20 +21,13 @@ jobs:
             - ./client/node_modules
           key: v1-dependencies-{{ checksum "client/package.json" }}
       - persist_to_workspace:
-          root: ~/<< parameters.work_dir >>
+          root: ~/repo
           paths:
-            - << parameters.client_package >>
+            - ${CLIENT_PACKAGE}
   build_server:
-    parameters:
-      work_dir:
-        default: "client"
-        type: string
-      server_package:
-        default: "server/habitat.zip"
-        type: string
     docker:
       - image: circleci/node
-    working_directory: ~/<< parameters.work_dir >>
+    working_directory: ~/repo
     steps:
       - checkout
       - restore_cache:
@@ -55,48 +41,30 @@ jobs:
             - ./server/node_modules
           key: v1-dependencies-{{ checksum "server/package.json" }}
       - persist_to_workspace:
-          root: ~/<< parameters.work_dir >>
+          root: ~/repo
           paths:
-            - << parameters.server_package >>
+            - ${SERVER_PACKAGE}
   deploy_client:
-    parameters:
-      work_dir:
-        default: "client"
-        type: string
-      software_version:
-        default: "0.1.0"
-        type: string
     docker:
-      - image: alpine/git
-    working_directory: ~/<< parameters.work_dir >>
+      - image: circleci/node
+    working_directory: ~/repo
     steps:
       - checkout
       - attach_workspace:
-          at: ~/<< parameters.work_dir >>
-      - run: git tag << parameters.software_version >>.$CIRCLE_BUILD_NUM
+          at: ~/repo
+      - run: git tag ${SOFTWARE_VERSION}.$CIRCLE_BUILD_NUM
       - run: git push origin master --tags
   deploy_server:
-    parameters:
-      work_dir:
-        default: "client"
-        type: string
-      software_version:
-        default: "0.1.0"
-        type: string
-      aws_bucket_name:
-        default: "habitat-deploys-prd-eastus"
-        type: string
-      
     docker:
       - image: circleci/python
-    working_directory: ~/<< parameters.work_dir >>
+    working_directory: ~/repo
     steps:
       - checkout
       - attach_workspace:
-          at: ~/<< parameters.work_dir >>
+          at: ~/repo
       - aws-s3/sync:
-          from: << parameters.server_package >>
-          to: s3://${AWS_S3_BUCKET}/habitat-<< parameters.server_package >>.$CIRCLE_BUILD_NUM.zip
+          from: ${SERVER_PACKAGE}
+          to: s3://${AWS_S3_BUCKET}/habitat-${SOFTWARE_VERSION}.${CIRCLE_BUILD_NUM}.zip
           aws-access-key-id: $AWS_ACCESS_KEY
           aws-secret-access-key: $AWS_SECRET_KEY
           aws-region: us-east-1
