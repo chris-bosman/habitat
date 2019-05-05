@@ -4,7 +4,7 @@ jobs:
   build_client:
     docker:
       - image: circleci/node
-    working_directory: $WORK_DIR
+    working_directory: ~/${$WORK_DIR}
     steps:
       - checkout
       - restore_cache:
@@ -18,13 +18,13 @@ jobs:
             - ./client/node_modules
           key: v1-dependencies-{{ checksum "client/package.json" }}
       - persist_to_workspace:
-          root: $WORK_DIR
+          root: ~/${$WORK_DIR}
           paths:
-            - $CLIENT_PACKAGE
+            - ${CLIENT_PACKAGE}
   build_server:
     docker:
       - image: circleci/node
-    working_directory: $WORK_DIR
+    working_directory: ~/${$WORK_DIR}
     steps:
       - checkout
       - restore_cache:
@@ -38,29 +38,29 @@ jobs:
             - ./server/node_modules
           key: v1-dependencies-{{ checksum "server/package.json" }}
       - persist_to_workspace:
-          root: $WORK_DIR
+          root: ~/${$WORK_DIR}
           paths:
-            - $SERVER_PACKAGE
+            - ${SERVER_PACKAGE}
   deploy_client:
     docker:
       - image: alpine/git
-    working_directory: $WORK_DIR
+    working_directory: ~/${$WORK_DIR}
     steps:
       - checkout
       - attach_workspace:
-          at: $WORK_DIR
+          at: ~/${$WORK_DIR}
       - run: git tag $SOFTWARE_VERSION.$CIRCLE_BUILD_NUM
       - run: git push origin master --tags
   deploy_server:
     docker:
       - image: circleci/python
-    working_directory: $WORK_DIR
+    working_directory: ~/${$WORK_DIR}
     steps:
       - checkout
       - attach_workspace:
-          at: $WORK_DIR
+          at: ~/${$WORK_DIR}
       - run: sudo pip install awscli
-      - run: aws s3 sync $SERVER_PACKAGE s3://$AWS_S3_BUCKET/$SERVER_PACKAGE --delete
+      - run: aws s3 sync ${SERVER_PACKAGE} s3://${AWS_S3_BUCKET}/${SERVER_PACKAGE} --delete
 
 workflows:
   version: 2
