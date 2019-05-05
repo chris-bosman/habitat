@@ -82,7 +82,6 @@ jobs:
       work_dir:
         default: "client"
         type: string
-    parameters:
       software_version:
         default: "0.1.0"
         type: string
