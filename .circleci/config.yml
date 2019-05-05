@@ -62,9 +62,9 @@ jobs:
           echo 'export SOFTWARE_VERSION="$SOFTWARE_VERSION" >> $BASH_ENV'
           echo 'export AWS_S3_BUCKET="$AWS_S3_BUCKET" >> $BASH_ENV'
       - attach_workspace:
-          at: ~/repo
+          at: ~/repo/server
       - aws-s3/sync:
-          from: server/habitat.zip
+          from: habitat.zip
           to: s3://$AWS_S3_BUCKET/habitat-$SOFTWARE_VERSION.$CIRCLE_BUILD_NUM.zip
           aws-access-key-id: AWS_ACCESS_KEY
           aws-secret-access-key: AWS_SECRET_KEY
