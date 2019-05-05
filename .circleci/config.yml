@@ -13,7 +13,6 @@ jobs:
             - v1-dependencies-
       - run: npm i
       - run: npm run build
-      - run: cp 
       - save_cache:
           paths:
             - ./client/node_modules
