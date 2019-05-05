@@ -4,7 +4,7 @@ jobs:
   build:
     docker:
       - image: circleci/node
-    working_directory: /repo
+    working_directory: ~/repo
     steps:
       - checkout
       - restore_cache:
@@ -20,7 +20,7 @@ jobs:
             - ./server/node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - persist_to_workspace:
-          root: /repo
+          root: ~/repo
           paths:
             - client/dist
             - server/habitat.zip
@@ -30,7 +30,7 @@ jobs:
     working_directory: /tmp
     steps:
       - attach_workspace:
-          at: /repo
+          at: ~/repo
       - run: sudo pip install awscli
       - run: aws s3 sync server/habitat.zip s3://habitat-deployments-prd-eastus/habitat.zip --delete
 
