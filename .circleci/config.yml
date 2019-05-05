@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  aws-s3: circleci/aws-s3@1.0.8
+
 commands:
   sync:
     parameters:
@@ -78,8 +81,13 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/${WORK_DIR}
-      - run: sudo pip install awscli
-      - run: aws s3 sync ${SERVER_PACKAGE} s3://${AWS_S3_BUCKET}/${SERVER_PACKAGE} --delete
+      - aws-s3/sync:
+          from: ${SERVER_PACKAGE}
+          to: s3://${AWS_S3_BUCKET}/habitat-${SOFTWARE_VERSION}.${CIRCLE_BUILD_NUM}.zip
+          aws-access-key-id: ${AWS_ACCESS_KEY}
+          aws-secret-access-key: ${AWS_SECRET_KEY}
+          aws-region: us-east-1
+          overwrite: false
 
 workflows:
   version: 2
@@ -94,6 +102,7 @@ workflows:
             branches:
               only: master
       - deploy_server:
+          context: prd
           requires:
             - build_server
           filters:
