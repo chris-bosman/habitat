@@ -65,9 +65,9 @@ jobs:
       - aws-s3/sync:
           from: ${SERVER_PACKAGE}
           to: s3://${AWS_S3_BUCKET}/habitat-${SOFTWARE_VERSION}.${CIRCLE_BUILD_NUM}.zip
-          aws-access-key-id: $AWS_ACCESS_KEY
-          aws-secret-access-key: $AWS_SECRET_KEY
-          aws-region: us-east-1
+          aws-access-key-id: AWS_ACCESS_KEY
+          aws-secret-access-key: AWS_SECRET_KEY
+          aws-region: AWS_REGION
           overwrite: false
 
 workflows:
@@ -89,4 +89,3 @@ workflows:
           filters:
             branches:
               only: master
-    
