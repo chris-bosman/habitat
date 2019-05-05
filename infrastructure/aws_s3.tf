@@ -4,9 +4,7 @@ variable "ORG_NAME" {}
 variable "ENV" {}
 variable "ENVIRONMENT" {}
 variable "REGION" {}
-variable "FUNCTION" {
-    type = "map"
-}
+variable "FUNCTION" {}
 
 terraform {
     backend "s3" {
@@ -28,6 +26,5 @@ resource "aws_s3_bucket" "deployment" {
 
     tags {
         environment     = "${var.ENVIRONMENT}"
-        function        = "${var.FUNCTION[count.index]}"
     }
 }

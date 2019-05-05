@@ -1,5 +1,24 @@
 version: 2.1
 
+commands:
+  sync:
+    parameters:
+      software_version:
+        default: "0.1.0"
+        type: string
+      work_dir:
+        default: "repo"
+        type: string
+      client_package:
+        default: "client/dist"
+        type: string
+      server_package:
+        default: "server/habitat.zip"
+        type: string
+      s3_bucket_name:
+        default: "habitat-deploys-prd-eastus"
+      
+
 jobs:
   build_client:
     docker:
@@ -49,7 +68,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/${WORK_DIR}
-      - run: git tag $SOFTWARE_VERSION.$CIRCLE_BUILD_NUM
+      - run: git tag ${SOFTWARE_VERSION}.${CIRCLE_BUILD_NUM}
       - run: git push origin master --tags
   deploy_server:
     docker:
