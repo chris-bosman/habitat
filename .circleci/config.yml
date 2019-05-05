@@ -3,25 +3,6 @@ version: 2.1
 orbs:
   aws-s3: circleci/aws-s3@1.0.8
 
-commands:
-  sync:
-    parameters:
-      software_version:
-        default: "0.1.0"
-        type: string
-      work_dir:
-        default: "repo"
-        type: string
-      client_package:
-        default: "client/dist"
-        type: string
-      server_package:
-        default: "server/habitat.zip"
-        type: string
-      s3_bucket_name:
-        default: "habitat-deploys-prd-eastus"
-        type: string
-
 jobs:
   build_client:
     parameters:
