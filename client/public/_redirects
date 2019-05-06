@@ -2,3 +2,4 @@
 
 # Redirect default Netlify subdomain to primary domain
 https://yourhabitat.netlify.com/* https://yourhabitat.io/:splat 301!
+/* /index.html 200
