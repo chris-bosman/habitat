@@ -14,7 +14,7 @@ Vue.use(Auth, {
   issuer: `https://${process.env.VUE_APP_OKTA_DOMAIN}/oauth2/default`,
   client_id: `${process.env.VUE_APP_OKTA_CLIENT_ID}`,
   //eslint-disable-next-line
-  redirect_uri: `https://${process.env.VUE_APP_CALLBACK_URL}/${process.env.VUE_APP_OKTA_REDIRECT_URI}`,
+  redirect_uri: `http://${process.env.BASE_URL}/${process.env.VUE_APP_OKTA_REDIRECT_URI}`,
   scope: "openid profile email"
 });
 
@@ -23,13 +23,13 @@ let router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/implicit/callback",
-      component: Auth.handleCallback()
-    },
-    {
       path: "/",
       name: "Home",
       component: Home
+    },
+    {
+      path: "/implicit/callback",
+      component: Auth.handleCallback()
     },
     {
       path: "/Admin",
