@@ -73,6 +73,27 @@ jobs:
           aws-secret-access-key: AWS_SECRET_KEY
           aws-region: AWS_REGION
           overwrite: false
+  test_infrastructure:
+    docker:
+      - image: hashicorp/terraform:full
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: mkdir output
+      - run: terraform plan -out=output/plan
+      - persist_to_workspace:
+          root: ~/repo
+          path: output
+  apply_infrastructure:
+    docker:
+      - image: hashicorp/terraform:full
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - run: cd output
+      - run: terraform apply "plan"
 
 workflows:
   version: 2
@@ -87,10 +108,18 @@ workflows:
             branches:
               only: master
       - build_server
+      - test_infrastructure
+      - build_infrastructure:
+          requires:
+            - test_infrastructure
+          filters:
+            branches:
+              only: master
       - deploy_server:
           context: prd
           requires:
             - build_server
+            - build_infrastructure
           filters:
             branches:
               only: master
