@@ -14,7 +14,7 @@ Vue.use(Auth, {
   issuer: `https://${process.env.VUE_APP_OKTA_DOMAIN}/oauth2/default`,
   client_id: `${process.env.VUE_APP_OKTA_CLIENT_ID}`,
   //eslint-disable-next-line
-  redirect_uri: `http://localhost:8080/${process.env.VUE_APP_OKTA_REDIRECT_URI}`,
+  redirect_uri: `${process.env.VUE_APP_CALLBACK_URL}/${process.env.VUE_APP_OKTA_REDIRECT_URI}`,
   scope: "openid profile email"
 });
 
