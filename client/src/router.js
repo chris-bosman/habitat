@@ -20,7 +20,7 @@ Vue.use(Auth, {
 
 let router = new Router({
   mode: "history",
-  base: process.env.BASE_URL,
+  base: process.env.VUE_APP_CALLBACK_URL,
   routes: [
     {
       path: "/implicit/callback",
