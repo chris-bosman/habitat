@@ -91,8 +91,8 @@ jobs:
       - run: |
           cd infrastructure/aws
           mkdir output
-          echo $AWS_DEFAULT_REGION
-          terraform init -backend-config='access_key="$AWS_ACCESS_KEY_ID"' -backend-config='secret_key="$AWS_SECRET_ACCESS_KEY"' -backend-config='region="$AWS_DEFAULT_REGION"'
+          echo ${AWS_DEFAULT_REGION}
+          terraform init -backend-config="access_key=${AWS_ACCESS_KEY_ID}" -backend-config="secret_key=${AWS_SECRET_ACCESS_KEY}" -backend-config="region=${AWS_DEFAULT_REGION}"
           terraform plan -out=plan
       - persist_to_workspace:
           root: ~/repo
@@ -110,7 +110,7 @@ jobs:
           at: ~/repo
       - run: |
           cd infrastructure/aws
-          terraform init -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY" -backend-config="region=$AWS_DEFAULT_REGION"
+          terraform init -backend-config="access_key=${AWS_ACCESS_KEY_ID}" -backend-config="secret_key=${AWS_SECRET_ACCESS_KEY}" -backend-config="region=${AWS_DEFAULT_REGION}"
           terraform apply "plan"
 
 workflows:
