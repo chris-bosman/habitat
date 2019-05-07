@@ -25,11 +25,10 @@ let router = new Router({
     {
       path: "/",
       name: "Home",
-      component: Home
-    },
-    {
-      path: "/login",
-      redirect: "/implicit/callback"
+      component: Home,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/implicit/callback",
