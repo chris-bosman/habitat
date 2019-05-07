@@ -20,6 +20,11 @@ jobs:
           paths:
             - ./client/node_modules
           key: v1-dependencies-{{ checksum "client/package.json" }}
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - ./client/dist
+
   build_server:
     docker:
       - image: circleci/node
@@ -43,6 +48,7 @@ jobs:
           root: ~/repo
           paths:
             - server/packages
+
   deploy_client:
     docker:
       - image: circleci/node
@@ -52,6 +58,7 @@ jobs:
       - run: |
           npm i
           npm run build-client
+
   deploy_server:
     docker:
       - image: circleci/python
@@ -70,6 +77,7 @@ jobs:
           aws-secret-access-key: AWS_SECRET_KEY
           aws-region: AWS_REGION
           overwrite: false
+
   test_infrastructure:
     docker:
       - image: hashicorp/terraform:full
@@ -83,6 +91,7 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           path: output
+
   apply_infrastructure:
     docker:
       - image: hashicorp/terraform:full
