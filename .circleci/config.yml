@@ -37,8 +37,8 @@ jobs:
       - run: npm i
       - run: npm run build-server
       - run: |
-          mkdir packages
-          mv habitat.zip packages
+          mkdir server/packages
+          mv server/habitat.zip server/packages
       - save_cache:
           paths:
             - ./server/node_modules
@@ -79,6 +79,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - run: cd infrastructure/aws
       - run: mkdir output
       - run: terraform plan -out=output/plan
       - persist_to_workspace:
