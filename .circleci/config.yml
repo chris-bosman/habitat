@@ -125,8 +125,10 @@ workflows:
             branches:
               only: master
       - build_server
-      - test_infrastructure
+      - test_infrastructure:
+          context: prd
       - apply_infrastructure:
+          context: prd
           requires:
             - test_infrastructure
           filters:
