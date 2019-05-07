@@ -5,14 +5,14 @@
 
 [[redirects]]
   from = "/*"
-  to = "/:splat"
+  to = "/login"
   status = 200
-  conditions = {Role = "*"}
 
 [[redirects]]
   from = "/*"
-  to = "/login"
+  to = "/:splat"
   status = 200
+  conditions = {Role = "*"}
 
 [[redirects]]
   from = "https://yourhabitat.netlify.com/*"

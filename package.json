@@ -23,11 +23,5 @@
     "url": "https://github.com/chris-bosman/habitat/issues"
   },
   "homepage": "https://github.com/chris-bosman/habitat#readme",
-  "dependencies": {
-    "@okta/okta-signin-widget": "^2.19.0",
-    "filepond": "^4.4.0",
-    "json-query": "^2.2.2",
-    "vue-filepond": "^5.1.0",
-    "vue-sidebar-menu": "^3.6.3"
-  }
+  "dependencies": {}
 }

@@ -10,7 +10,6 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@okta/okta-signin-widget": "^2.19.0",
     "@okta/okta-vue": "^1.1.0",
     "ajv": "^6.10.0",
     "vue": "^2.6.10",
@@ -25,19 +24,16 @@
     "@vue/cli-service": "^3.6.0",
     "@vue/eslint-config-prettier": "^4.0.1",
     "@vue/test-utils": "^1.0.0-beta.29",
-    "axios": "^0.18.0",
     "babel-eslint": "^10.0.1",
     "chai": "^4.1.2",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.2",
-    "jquery": "^3.4.0",
     "jstransformer-markdown-it": "^2.1.0",
     "node-sass": "^4.12.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
-    "vue-sidebar-menu": "^2.4.2",
     "vue-template-compiler": "^2.6.10"
   }
 }
