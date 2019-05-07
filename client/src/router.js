@@ -28,6 +28,10 @@ let router = new Router({
       component: Home
     },
     {
+      path: "/login",
+      redirect: "/implicit/callback"
+    },
+    {
       path: "/implicit/callback",
       component: Auth.handleCallback()
     },

@@ -1,0 +1,20 @@
+[build.environment]
+  VUE_APP_CALLBACK_URL = "https://yourhabitat.io"
+  VUE_APP_OKTA_REDIRECT_URI = "implicit/callback"
+  VUE_APP_OKTA_DOMAIN = "dev-857484.okta.com"
+
+[[redirects]]
+  from = "/*"
+  to = "/:splat"
+  status = 200!
+  conditions = {Role = "*"}
+
+[[redirects]]
+  from = "/*"
+  to = "/login"
+  status = 200!
+
+[[redirects]]
+  from = "https://yourhabitat.netlify.com/*"
+  to = "https://yourhabitat.io/:splat"
+  status = 301
