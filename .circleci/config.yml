@@ -119,7 +119,7 @@ workflows:
           context: prd
           requires:
             - build_server
-            - build_infrastructure
+            - apply_infrastructure
           filters:
             branches:
               only: master
