@@ -9,14 +9,11 @@ variable "FUNCTION" {}
 terraform {
     backend "s3" {
         bucket  = "habitat-tf-state"
-        key     = "tfstate"
-        region  = "us-east-1"
+        key     = "prod.terraform.tfstate"
     }
 }
 
-provider "aws" {
-    region = "us-east-1"
-}
+provider "aws" {}
 
 data "aws_iam_policy" "AWSElasticBeanstalkWebTier" {
   arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
