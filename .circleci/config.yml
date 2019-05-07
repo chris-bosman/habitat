@@ -20,10 +20,6 @@ jobs:
           paths:
             - ./client/node_modules
           key: v1-dependencies-{{ checksum "client/package.json" }}
-      - persist_to_workspace:
-          root: ~/repo
-          paths:
-            - ./client/dist
   build_server:
     docker:
       - image: circleci/node
@@ -53,8 +49,9 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: npm i
-      - run: npm run build-client
+      - run: |
+          npm i
+          npm run build-client
   deploy_server:
     docker:
       - image: circleci/python
@@ -79,10 +76,10 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: cd infrastructure/aws
-      - run: ls
-      - run: mkdir output
-      - run: terraform plan -out=output/plan
+      - run: |
+          cd infrastructure/aws
+          mkdir output
+          terraform plan -out=output/plan
       - persist_to_workspace:
           root: ~/repo
           path: output
@@ -94,8 +91,9 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/repo
-      - run: cd output
-      - run: terraform apply "plan"
+      - run: |
+          cd infrastructure/aws/output
+          terraform apply "plan"
 
 workflows:
   version: 2
