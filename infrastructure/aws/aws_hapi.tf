@@ -10,7 +10,6 @@ terraform {
     backend "s3" {
         bucket  = "habitat-tf-state"
         key     = "prod.terraform.tfstate"
-        region  = "us-east-1"
     }
 }
 
