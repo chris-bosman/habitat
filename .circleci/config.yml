@@ -109,7 +109,7 @@ workflows:
               only: master
       - build_server
       - test_infrastructure
-      - build_infrastructure:
+      - apply_infrastructure:
           requires:
             - test_infrastructure
           filters:
