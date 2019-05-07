@@ -87,6 +87,7 @@ jobs:
       - run: |
           cd infrastructure/aws
           mkdir output
+          terraform init
           terraform plan -out=output/plan
       - persist_to_workspace:
           root: ~/repo
@@ -102,6 +103,7 @@ jobs:
           at: ~/repo
       - run: |
           cd infrastructure/aws/output
+          terraform init
           terraform apply "plan"
 
 workflows:
