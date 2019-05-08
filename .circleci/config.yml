@@ -78,8 +78,8 @@ jobs:
           aws-region: AWS_DEFAULT_REGION
           overwrite: false
       - run: |
-          touch build_number.txt
-          echo "$CIRCLE_BUILDNUM" >> build_number.txt
+          touch ~/repo/build_number.txt
+          echo "$CIRCLE_BUILDNUM" >> ~/repo/build_number.txt
       - persist_to_workspace:
           root: ~/repo
           path: build_number.txt
