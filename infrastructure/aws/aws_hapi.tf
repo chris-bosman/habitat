@@ -57,7 +57,7 @@ resource "aws_elastic_beanstalk_environment" "deployment" {
 
     setting {
         namespace   = "aws:autoscaling:launchconfiguration"
-        name        = "IamInstaneProfile"
+        name        = "IamInstanceProfile"
         value       = "${aws_iam_instance_profile.deployment.name}"
     }
 }
