@@ -105,7 +105,7 @@ jobs:
       - run: |
           cd infrastructure/aws
           terraform init -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY" -backend-config="region=$AWS_DEFAULT_REGION"
-          terraform apply "plan" -auto-approve
+          terraform apply -auto-approve "plan"
 
 workflows:
   version: 2
