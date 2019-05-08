@@ -13,12 +13,8 @@ terraform {
 
 provider "aws" {}
 
-data "aws_s3_bucket" "deployments" {
-    bucket  = "${var.ORG_NAME}-${var.FUNCTION}-${var.ENV}-${var.REGION}"
-}
-
 data "aws_s3_bucket_object" "deploy_zip" {
-    bucket  = "${data.aws_s3_bucket.deployments.name}"
+    bucket  = "${var.ORG_NAME}-${var.FUNCTION}-${var.ENV}-${var.REGION}"
     key     = "habitat-${var.SOFTWARE_VERSION}.zip"
 }
 
