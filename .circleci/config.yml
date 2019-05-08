@@ -77,11 +77,11 @@ jobs:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_DEFAULT_REGION
           overwrite: false
-      - run: |
-          echo "$CIRCLE_BUILDNUM" >> build_number
+      - run: echo "$CIRCLE_BUILDNUM" > build_number
       - persist_to_workspace:
           root: ~/repo
-          path: build_number
+          paths:
+            - build_number
 
   deploy_server:
     docker:
