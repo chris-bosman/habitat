@@ -80,11 +80,9 @@ jobs:
       - run: |
           touch build_number.txt
           echo "$CIRCLE_BUILDNUM" >> build_number.txt
-          ls
-          ls ..
       - persist_to_workspace:
           root: ~/repo
-          path: build_number.txt      
+          path: build_number.txt
 
   deploy_server:
     docker:
