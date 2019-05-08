@@ -86,8 +86,8 @@ jobs:
       - checkout
       - run: |
           cd infrastructure/aws
-          echo "Without brackets $AWS_DEFAULT_REGION"
-          echo "With brackets ${AWS_DEFAULT_REGION}"
+          echo $AWS_DEFAULT_REGION
+          echo ${AWS_DEFAULT_REGION}
           terraform init -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY" -backend-config="region=$AWS_DEFAULT_REGION"
           terraform plan -out=plan
       - persist_to_workspace:
