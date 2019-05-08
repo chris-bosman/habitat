@@ -1,5 +1,3 @@
-variable "AWS_ACCOUNT_ID" {}
-variable "AWS_ACCOUNT_SECRET" {}
 variable "ORG_NAME" {}
 variable "ENV" {}
 variable "REGION" {}
