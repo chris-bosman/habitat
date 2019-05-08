@@ -82,7 +82,7 @@ jobs:
           echo "$CIRCLE_BUILDNUM" >> build_number.txt
       - persist_to_workspace:
           root: ~/repo
-          path: server/packages/build_number.txt      
+          path: build_number.txt      
 
   deploy_server:
     docker:
@@ -93,7 +93,7 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run: |
-          echo 'VERSION_NUMBER="$(cat server/package/build_number.txt)" >> $BASH_ENV'
+          echo 'VERSION_NUMBER="$(cat build_number.txt)" >> $BASH_ENV'
       - run: |
           cd infrastructure/deployments
           terraform init -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY" -backend-config="region=$AWS_DEFAULT_REGION"
