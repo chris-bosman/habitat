@@ -73,9 +73,9 @@ jobs:
       - aws-s3/sync:
           from: server/packages
           to: s3://$AWS_S3_BUCKET/habitat-$SOFTWARE_VERSION.$CIRCLE_BUILD_NUM.zip
-          aws-access-key-id: AWS_ACCESS_KEY
-          aws-secret-access-key: AWS_SECRET_KEY
-          aws-region: AWS_REGION
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_DEFAULT_REGION
           overwrite: false
 
   test_infrastructure:
