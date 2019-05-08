@@ -87,8 +87,8 @@ jobs:
       - run: |
           cd infrastructure/deployments
           terraform init -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY" -backend-config="region=$AWS_DEFAULT_REGION"
-          terraform plan -var 'SOFTWARE_VERSION=$SOFTWARE_VERSION.$CIRCLE_BUILD_NUM' -out=deploy
-          terraform apply -auto-approve -var 'SOFTWARE_VERSION=$SOFTWARE_VERSION.$CIRCLE_BUILD_NUM'
+          terraform plan -var "SOFTWARE_VERSION=$SOFTWARE_VERSION.$CIRCLE_BUILD_NUM" -out=deploy
+          terraform apply -auto-approve -var "SOFTWARE_VERSION=$SOFTWARE_VERSION.$CIRCLE_BUILD_NUM"
 
   test_infrastructure:
     docker:
