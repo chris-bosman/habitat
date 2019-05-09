@@ -19,7 +19,7 @@ data "aws_s3_bucket" "deployments" {
 
 data "aws_s3_bucket_object" "deploy_zip" {
     bucket  = "${data.aws_s3_bucket.deployments.id}"
-    key     = "habitat-${var.SOFTWARE_VERSION}.zip"
+    key     = "${var.SOFTWARE_VERSION}/habitat.zip"
 }
 
 resource "aws_elastic_beanstalk_application_version" "release" {
