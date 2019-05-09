@@ -73,7 +73,7 @@ resource "aws_s3_bucket" "deployment" {
 }
 
 data "aws_s3_bucket_object" "deploy_zip" {
-    bucket  = "${data.aws_s3_bucket.deployments.id}"
+    bucket  = "${aws_s3_bucket.deployment.id}"
     key     = "habitat-${var.SOFTWARE_VERSION}.zip"
 }
 
