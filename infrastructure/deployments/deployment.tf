@@ -79,7 +79,7 @@ data "aws_s3_bucket_object" "deploy_zip" {
 
 resource "aws_elastic_beanstalk_application_version" "release" {
     name        = "${var.ORG_NAME}-ebrelease-${var.ENV}-${var.REGION}-${var.SOFTWARE_VERSION}"
-    application = "${var.ORG_NAME}-ebenv-${var.ENV}-${var.REGION}"
+    application = "${var.ORG_NAME}-ebapp-${var.ENV}-${var.REGION}"
     bucket      = "${aws_s3_bucket.deployment.id}"
     key         = "${data.aws_s3_bucket_object.deploy_zip.id}"
 }
