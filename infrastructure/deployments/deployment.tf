@@ -1,9 +1,9 @@
 variable "SOFTWARE_VERSION" {}
 variable "ORG_NAME" {}
+variable "FUNCTION" {}
 variable "ENV" {}
 variable "REGION" {}
 variable "ENVIRONMENT" {}
-variable "FUNCTION" {}
 
 terraform {
     backend "s3" {
@@ -72,9 +72,14 @@ resource "aws_s3_bucket" "deployment" {
     }
 }
 
+data "aws_s3_bucket_object" "deploy_zip" {
+    bucket  = "${data.aws_s3_bucket.deployments.id}"
+    key     = "habitat-${var.SOFTWARE_VERSION}.zip"
+}
+
 resource "aws_elastic_beanstalk_application_version" "release" {
     name        = "${var.ORG_NAME}-ebrelease-${var.ENV}-${var.REGION}-${var.SOFTWARE_VERSION}"
     application = "${var.ORG_NAME}-ebenv-${var.ENV}-${var.REGION}"
-    bucket      = "${data.aws_s3_bucket.deployments.id}"
+    bucket      = "${aws_s3_bucket.deployment.id}"
     key         = "${data.aws_s3_bucket_object.deploy_zip.id}"
 }
