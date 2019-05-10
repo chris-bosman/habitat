@@ -1,5 +1,0 @@
-ORG_NAME            = "habitat"
-ENV                 = "prd"
-ENVIRONMENT         = "Production"
-REGION              = "eastus"
-FUNCTION            = "deploys"

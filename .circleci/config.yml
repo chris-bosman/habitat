@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   aws-s3: circleci/aws-s3@1.0.8
+  aws-cli: circleci/aws-cli@0.1.13
 
 jobs:
   build_client:
@@ -86,19 +87,25 @@ jobs:
 
   deploy_server:
     docker:
-      - image: hashicorp/terraform:full
+      - image: circleci/python
     working_directory: ~/repo
     steps:
       - checkout
+      - aws-cli/install
+      - aws-cli/configure:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_DEFAULT_REGION
       - attach_workspace:
           at: ~/repo
       - run: |
-          mv build_number infrastructure/deployments
-          cd infrastructure/deployments
-          echo `cat build_number`
-          terraform init -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY" -backend-config="region=$AWS_DEFAULT_REGION"
-          terraform plan -var "SOFTWARE_VERSION=$SOFTWARE_VERSION.`cat build_number`" -out=deploy
-          terraform apply -auto-approve -var "SOFTWARE_VERSION=$SOFTWARE_VERSION.`cat build_number`"
+          echo 'export BUILD_NUM=`cat build_number` >> $BASH_ENV'
+          echo 'export SOFTWARE_VERSION="$SOFTWARE_VERSION" >> $BASH_ENV'
+      - aws-s3/copy:
+          from: s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$BUILD_NUM/habitat.zip
+          to: s3://elasticbeanstalk-us-east-1-836165724612/$SOFTWARE_VERSION.$BUILD_NUM/habitat.zip
+      - run: |
+          aws elasticbeanstalk create-application-version --application-name habitat-ebapp-prd-eastus --version-label $SOFTWARE_VERSION.$BUILD_NUM --source-bundle S3Bucket="elasticbeanstalk-us-east-1-836165724612",S3Key="$SOFTWARE_VERSION.$BUILD_NUM/habitat.zip" --auto-create-application
 
   test_infrastructure:
     docker:
