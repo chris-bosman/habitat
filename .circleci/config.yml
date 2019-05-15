@@ -41,6 +41,7 @@ jobs:
       - run: npm run build-server
       - run: |
           mkdir server/packages
+          zip -ur server/habitat.zip .ebextensions
           mv server/habitat.zip server/packages
       - save_cache:
           paths:
