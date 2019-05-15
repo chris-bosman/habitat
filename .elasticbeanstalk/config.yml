@@ -1,6 +1,7 @@
 branch-defaults:
-  default:
+  master:
     environment: habitat-ebenv-prd-eastus
+    group_suffix: null
 environment-defaults:
   habitat-ebenv-prd-eastus:
     branch: null
