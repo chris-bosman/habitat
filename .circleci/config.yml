@@ -101,6 +101,9 @@ jobs:
       - run: |
           echo 'export BUILD_NUM=`cat build_number` >> $BASH_ENV'
           echo 'export SOFTWARE_VERSION="$SOFTWARE_VERSION" >> $BASH_ENV'
+      - run: |
+          echo 'Build Number $BUILD_NUM'
+          echo 'Build Number 2 ${BUILD_NUM}'
       - aws-s3/copy:
           from: s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$BUILD_NUM/habitat.zip
           to: s3://elasticbeanstalk-us-east-1-836165724612/$SOFTWARE_VERSION.$BUILD_NUM/habitat.zip
