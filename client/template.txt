@@ -1,14 +1,8 @@
 <!-- Pug Template -->
-<template lang="pug">
-
-</template>
+<template lang="pug"></template>
 
 <!-- SCSS Styling-->
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
 
 <!-- Javascript-->
-<script>
-
-</script>
+<script></script>
