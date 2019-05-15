@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   aws-s3: circleci/aws-s3@1.0.9
   aws-cli: circleci/aws-cli@0.1.13
+  awsebcli: sbc-orbs/awsebcli@0.0.3
 
 jobs:
   build_client:
@@ -96,16 +97,14 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_DEFAULT_REGION
+      - awsebcli:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_DEFAULT_REGION
       - attach_workspace:
           at: ~/repo
       - run: |
-          BUILD_NUMBER=$(cat build_number)
-          echo 'export BUILD_NUM="$BUILD_NUMBER" >> $BASH_ENV'
           echo 'export SOFTWARE_VERSION="$SOFTWARE_VERSION" >> $BASH_ENV'
-      - run: |
-          echo "Build Number $BUILD_NUM"
-          echo "Build Number 2 ${BUILD_NUM}"
-          echo "Build Number 3 `cat build_number`"
       - aws-s3/copy:
           from: s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.`cat build_number`/habitat.zip
           to: s3://elasticbeanstalk-us-east-1-836165724612/$SOFTWARE_VERSION.`cat build_number`/habitat.zip
@@ -114,6 +113,7 @@ jobs:
           aws-region: AWS_DEFAULT_REGION
       - run: |
           aws elasticbeanstalk create-application-version --application-name habitat-ebapp-prd-eastus --version-label $SOFTWARE_VERSION.`cat build_number` --source-bundle S3Bucket="elasticbeanstalk-us-east-1-836165724612",S3Key="$SOFTWARE_VERSION.`cat build_number`/habitat.zip" --auto-create-application
+          eb deploy --version $SOFTWARE_VERSION.`cat build_number`
 
   test_infrastructure:
     docker:
