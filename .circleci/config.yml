@@ -99,7 +99,8 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run: |
-          echo 'export BUILD_NUM="$(cat build_number)" >> $BASH_ENV'
+          BUILD_NUMBER=`cat build_number`
+          echo 'export BUILD_NUM="$BUILD_NUMBER" >> $BASH_ENV'
           echo 'export SOFTWARE_VERSION="$SOFTWARE_VERSION" >> $BASH_ENV'
       - run: |
           echo "Build Number $BUILD_NUM"
