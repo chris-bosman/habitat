@@ -32,5 +32,12 @@ module.exports = [
                 throw new Boom(err.message);
             }
         }
+    },
+    {
+        method: 'GET',
+        path: '/',
+        handler: (request, h) => {
+            return  h.response().code(200);
+        }
     }
 ];
