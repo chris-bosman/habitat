@@ -46,7 +46,7 @@ jobs:
       - run: |
           cd server
           mkdir packages
-          zip -ur habitat.zip .ebextensions
+          zip -ur habitat.zip ../.ebextensions
           mv habitat.zip packages
       - save_cache:
           paths:
