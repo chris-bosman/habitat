@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pack": "tsc && zip habitat.zip package.json && zip -r habitat.zip dist"
+    "pack": "tsc && zip -r habitat.zip dist"
   },
   "author": "Chris Bosman",
   "license": "ISC",
