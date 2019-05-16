@@ -44,10 +44,9 @@ jobs:
           npm i
           npm run pack
       - run: |
-          cd server
-          mkdir packages
-          zip -ur habitat.zip ../.ebextensions
-          mv habitat.zip packages
+          mkdir server/packages
+          zip -ur server/habitat.zip .ebextensions
+          mv server/habitat.zip server/packages
       - save_cache:
           paths:
             - ./server/node_modules
