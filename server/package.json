@@ -4,7 +4,7 @@
   "description": "habitat backend",
   "main": "index.js",
   "scripts": {
-    "start": "node ./dist/index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "tsc && cp -r node_modules dist/node_modules && zip -r habitat.zip dist"
   },
