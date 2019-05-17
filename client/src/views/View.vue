@@ -102,7 +102,11 @@ export default {
   },
   mounted() {
     //this.getResources();
-    this.currentStatus = "Map";
+    if (localStorage.getItem("vizView") != null) {
+      this.currentStatus = localStorage.getItem("vizView");
+    } else {
+      this.currentStatus = "Map";
+    }
   },
   methods: {
     showModal() {
