@@ -44,7 +44,9 @@ build:server:
       - server/*
 
 build:infrastructure:
-  image: hashicorp/terraform:full
+  image:
+    name: hashicorp/terraform:full
+    entrypoint: ["/bin/bash"]
   stage: build
   script:
     - cd infrastructure/aws
@@ -91,7 +93,9 @@ deploy:server:
     - build:server
 
 deploy:infrastructure:
-  image: hashicorp/terraform:full
+  image:
+    name: hashicorp/terraform:full
+    entrypoint: ["/bin/bash"]
   stage: deploy
   script:
     - cd infrastructure/aws
