@@ -18,7 +18,7 @@ jobs:
             - v1-dependencies-
       - run: |
           cd client
-          npm run i
+          npm i
           npm run build
       - save_cache:
           paths:
