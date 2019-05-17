@@ -72,6 +72,9 @@ deploy:client:
 deploy:server:
   image: circleci/python
   stage: deploy
+  before_script:
+    - pip3 install awscli --upgrade --user
+    - pip3 install awsebcli --upgrade --user
   script:
     - aws s3 sync server/packages s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID
     - aws s3 copy s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip s3://$AWS_EB_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip
