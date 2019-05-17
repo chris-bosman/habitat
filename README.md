@@ -3,8 +3,6 @@
 
 # Habitat
 
-**NOTE:** Not currently working.
-
 Habitat is intended to be a web UI for Terraform. The front-end is written in [Vue](https://vuejs.org/), [SCSS](https://sass-lang.com/), and [Pug](https://pugjs.org/api/getting-started.html). The back-end is written in [HapiJS](https://hapijs.com/) and interfaces with a [Mongo](https://www.mongodb.com/) Atlas database via [Mongoose](https://mongoosejs.com/).
 
 The front-end runs on [Netlify](https://netlify.com), and the backend runs on AWS(https://aws.amazon.com) and Elastic Beanstalk.
