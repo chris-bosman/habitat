@@ -1,3 +1,6 @@
+[![CircleCI](https://circleci.com/gh/chris-bosman/habitat/tree/master.svg?style=svg)](https://circleci.com/gh/chris-bosman/habitat/tree/master)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/22ef79a2-afa3-4f73-ae12-e9d58cb42890/deploy-status)](https://app.netlify.com/sites/yourhabitat/deploys)
+
 # Habitat
 
 **NOTE:** Not currently working.
