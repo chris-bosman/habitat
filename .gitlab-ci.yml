@@ -48,7 +48,7 @@ build:infrastructure:
   stage: build
   script:
     - cd infrastructure/aws
-    - terraform init -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY" -backend-config="region=$AWS_DEFAULT_REGION"
+    - terraform init
     - terraform plan -out=plan
   artifacts:
     paths:
@@ -95,7 +95,7 @@ deploy:infrastructure:
   stage: deploy
   script:
     - cd infrastructure/aws
-    - terraform init -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY" -backend-config="region=$AWS_DEFAULT_REGION"
+    - terraform init
     - terraform apply -auto-approve "plan"
   only:
     refs:
