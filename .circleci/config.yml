@@ -156,50 +156,40 @@ workflows:
     jobs:
       - build_client:
           filters:
-            branches:
-              ignore: master
             tags:
-              only: /^client.*/
+              only: /^client/
       - deploy_client:
           filters:
-            branches:
-              only: master
             tags:
-              only: /^client.*/
+              only: /^client/
       - build_server:
           filters:
             tags:
-              only: /^server.*/
+              only: /^server/
       - test_infrastructure:
           context: prd
           filters:
             tags:
-              only: /^infra.*/
+              only: /^infra/
       - apply_infrastructure:
           context: prd
           requires:
             - test_infrastructure
           filters:
-            branches:
-              only: master
             tags:
-              only: /^infra.*/
+              only: /^infra/
       - upload_server_package:
           context: prd
           requires:
             - build_server
             - apply_infrastructure
           filters:
-            branches:
-              only: master
             tags:
-              only: /^server.*/
+              only: /^server/
       - deploy_server:
           context: prd
           requires:
             - upload_server_package
           filters:
-            branches:
-              only: master
             tags:
-              only: /^server.*/
+              only: /^server/
