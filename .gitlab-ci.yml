@@ -46,6 +46,7 @@ deploy:server:
   before_script:
     - pip3 install awscli --upgrade --user
     - pip3 install awsebcli --upgrade --user
+    - echo 'export PATH="/home/circleci/.local/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
   script:
     - aws s3 sync server/packages s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID
     - aws s3 copy s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip s3://$AWS_EB_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip
