@@ -1,0 +1,82 @@
+stages:
+  - build
+  - deploy
+
+build:server:
+  image: circleci/node
+  stage: build
+  cache: 
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - server/node_modules/
+  script:
+    - cd server
+    - npm i
+    - npm run pack
+    - mkdir packages
+    - cd ..
+    - zip -ur server/habitat.zip .ebextensions
+    - mv server/habitat.zip server/packages
+  artifacts:
+    paths:
+      - server/packages/habitat.zip
+  only:
+    changes:
+      - server/*
+
+build:infrastructure:
+  image:
+    name: hashicorp/terraform:full
+    entrypoint: [""]
+  stage: build
+  script:
+    - cd infrastructure/aws
+    - terraform init -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY" -backend-config="region=$AWS_DEFAULT_REGION"
+    - terraform plan -out=plan
+  artifacts:
+    paths:
+      - infrastructure/aws/plan
+  only:
+    changes:
+      - infrastructure/*
+
+deploy:server:
+  image: circleci/python
+  stage: deploy
+  before_script:
+    - pip3 install awscli --upgrade --user
+    - pip3 install awsebcli --upgrade --user
+    - echo 'export PATH="/home/circleci/.local/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
+  script:
+    - aws s3 sync server/packages s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID
+    - aws s3 cp s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip s3://$AWS_EB_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip
+    - aws elasticbeanstalk create-application-version --application-name $AWS_EB_APP_NAME --version-label $SOFTWARE_VERSION.$CI_JOB_ID --source-bundle S3Bucket="$AWS_EB_S3_BUCKET",S3Key="$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip" --auto-create-application
+    - eb use $AWS_EB_ENV_NAME
+    - eb deploy --version $SOFTWARE_VERSION.$CI_JOB_ID
+    - eb setenv DB_PASS=$atlas_pw
+  only:
+    refs:
+    - master
+    changes:
+      - server/*
+  when: on_success
+  dependencies:
+    - build:server
+
+deploy:infrastructure:
+  image:
+    name: hashicorp/terraform:full
+    entrypoint: [""]
+  stage: deploy
+  script:
+    - cd infrastructure/aws
+    - terraform init -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY" -backend-config="region=$AWS_DEFAULT_REGION"
+    - terraform apply -auto-approve "plan"
+  only:
+    refs:
+    - master
+    changes:
+      - infrastructure/*
+  when: on_success
+  dependencies:
+    - build:infrastructure

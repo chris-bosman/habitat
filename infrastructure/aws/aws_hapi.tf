@@ -1,5 +1,3 @@
-variable "AWS_ACCOUNT_ID" {}
-variable "AWS_ACCOUNT_SECRET" {}
 variable "ORG_NAME" {}
 variable "ENV" {}
 variable "REGION" {}
@@ -9,14 +7,11 @@ variable "FUNCTION" {}
 terraform {
     backend "s3" {
         bucket  = "habitat-tf-state"
-        key     = "tfstate"
-        region  = "us-east-1"
+        key     = "prod.terraform.tfstate"
     }
 }
 
-provider "aws" {
-    region = "us-east-1"
-}
+provider "aws" {}
 
 data "aws_iam_policy" "AWSElasticBeanstalkWebTier" {
   arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
@@ -58,11 +53,11 @@ resource "aws_elastic_beanstalk_application" "deployment" {
 resource "aws_elastic_beanstalk_environment" "deployment" {
     name                = "${var.ORG_NAME}-ebenv-${var.ENV}-${var.REGION}"
     application         = "${aws_elastic_beanstalk_application.deployment.name}"
-    solution_stack_name = "64bit Amazon Linux 2018.03 v4.8.2 running Node.js"
+    solution_stack_name = "64bit Amazon Linux 2018.03 v4.8.3 running Node.js"
 
     setting {
         namespace   = "aws:autoscaling:launchconfiguration"
-        name        = "IamInstaneProfile"
+        name        = "IamInstanceProfile"
         value       = "${aws_iam_instance_profile.deployment.name}"
     }
 }

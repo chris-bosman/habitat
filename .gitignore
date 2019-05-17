@@ -24,8 +24,7 @@ yarn-error.log*
 *.sln
 *.sw*
 
-# User-defined
-*.tfvars
+# Terraform
 *.tfstate
-*.tfstate.backup
-.terraform
+*.tfstate.*
+**/.terraform/*

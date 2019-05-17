@@ -9,7 +9,7 @@
     "build-client": "cd client && npm run build",
     "build-server": "cd server && npm run pack",
     "client": "cd client && npm run serve",
-    "server": "cd server && npm run start",
+    "server": "cd server && npm run monitor",
     "start": "npm run server && cd .. && npm run client",
     "postinstall": "cd client && npm i && cd ../server && npm i"
   },
