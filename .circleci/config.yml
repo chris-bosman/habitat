@@ -157,27 +157,27 @@ workflows:
       - build_client:
           filters:
             tags:
-              only: /^client/
+              only: client
       - deploy_client:
           filters:
             tags:
-              only: /^client/
+              only: client
       - build_server:
           filters:
             tags:
-              only: /^server/
+              only: server
       - test_infrastructure:
           context: prd
           filters:
             tags:
-              only: /^infra/
+              only: infrastructure
       - apply_infrastructure:
           context: prd
           requires:
             - test_infrastructure
           filters:
             tags:
-              only: /^infra/
+              only: infrastructure
       - upload_server_package:
           context: prd
           requires:
@@ -185,11 +185,11 @@ workflows:
             - apply_infrastructure
           filters:
             tags:
-              only: /^server/
+              only: server
       - deploy_server:
           context: prd
           requires:
             - upload_server_package
           filters:
             tags:
-              only: /^server/
+              only: server
