@@ -158,13 +158,23 @@ workflows:
           filters:
             branches:
               ignore: master
+            tags:
+              only: /^client*/
       - deploy_client:
           filters:
             branches:
               only: master
-      - build_server
+            tags:
+              only: /^client*/
+      - build_server:
+          filters:
+            tags:
+              only: /^server*/
       - test_infrastructure:
           context: prd
+          filters:
+            tags:
+              only: /^infra*/
       - apply_infrastructure:
           context: prd
           requires:
@@ -172,6 +182,8 @@ workflows:
           filters:
             branches:
               only: master
+            tags:
+              only: /^infra*/
       - upload_server_package:
           context: prd
           requires:
@@ -180,6 +192,8 @@ workflows:
           filters:
             branches:
               only: master
+            tags:
+              only: /^server*/
       - deploy_server:
           context: prd
           requires:
@@ -187,3 +201,5 @@ workflows:
           filters:
             branches:
               only: master
+            tags:
+              only: /^server*/
