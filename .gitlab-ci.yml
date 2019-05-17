@@ -2,25 +2,6 @@ stages:
   - build
   - deploy
 
-build:client:
-  image: circleci/node
-  stage: build
-  cache: 
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - client/node_modules/
-  before_script:
-    - cd client
-    - npm i
-  script:
-    - npm run build
-  only:
-    changes:
-      - client/*
-  except:
-    refs:
-      - master
-
 build:server:
   image: circleci/node
   stage: build
@@ -58,18 +39,6 @@ build:infrastructure:
   only:
     changes:
       - infrastructure/*
-
-deploy:client:
-  image: circleci/node
-  stage: deploy
-  script:
-    - npm i
-    - npm run build-client
-  only:
-    refs:
-      - master
-    changes:
-      - client/*
 
 deploy:server:
   image: circleci/python
