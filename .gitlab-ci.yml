@@ -50,7 +50,7 @@ deploy:server:
   script:
     - aws s3 sync server/packages s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID
     - aws s3 cp s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip s3://$AWS_EB_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip
-    - aws elasticbeanstalk create-application-vesion --application-name $AWS_EB_APP_NAME --version-label $SOFTWARE_VERSION.$CI_JOB_ID --source-bundle S3Bucket="$AWS_EB_S3_BUCKET",S3Key="$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip" --auto-create-application
+    - aws elasticbeanstalk create-application-version --application-name $AWS_EB_APP_NAME --version-label $SOFTWARE_VERSION.$CI_JOB_ID --source-bundle S3Bucket="$AWS_EB_S3_BUCKET",S3Key="$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip" --auto-create-application
     - eb deploy --version $SOFTWARE_VERSION.$CI_JOB_ID
     - eb setenv DB_PASS=$atlas_pw
   only:
