@@ -4,9 +4,9 @@
   "description": "habitat backend",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pack": "zip habitat.zip *"
+    "pack": "tsc && cp -r node_modules dist/node_modules && zip -r habitat.zip dist"
   },
   "author": "Chris Bosman",
   "license": "ISC",

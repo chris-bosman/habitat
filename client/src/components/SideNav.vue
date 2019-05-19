@@ -77,7 +77,7 @@
               align-self: center;
             }
             &:hover {
-              background-color: rgb(190, 189, 184);
+              background-color: rgba(190, 189, 184, 0.7);
               color: black;
             }
           }
@@ -114,7 +114,7 @@
     width: 5vw;
   }
   to {
-    width: 14vw;
+    width: 11vw;
   }
 }
 
@@ -136,6 +136,7 @@ import store from "../store";
 let menuCollapsed = false;
 
 export default {
+  name: "SideNav",
   components: {
     Header: Header
   },

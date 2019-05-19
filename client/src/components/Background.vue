@@ -21,5 +21,4 @@
 </style>
 
 <!-- Javascript-->
-<script>
-</script>
+<script></script>

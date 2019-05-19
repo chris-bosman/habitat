@@ -1,4 +1,4 @@
-import * as Boom from "Boom";
+import * as Boom from 'boom';
 import { createResource } from './components/uploadHandler';
 import { Resource } from './models/resource';
 
@@ -31,6 +31,13 @@ module.exports = [
             } catch (err) {
                 throw new Boom(err.message);
             }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/',
+        handler: async (request, h) => {
+            return "Hello World";
         }
     }
 ];

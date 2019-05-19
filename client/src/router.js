@@ -3,10 +3,6 @@ import Router from "vue-router";
 import Auth from "@okta/okta-vue";
 
 import Home from "@/views/Home";
-import Admin from "@/views/Admin";
-import Analyze from "@/views/Analyze";
-import Start from "@/views/Start";
-import Map from "@/views/View";
 
 Vue.use(Router);
 
@@ -25,11 +21,10 @@ let router = new Router({
     {
       path: "/",
       name: "Home",
-      component: Home
-    },
-    {
-      path: "/login",
-      redirect: "/implicit/callback"
+      component: Home,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/implicit/callback",
@@ -38,7 +33,7 @@ let router = new Router({
     {
       path: "/Admin",
       name: "Admin",
-      component: Admin,
+      component: () => import("@/views/Admin.vue"),
       meta: {
         requiresAuth: true
       }
@@ -46,7 +41,7 @@ let router = new Router({
     {
       path: "/Analyze",
       name: "Analyze",
-      component: Analyze,
+      component: () => import("@/views/Analyze.vue"),
       meta: {
         requiresAuth: true
       }
@@ -54,7 +49,7 @@ let router = new Router({
     {
       path: "/Start",
       name: "Start",
-      component: Start,
+      component: () => import("@/views/Start.vue"),
       meta: {
         requiresAuth: true
       }
@@ -62,7 +57,7 @@ let router = new Router({
     {
       path: "/View",
       name: "View",
-      component: Map,
+      component: () => import("@/views/View.vue"),
       meta: {
         requiresAuth: true
       }

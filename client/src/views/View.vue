@@ -70,7 +70,7 @@ import ListViz from "@/components/visualizations/ListViz";
 import MapViz from "@/components/visualizations/MapViz";
 import TreeViz from "@/components/visualizations/TreeViz";
 
-import { fetchResources } from "@/scripts/webRequests/fetchResources";
+//import { fetchResources } from "@/scripts/webRequests/fetchResources";
 
 var view;
 
@@ -101,8 +101,8 @@ export default {
     };
   },
   mounted() {
-    this.getResources();
-    if (localStorage.getItem("vizView")) {
+    //this.getResources();
+    if (localStorage.getItem("vizView") != null) {
       this.currentStatus = localStorage.getItem("vizView");
     } else {
       this.currentStatus = "Map";
@@ -119,14 +119,14 @@ export default {
       view = event.srcElement.innerText;
       localStorage.setItem("vizView", view);
       this.currentStatus = view;
-    },
+    } /*,
     getResources() {
       fetchResources()
         .then(resourceData => resourceData.json())
         .then(json => {
           var returnedResource = (json[0]);
         });
-    }
+    }*/
   }
 };
 </script>

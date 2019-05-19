@@ -1,0 +1,1 @@
+Start your Habitat journey by importing your first Terraform state (.tfstate) file.

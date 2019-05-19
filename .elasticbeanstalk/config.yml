@@ -1,0 +1,21 @@
+branch-defaults:
+  master:
+    environment: habitat-ebenv-prd-eastus
+    group_suffix: null
+environment-defaults:
+  habitat-ebenv-prd-eastus:
+    branch: null
+    repository: null
+global:
+  application_name: habitat-ebapp-prd-eastus
+  default_ec2_keyname: null
+  default_platform: arn:aws:elasticbeanstalk:us-east-1::platform/Node.js running on
+    64bit Amazon Linux/4.8.3
+  default_region: us-east-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  sc: null
+  workspace_type: Application
