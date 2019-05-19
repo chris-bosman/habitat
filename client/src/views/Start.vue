@@ -6,31 +6,33 @@
     include:markdown-it ../data/text/gs.md
   .cards
     .column
-      .card(@click="showModal" id="uploadCard")
-        h3 Import
-        p Start your Habitat journey by importing your first Terraform state (.tfstate) file.
-        .ico
-          img(src='@/assets/upload.svg')
+      a(href='Admin')
+        Card(v-for="(item, index) in orgCard" :key="item.title" :cardtitle="item.title" :cardtext="item.text" :cardicon="item.icon")
+    .column(@click="showModal")
+      Card(id="uploadCard" v-for="(item,index) in importCard" :key="item.title" :cardtitle="item.title" :cardtext="item.text" :cardicon="item.icon")
     .column
       a(href='View')
-        .card
-          h3 Visualize
-          p Dig into Habitat's functionality by checking out our visualization tools.
-          .ico
-            img(src='@/assets/visualize.svg')
+        Card(v-for="(item, index) in vizCard" :key="item.title" :cardtitle="item.title" :cardtext="item.text" :cardicon="item.icon")
     .column
       a(href='Analyze')
-        .card
-          h3 Analyze
-          p Compare the real-world state of your infrastructure against your Terraform code.
-          .ico
-            img(src='@/assets/analyze.svg')
+        Card(id="analyzeCard" v-for="(item, index) in analyzeCard" :key="item.title" :cardtitle="item.title" :cardtext="item.text" :cardicon="item.icon")
 </template>
 
 <!-- SCSS Styling-->
 <style lang="scss">
 #Modal {
   z-index: 5;
+}
+
+#uploadCard {
+  cursor: pointer;
+  & i {
+    margin-left: 4vw;
+  }
+}
+
+#analyzeCard i {
+  margin-left: 4vw;
 }
 
 .gs {
@@ -43,7 +45,7 @@
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    margin-top: 7vh;
+    margin: 7vh 0 0 7vw;
     &:after {
       display: table;
       clear: both;
@@ -54,48 +56,6 @@
       height: 30vh;
       max-height: 400px;
       width: 25vw;
-      & .card {
-        color: rgb(190, 189, 184);
-        box-sizing: inherit;
-        box-shadow: 1px 1px 1px 1px rgba(190, 189, 184, 0.3);
-        padding: 16px;
-        background-color: rgba(30, 32, 29, 0.8);
-        height: 100%;
-        border-radius: 16px;
-        text-align: left;
-        border-style: solid;
-        border-width: 0.5px;
-        border-color: rgb(190, 189, 184);
-        transition: transform 0.1s;
-        min-width: 125px;
-        max-width: 14vw;
-        display: flex;
-        flex-direction: column;
-        &:hover {
-          color: rgb(190, 189, 184);
-          transform: scale(1.02);
-        }
-        & h3 {
-          text-align: center;
-          margin: 0;
-        }
-        &#uploadCard {
-          cursor: pointer;
-        }
-        & .ico {
-          box-sizing: inherit;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          flex-grow: 1;
-          & img {
-            opacity: 0.8;
-            width: 90%;
-            height: 40%;
-          }
-        }
-      }
     }
   }
 }
@@ -104,14 +64,50 @@
 <!-- Javascript-->
 <script>
 import Modal from "@/components/Upload";
+import Card from "@/components/Card";
+
+import orgCardText from "raw-loader!@/data/text/orgCard.txt";
+import importCardText from "raw-loader!@/data/text/importCard.txt";
+import vizCardText from "raw-loader!@/data/text/vizCard.txt";
+import analyzeCardText from "raw-loader!@/data/text/analyzeCard.txt";
+
 export default {
   name: "Start",
   components: {
-    Modal: Modal
+    Modal: Modal,
+    Card: Card
   },
   data() {
     return {
-      isModalVisible: false
+      isModalVisible: false,
+      orgCard: [
+        {
+          title: "Configure",
+          text: orgCardText,
+          icon: "fas fa-cogs"
+        }
+      ],
+      importCard: [
+        {
+          title: "Import",
+          text: importCardText,
+          icon: "fas fa-file-upload"
+        }
+      ],
+      vizCard: [
+        {
+          title: "Visualize",
+          text: vizCardText,
+          icon: "fas fa-tv"
+        }
+      ],
+      analyzeCard: [
+        {
+          title: "Analyze",
+          text: analyzeCardText,
+          icon: "fas fa-flask"
+        }
+      ]
     };
   },
   methods: {
