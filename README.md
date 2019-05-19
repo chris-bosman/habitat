@@ -1,3 +1,4 @@
+[![pipeline status](https://gitlab.com/chrisbosman/habitat/badges/master/pipeline.svg)](https://gitlab.com/chrisbosman/habitat/commits/master)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/22ef79a2-afa3-4f73-ae12-e9d58cb42890/deploy-status)](https://app.netlify.com/sites/yourhabitat/deploys)
 
 # Habitat
