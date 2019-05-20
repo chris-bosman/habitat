@@ -1,8 +1,8 @@
 <!-- Pug Template -->
 <template lang="pug">
 .topnav
-    button(v-if="authenticated" v-on:click="logout()" id="logout-button") Logout
-    button(v-else v-on:click="login()" id="login-button") Login
+    button(v-if="authenticated" @click="logout()" id="logout-button") Logout
+    button(v-else @click="login()" id="login-button") Login
     router-link(to="/") Home
     router-link(to="/Docs") Documentation
     a(href="https://github.com/chris-bosman/habitat.git" @click.prevent="openNewWindow($event)") GitHub
@@ -48,7 +48,7 @@ import store from "../store";
 
 export default {
   name: "TopNav",
-  data: function() {
+  data() {
     return {
       authenticated: false
     };

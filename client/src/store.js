@@ -11,7 +11,9 @@ const store = new Vuex.Store({
     uploadSuccess: false,
     responseResult: [],
     menuCollapsed: null,
-    authenticated: false
+    authenticated: false,
+    orgExists: false,
+    orgName: null
   },
   mutations: {
     UPLOAD_SUCCESS(state, uploadSuccess) {
@@ -25,6 +27,10 @@ const store = new Vuex.Store({
     },
     AUTH_STATE(state, authenticated) {
       state.authenticated = authenticated;
+    },
+    ORG_EXISTS(state, { orgExists, orgName }) {
+      state.orgExists = orgExists;
+      state.orgName = orgName;
     }
   },
   actions: {
@@ -58,6 +64,9 @@ const store = new Vuex.Store({
     },
     registerAuth({ commit }, authenticated) {
       commit("AUTH_STATE", authenticated);
+    },
+    registerOrg({ commit }, { orgExists, orgName }) {
+      commit("ORG_EXISTS", { orgExists, orgName });
     }
   }
 });
