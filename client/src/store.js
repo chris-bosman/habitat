@@ -1,4 +1,4 @@
-import { upload } from "./scripts/webRequests/uploadService";
+import { upload } from "./scripts/webRequests/serverInterface";
 import { responseHandler } from "./scripts/webRequests/responseHandler";
 
 import Vue from "vue";

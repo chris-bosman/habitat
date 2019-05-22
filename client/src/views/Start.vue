@@ -26,13 +26,6 @@
 
 #uploadCard {
   cursor: pointer;
-  & i {
-    margin-left: 4vw;
-  }
-}
-
-#analyzeCard i {
-  margin-left: 4vw;
 }
 
 .gs {

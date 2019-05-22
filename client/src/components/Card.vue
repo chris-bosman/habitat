@@ -14,8 +14,8 @@
   box-shadow: 1px 1px 1px 1px rgba(190, 189, 184, 0.3);
   padding: 2vh 2vw;
   background-color: rgba(30, 32, 29, 0.8);
-  min-height: 30vh;
-  max-height: 30vh;
+  min-height: 250px;
+  height: 30vh;
   border-radius: 16px;
   text-align: left;
   border-style: solid;
@@ -34,13 +34,17 @@
     text-align: center;
     margin: 0;
   }
+  & p {
+    height: 10vh;
+  }
   & i {
     box-sizing: inherit;
     text-align: center;
     font-size: 3vw;
-    position: absolute;
-    bottom: 8vh;
-    margin: 0 3vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 2vh;
   }
 }
 </style>

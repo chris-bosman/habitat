@@ -6,7 +6,9 @@
   .form
     .settings(v-if="this.$store.state.orgExists")
       h3 Organization Name
-      p Organization: {{ this.$store.state.orgName }}
+      .org
+        span Organization:
+        span(style="margin-left:50px;") {{ this.$store.state.orgName }}
       button(@click="deleteOrg()") Delete Organization
     .setup(v-else)
       h3 Organization Name
@@ -17,6 +19,14 @@
 <style lang="scss">
 .form {
   margin-top: 7vh;
+  & .settings {
+    & .org {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 5.75vh 1.55vw 4vh 1.55vw;
+    }
+  }
   & .setup {
     & .ivu-form-item {
       display: flex;
@@ -53,7 +63,7 @@ export default {
           store.dispatch("registerOrg", { orgExists, orgName });
         },
         submitBtn: {
-          innerText: "Submit"
+          innerText: "Create Organization"
         },
         form: {
           labelWidth: 50
