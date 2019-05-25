@@ -5,15 +5,17 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "monitor": "nodemon index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "tsc && cp -r node_modules dist/node_modules && zip -r habitat.zip dist"
   },
   "author": "Chris Bosman",
   "license": "ISC",
   "dependencies": {
-    "boom": "^7.3.0",
+    "@hapi/boom": "^7.4.2",
+    "@hapi/hapi": "^18.3.1",
+    "@okta/jwt-verifier": "0.0.15",
     "dotenv": "^6.2.0",
-    "hapi": "^17.8.5",
     "joi": "^14.3.1",
     "mongoose": "^5.5.1"
   },

@@ -61,6 +61,14 @@ let router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/Server",
+      name: "Server",
+      component: () => import("@/views/Server.vue"),
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 });

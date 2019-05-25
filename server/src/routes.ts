@@ -1,5 +1,7 @@
-import * as Boom from 'boom';
+import * as Boom from '@hapi/boom';
+
 import { createResource } from './components/uploadHandler';
+import { validate } from './components/verifyAuth';
 import { Resource } from './models/resource';
 
 module.exports = [
@@ -37,7 +39,7 @@ module.exports = [
         method: 'GET',
         path: '/',
         handler: async (request, h) => {
-            return "Hello World";
+            validate(request);
         }
     }
 ];

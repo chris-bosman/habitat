@@ -54,6 +54,7 @@ deploy:server:
     - eb use $AWS_EB_ENV_NAME
     - eb deploy --version $SOFTWARE_VERSION.$CI_JOB_ID
     - eb setenv DB_PASS=$atlas_pw
+    - eb setenv OKTA_CLIENT_ID=$OKTA_CLIENT_ID
   only:
     refs:
     - master

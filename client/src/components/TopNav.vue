@@ -6,6 +6,7 @@
     router-link(to="/") Home
     router-link(to="/Docs") Documentation
     a(href="https://github.com/chris-bosman/habitat.git" @click.prevent="openNewWindow($event)") GitHub
+    router-link(to="/Server") Server
 </template>
 
 <!-- SCSS Styling-->
