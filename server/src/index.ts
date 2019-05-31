@@ -2,6 +2,7 @@ require('dotenv').config();
 
 import * as express from 'express';
 import * as cors from 'cors';
+import * as bodyParser from 'body-parser';
 
 import { validateUser } from './components/auth';
 import mongodb from "./components/db";
@@ -16,6 +17,7 @@ var corsOptions = {
 }
 
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
     validateUser(req, res, next);

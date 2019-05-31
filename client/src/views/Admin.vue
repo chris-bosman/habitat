@@ -92,7 +92,7 @@ export default {
           this.orgName = formData.orgName;
           var orgExists = true;
           var orgName = this.orgName;
-          createOrg(event, orgName);
+          createOrg(orgName, event);
           store.dispatch("registerOrg", { orgExists, orgName });
         },
         submitBtn: {

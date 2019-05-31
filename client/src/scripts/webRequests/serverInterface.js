@@ -48,17 +48,16 @@ async function uploadResource(formData, event) {
 }
 
 async function createOrg(orgName, event) {
-  const user = await Vue.prototype.$auth.getUser();
   const accessToken = await Vue.prototype.$auth.getAccessToken();
-  console.log(orgName);
   console.log(event);
-  console.log(user.email);
 
   return axios({
     url: `${process.env.VUE_APP_SERVER}/api/v1/organizations`,
     method: "POST",
     crossDomain: true,
-    data: `{organization: ${orgName}, user: ${user.email}}`,
+    data: {
+      organization: orgName
+    },
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`
