@@ -1,4 +1,4 @@
-import store from "../../store";
+import { uploadResource } from "../webRequests/serverInterface";
 
 function tfStateParser(reader, event) {
   const formData = new FormData();
@@ -57,7 +57,7 @@ function tfStateParser(reader, event) {
   }
   var resourceAttributes = JSON.stringify(resourceAttributesObject);
   formData.append("resourceAttributes", resourceAttributes);
-  store.dispatch("uploadResult", { formData, event });
+  uploadResource(formData, event);
 }
 
 export { tfStateParser };

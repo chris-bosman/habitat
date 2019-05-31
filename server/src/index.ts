@@ -1,26 +1,27 @@
 require('dotenv').config();
 
-import * as Hapi from '@hapi/hapi';
+import * as express from 'express';
+import * as cors from 'cors';
 
+import { validateUser } from './components/auth';
 import mongodb from "./components/db";
-import { validate } from './components/verifyAuth';
+import router from "./routes";
 
-const routes = require('./routes');
+const app = express();
+const port = process.env.PORT;
 
-const init = async () => {
-    const app = new Hapi.Server({
-        port: process.env.PORT,
-        host: process.env.HOST,
-        routes: { 
-            cors: true
-        }
-    });
+var corsOptions = {
+    origin: process.env.CLIENT_FQDN,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
+}
 
-    app.route(routes);
+app.use(cors(corsOptions));
 
-    await app.start();
-    console.log(`Server running at: ${app.info.uri}`);
-};
+app.use((req, res, next) => {
+    validateUser(req, res, next);
+})
+
+app.use('/', router);
 
 mongodb.on("error", err => {
     console.log("Unable to connect to database", err);
@@ -35,4 +36,4 @@ process.on('unhandledRejection', (err) => {
     process.exit(1);
 });
 
-init();
+app.listen(port, () => console.log(`Server listening at ${process.env.HOST}:${process.env.PORT}`));

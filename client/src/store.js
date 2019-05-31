@@ -1,6 +1,3 @@
-import { upload } from "./scripts/webRequests/serverInterface";
-import { responseHandler } from "./scripts/webRequests/responseHandler";
-
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -31,33 +28,15 @@ const store = new Vuex.Store({
     ORG_EXISTS(state, { orgExists, orgName }) {
       state.orgExists = orgExists;
       state.orgName = orgName;
+    },
+    SMALL_VIEWPORT(state, smallWindow) {
+      state.smallWindow = smallWindow;
     }
   },
   actions: {
-    uploadResult({ commit }, { formData, event }) {
-      var responseResult, uploadSuccess;
-      try {
-        upload(formData, event).then(response => {
-          responseHandler(response);
-          if (!response.ok) {
-            uploadSuccess = false;
-            // eslint-disable-next-line
-            responseResult = `Error attempting to reach ${response.url}: ${response.status} ${response.statusText}`;
-            commit("UPLOAD_SUCCESS", uploadSuccess);
-            commit("UPLOAD_RESULT", responseResult);
-          } else {
-            uploadSuccess = true;
-            responseResult = "Success!";
-            commit("UPLOAD_SUCCESS", uploadSuccess);
-            commit("UPLOAD_RESULT", responseResult);
-          }
-        });
-      } catch (err) {
-        uploadSuccess = false;
-        responseResult = err;
-        commit("UPLOAD_SUCCESS", uploadSuccess);
-        commit("UPLOAD_RESULT", responseResult);
-      }
+    uploadResult({ commit }, { uploadSuccess, responseResult }) {
+      commit("UPLOAD_SUCCESS", uploadSuccess);
+      commit("UPLOAD_RESULT", responseResult);
     },
     registerMenuChange({ commit }, menuCollapsed) {
       commit("COLLAPSE_STATE", menuCollapsed);
@@ -67,6 +46,9 @@ const store = new Vuex.Store({
     },
     registerOrg({ commit }, { orgExists, orgName }) {
       commit("ORG_EXISTS", { orgExists, orgName });
+    },
+    registerWindowWidth({ commit }, smallWindow) {
+      commit("SMALL_VIEWPORT", smallWindow);
     }
   }
 });

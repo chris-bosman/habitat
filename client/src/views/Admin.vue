@@ -9,7 +9,7 @@
       .org
         span Organization:
         span(style="margin-left:50px;") {{ this.$store.state.orgName }}
-      button(@click="deleteOrg()") Delete Organization
+      button(@click="deleteOrg()" class="delete-org-button") Delete Organization
     .setup(v-else)
       h3 Organization Name
       form-create(ref="fc" v-model="fApi" :rule="rule" :option="option")
@@ -26,6 +26,23 @@
       justify-content: flex-start;
       margin: 5.75vh 1.55vw 4vh 1.55vw;
     }
+    & .delete-org-button {
+      background-color: rgba(30, 32, 29, 0.8);
+      box-shadow: 0.25px rgba(190, 189, 184, 0.3);
+      color: rgb(190, 189, 184);
+      border-radius: 4px;
+      text-align: left;
+      border-style: solid;
+      border-width: 0.5px;
+      border-color: rgb(190, 189, 184);
+      height: 4vh;
+      cursor: pointer;
+      transition: transform 0.1s;
+      &:hover {
+        color: rgb(190, 189, 184);
+        transform: scale(1.04);
+      }
+    }
   }
   & .setup {
     & .ivu-form-item {
@@ -35,6 +52,21 @@
     }
     & .ivu-btn {
       margin-top: 4vh;
+      background-color: rgba(30, 32, 29, 0.8);
+      box-shadow: 0.25px rgba(190, 189, 184, 0.3);
+      color: rgb(190, 189, 184);
+      border-radius: 4px;
+      text-align: left;
+      border-style: solid;
+      border-width: 0.5px;
+      border-color: rgb(190, 189, 184);
+      height: 4vh;
+      cursor: pointer;
+      transition: transform 0.1s;
+      &:hover {
+        color: rgb(190, 189, 184);
+        transform: scale(1.04);
+      }
     }
   }
 }
@@ -44,6 +76,7 @@
 <script>
 import store from "../store";
 import { maker } from "form-create";
+import { createOrg } from "@/scripts/webRequests/serverInterface";
 
 export default {
   name: "Admin",
@@ -59,7 +92,7 @@ export default {
           this.orgName = formData.orgName;
           var orgExists = true;
           var orgName = this.orgName;
-          console.log(this.orgName);
+          createOrg(event, orgName);
           store.dispatch("registerOrg", { orgExists, orgName });
         },
         submitBtn: {
@@ -76,13 +109,11 @@ export default {
       var orgExists = false;
       this.orgName = null;
       var orgName = this.orgName;
-      console.log(orgExists);
       store.dispatch("registerOrg", { orgExists, orgName });
     }
   },
   mounted() {
     this.model = this.fApi.model();
-    console.log(this.$store.state.orgExists);
   }
 };
 </script>

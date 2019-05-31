@@ -55,6 +55,7 @@ deploy:server:
     - eb deploy --version $SOFTWARE_VERSION.$CI_JOB_ID
     - eb setenv DB_PASS=$atlas_pw
     - eb setenv OKTA_CLIENT_ID=$OKTA_CLIENT_ID
+    - eb setenv OKTA_JWT_KEY=$OKTA_JWT_KEY
   only:
     refs:
     - master

@@ -20,7 +20,7 @@ html {
   color: rgb(235, 234, 229);
   font-family: "Raleway", sans-serif;
   font-weight: lighter;
-  font-size: 0.8vw;
+  font-size: calc(5px + 0.5vw);
   width: 100%;
   height: 100%;
   overflow-x: hidden;
@@ -63,6 +63,16 @@ body {
 import Background from "@/components/Background";
 import SideNav from "@/components/SideNav";
 import TopNav from "@/components/TopNav";
+import store from "./store";
+
+var viewWidth = window.matchMedia("(max-width:700px)");
+
+function hideText(viewWidth) {
+  if (viewWidth.matches) {
+    var smallWindow = true;
+    store.dispatch("registerWindowWidth", smallWindow);
+  }
+};
 
 export default {
   name: "Home",

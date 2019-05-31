@@ -2,8 +2,6 @@ import * as mongoose from 'mongoose';
 
 require('dotenv').config();
 
-console.log(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true`);
-
 const connString = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true`;
 const dbConfig: mongoose.ConnectionOptions = {
     useNewUrlParser: true

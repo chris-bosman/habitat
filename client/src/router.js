@@ -21,10 +21,7 @@ let router = new Router({
     {
       path: "/",
       name: "Home",
-      component: Home,
-      meta: {
-        requiresAuth: true
-      }
+      component: Home
     },
     {
       path: "/implicit/callback",
@@ -58,14 +55,6 @@ let router = new Router({
       path: "/View",
       name: "View",
       component: () => import("@/views/View.vue"),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: "/Server",
-      name: "Server",
-      component: () => import("@/views/Server.vue"),
       meta: {
         requiresAuth: true
       }

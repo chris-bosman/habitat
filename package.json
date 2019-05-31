@@ -23,5 +23,7 @@
     "url": "https://github.com/chris-bosman/habitat/issues"
   },
   "homepage": "https://github.com/chris-bosman/habitat#readme",
-  "dependencies": {}
+  "dependencies": {
+    "jwks-rsa": "^1.5.1"
+  }
 }

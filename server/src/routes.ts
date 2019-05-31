@@ -1,45 +1,26 @@
-import * as Boom from '@hapi/boom';
-
+import * as express from 'express';
+import * as multer from 'multer';
 import { createResource } from './components/uploadHandler';
-import { validate } from './components/verifyAuth';
-import { Resource } from './models/resource';
 
-module.exports = [
-    {
-        method: 'POST',
-        path: '/api/v1/tfstate',
-        options: {
-            payload: {
-                output: 'stream',
-                allow: 'multipart/form-data'
-            }
-        },
-        handler: async (request, h) => {
-            try {
-                await createResource(request);
-                return h.response();
-            } catch(err) {
-                throw Boom.badData(err.message);
-            }
-        }
-    },
-    {
-        method: 'GET',
-        path: '/api/v1/tfstate',
-        handler: async (request, h) => {
-            try {
-                var resource = await Resource.find().exec();
-                return h.response(resource);
-            } catch (err) {
-                throw new Boom(err.message);
-            }
-        }
-    },
-    {
-        method: 'GET',
-        path: '/',
-        handler: async (request, h) => {
-            validate(request);
-        }
-    }
-];
+const upload = multer();
+const router = express.Router();
+router.get('/', (req, res, next) => {
+    res.status(200);
+    res.send("Hello World");
+});
+
+router.get('/api/v1/health', (req, res, next) => {
+    res.status(200);
+    res.send("Healthy");
+});
+
+router.post('/api/v1/tfstate', upload.none(), (req, res, next) => {
+    var newResource = createResource(req);
+    newResource.then(newResource => {
+        res.status(200).json({'message': 'Success'});
+    }).catch(err => {
+        res.status(400).send(err.message);
+    });
+});
+
+export default router;
