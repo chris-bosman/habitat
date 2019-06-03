@@ -5,19 +5,22 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    uploadSuccess: false,
-    responseResult: [],
+    requestSuccess: false,
+    requestResult: null,
     menuCollapsed: null,
     authenticated: false,
     orgExists: false,
-    orgName: null
+    orgName: null,
+    smallWindow: null,
+    useLoadingModal: false,
+    useResultModal: false
   },
   mutations: {
-    UPLOAD_SUCCESS(state, uploadSuccess) {
-      state.uploadSuccess = uploadSuccess;
+    REQUEST_SUCCESS(state, requestSuccess) {
+      state.requestSuccess = requestSuccess;
     },
-    UPLOAD_RESULT(state, responseResult) {
-      state.responseResult = responseResult;
+    REQUEST_RESULT(state, requestResult) {
+      state.requestResult = requestResult;
     },
     COLLAPSE_STATE(state, menuCollapsed) {
       state.menuCollapsed = menuCollapsed;
@@ -31,12 +34,18 @@ const store = new Vuex.Store({
     },
     SMALL_VIEWPORT(state, smallWindow) {
       state.smallWindow = smallWindow;
+    },
+    LOADING_STATE(state, useLoadingModal) {
+      state.useLoadingModal = useLoadingModal;
+    },
+    SHOW_RESULTS(state, useResultModal) {
+      state.useResultModal = useResultModal;
     }
   },
   actions: {
-    uploadResult({ commit }, { uploadSuccess, responseResult }) {
-      commit("UPLOAD_SUCCESS", uploadSuccess);
-      commit("UPLOAD_RESULT", responseResult);
+    requestResult({ commit }, { requestSuccess, requestResult }) {
+      commit("REQUEST_SUCCESS", requestSuccess);
+      commit("REQUEST_RESULT", requestResult);
     },
     registerMenuChange({ commit }, menuCollapsed) {
       commit("COLLAPSE_STATE", menuCollapsed);
@@ -49,6 +58,12 @@ const store = new Vuex.Store({
     },
     registerWindowWidth({ commit }, smallWindow) {
       commit("SMALL_VIEWPORT", smallWindow);
+    },
+    registerLoading({ commit }, useLoadingModal) {
+      commit("LOADING_STATE", useLoadingModal);
+    },
+    triggerResults({ commit }, useResultModal) {
+      commit("SHOW_RESULTS", useResultModal);
     }
   }
 });

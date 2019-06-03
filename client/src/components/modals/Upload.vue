@@ -1,35 +1,35 @@
 <!-- Pug Template -->
 <template lang="pug">
 .modal-wrapper
-    .modal(role="dialog" aria-labelledby="Habitat Upload" aria-describedy="Upload Terraform State Files to Habitat")
-        .modal-header
-            slot(name="header")
-                .close-button
-                    span(@click="close" aria-label="Close modal") &times;
-        .modal-body
-            slot(name="body")
-              .container(v-if="isInitial || isSaving || isSuccess || isFailed || isServerResponse")
-                div(@dragover="dragging=true" @dragleave="dragging=false" @click="reset()" :class="['upload-box', dragging ? 'upload-box-over' : '']")
-                  .text
-                      span
-                        template(v-if="isInitial")
-                          p Drag & Drop or &nbsp;
-                            div(id="clickable") Click to Browse
-                        template(v-if="isSaving")
-                          p Uploading {{ fileCount }} files...
-                        template(v-if="isServerResponse && this.$store.state.uploadSuccess")
-                          p Uploaded {{ fileCount }} file(s) successfully. 
-                          center
-                            p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Upload more files?]
-                        template(v-if="isFailed")
-                          p(class="error") {{ uploadResponse }}
-                          center
-                            p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Reset upload form?]
-                        template(v-if="isServerResponse && !this.$store.state.uploadSuccess")
-                          p(class="error") {{ this.$store.state.responseResult }}
-                          center
-                            p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Reset upload form?]
-                  input(v-if="isInitial" type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event)" accept=".tfstate" class="input-file")                                           
+  .modal(role="dialog" aria-labelledby="Habitat Upload" aria-describedy="Upload Terraform State Files to Habitat")
+    .modal-header
+      slot(name="header")
+        .close-button
+          span(@click="close" aria-label="Close modal") &times;
+    .modal-body
+      slot(name="body")
+        .container(v-if="isInitial || isSaving || isSuccess || isFailed || isServerResponse")
+          div(@dragover="dragging=true" @dragleave="dragging=false" @click="reset()" :class="['upload-box', dragging ? 'upload-box-over' : '']")
+            .text
+              span
+                template(v-if="isInitial")
+                  p Drag & Drop or &nbsp;
+                    div(id="clickable") Click to Browse
+                template(v-if="isSaving")
+                  p Uploading {{ fileCount }} files...
+                template(v-if="isServerResponse && this.$store.state.requestSuccess")
+                  p Uploaded {{ fileCount }} file(s) successfully. 
+                  center
+                    p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Upload more files?]
+                template(v-if="isFailed")
+                  p(class="error") {{ uploadResponse }}
+                  center
+                    p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Reset upload form?]
+                template(v-if="isServerResponse && !this.$store.state.requestSuccess")
+                  p(class="error") {{ this.$store.state.requestResult }}
+                  center
+                    p #[a(id="clickable" href="javascript:void(0)" @click="reset()") Reset upload form?]
+            input(v-if="isInitial" type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event)" accept=".tfstate" class="input-file")                                           
 </template>
 
 <!-- SCSS Styling-->
@@ -139,7 +139,7 @@ const STATUS_INITIAL = 0,
   STATUS_SERVERRESPONDED = 4;
 
 export default {
-  name: "Modal",
+  name: "Upload",
   computed: {
     isInitial() {
       return this.currentStatus === STATUS_INITIAL;
@@ -166,7 +166,7 @@ export default {
       this.dragging = false;
       this.uploadResponse = null;
       this.fileCount = null;
-      this.$store.state.uploadSuccess = false;
+      this.$store.state.requestSuccess = false;
     },
     filesChange(event) {
       this.fileCount = event.target.files.length;
@@ -191,7 +191,7 @@ export default {
       currentStatus: null,
       uploadFieldName: "stateFile",
       dragging: false,
-      uploadSuccess: false
+      requestSuccess: false
     };
   },
   mounted() {

@@ -1,19 +1,53 @@
 import codes from "../../data/json/customResponseCodes.json";
+import store from "../../store";
 
-function responseHandler(response) {
-  var customResponses = codes.responseCodes.map(a => a.code);
-  if (customResponses.indexOf(response.status) !== -1) {
-    var i;
+var requestResult, requestSuccess, i;
+var customResponses = codes.responseCodes.map(a => a.code);
+
+function errorHandler(error) {
+  console.log(error);
+
+  var errorMessage = error.message;
+  var errorNumber = errorMessage.substring(errorMessage.lastIndexOf(" ") + 1);
+  var errorCode = Number(errorNumber);
+  console.log(errorCode); 
+
+  if (customResponses.indexOf(errorCode) !== -1) {
     for (i = 0; i < codes.responseCodes.length; i++) {
-      if (codes.responseCodes[i].code == response.status) {
-        var err = new Error(codes.responseCodes[i].response);
-        err.code = codes.responseCodes[i].code;
-        throw err;
+      if (codes.responseCodes[i].code == errorCode) {
+        requestResult = new Error(codes.responseCodes[i].response);
+        requestSuccess = false;
+        requestResult.code = codes.responseCodes[i].code;
       }
     }
   } else {
-    return response;
+    requestResult = error.message;
+    requestSuccess = false;
   }
+  store.dispatch("requestResult", { requestSuccess, requestResult });
 }
 
-export { responseHandler };
+function responseHandler(response) {
+  console.log(response);
+
+  if (customResponses.indexOf(response.status) !== -1) {
+    for (i = 0; i < codes.responseCodes.length; i++) {
+      if (codes.responseCodes[i].code == response.status) {
+        if (response.status > 399) {
+          requestResult = new Error(codes.responseCodes[i].response);
+          requestSuccess = false;
+          requestResult.code = codes.responseCodes[i].code;
+        } else {
+          requestResult = codes.responseCodes[i].response;
+          requestSuccess = true;
+        }
+      }
+    }
+  } else {
+    requestResult = response.data.message;
+    requestSuccess = true;
+  }
+  store.dispatch("requestResult", { requestSuccess, requestResult });
+}
+
+export { responseHandler, errorHandler };

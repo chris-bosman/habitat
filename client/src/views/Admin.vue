@@ -1,6 +1,7 @@
 <!-- Pug Template -->
 <template lang="pug">
 .config
+  Loading(v-show="this.$store.state.useLoadingModal")
   .config-head
     include:markdown-it ../data/text/config.md
   .form
@@ -9,7 +10,7 @@
       .org
         span Organization:
         span(style="margin-left:50px;") {{ this.$store.state.orgName }}
-      button(@click="deleteOrg()" class="delete-org-button") Delete Organization
+      button(@click="deleteOrgName()" class="delete-org-button") Delete Organization
     .setup(v-else)
       h3 Organization Name
       form-create(ref="fc" v-model="fApi" :rule="rule" :option="option")
@@ -76,12 +77,19 @@
 <script>
 import store from "../store";
 import { maker } from "form-create";
-import { createOrg } from "@/scripts/webRequests/serverInterface";
+
+import Loading from "@/components/modals/Loading";
+import { createOrg, deleteOrg } from "@/scripts/webRequests/serverInterface";
 
 export default {
   name: "Admin",
+  components: {
+    Loading: Loading
+  },
   data() {
     return {
+      useLoadingModal: null,
+      color: "#ebeae5",
       orgExists: null,
       orgName: null,
       fApi: {},
@@ -90,9 +98,11 @@ export default {
       option: {
         onSubmit: function(formData) {
           this.orgName = formData.orgName;
+
           var orgExists = true;
           var orgName = this.orgName;
-          createOrg(orgName, event);
+
+          createOrg(orgName);
           store.dispatch("registerOrg", { orgExists, orgName });
         },
         submitBtn: {
@@ -105,10 +115,13 @@ export default {
     };
   },
   methods: {
-    deleteOrg() {
-      var orgExists = false;
+    deleteOrgName() {
       this.orgName = null;
+
+      var orgExists = false;
       var orgName = this.orgName;
+
+      deleteOrg();
       store.dispatch("registerOrg", { orgExists, orgName });
     }
   },

@@ -6,11 +6,11 @@
     include:markdown-it ../data/text/view.md
   .tabs
     ul
-      a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isMap ? 'selected':''")  Map]
+      a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isMapping ? 'selected':''")  Map]
       a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isTree ? 'selected':''") Tree]
       a(href="javascript:void(0)" @click="selectView($event)") #[li(:class="isList ? 'selected':''")  List]
-  .viz(v-if="isMap || isTree || isList")
-    MapViz(v-if="isMap")
+  .viz(v-if="isMapping || isTree || isList")
+    MapViz(v-if="isMapping")
     TreeViz(v-if="isTree")
     ListViz(v-if="isList")
 </template>
@@ -65,10 +65,10 @@
 
 <!-- Javascript-->
 <script>
-import Modal from "@/components/Upload";
-import ListViz from "@/components/visualizations/ListViz";
-import MapViz from "@/components/visualizations/MapViz";
-import TreeViz from "@/components/visualizations/TreeViz";
+import Upload from "@/components/modals/Upload";
+import List from "@/components/visualizations/List";
+import Mapping from "@/components/visualizations/Mapping";
+import Tree from "@/components/visualizations/Tree";
 
 //import { fetchResources } from "@/scripts/webRequests/fetchResources";
 
@@ -78,7 +78,9 @@ export default {
   name: "Map",
   computed: {
     isMap() {
-      return this.currentStatus === "Map" || this.initialStatus === "Map";
+      return (
+        this.currentStatus === "Mapping" || this.initialStatus === "Mapping"
+      );
     },
     isTree() {
       return this.currentStatus === "Tree";
@@ -88,10 +90,10 @@ export default {
     }
   },
   components: {
-    Modal: Modal,
-    MapViz: MapViz,
-    ListViz: ListViz,
-    TreeViz: TreeViz
+    Upload: Upload,
+    Mapping: Mapping,
+    List: List,
+    Tree: Tree
   },
   data() {
     return {
@@ -105,7 +107,7 @@ export default {
     if (localStorage.getItem("vizView") != null) {
       this.currentStatus = localStorage.getItem("vizView");
     } else {
-      this.currentStatus = "Map";
+      this.currentStatus = "Mapping";
     }
   },
   methods: {

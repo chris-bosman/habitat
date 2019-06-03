@@ -1,6 +1,6 @@
 <!-- Pug Template -->
 <template lang="pug">
-span TreeViz Dummy Data
+span Tree Dummy Data
 </template>
 
 <!-- SCSS Styling-->
@@ -9,6 +9,6 @@ span TreeViz Dummy Data
 <!-- Javascript-->
 <script>
 export default {
-  name: "TreeViz"
+  name: "Tree"
 };
 </script>

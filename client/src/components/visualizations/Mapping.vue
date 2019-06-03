@@ -1,6 +1,6 @@
 <!-- Pug Template -->
 <template lang="pug">
-span ListViz Dummy Data
+span Mapping Dummy Data
 </template>
 
 <!-- SCSS Styling-->
@@ -9,6 +9,6 @@ span ListViz Dummy Data
 <!-- Javascript-->
 <script>
 export default {
-  name: "ListViz"
+  name: "Mapping"
 };
 </script>

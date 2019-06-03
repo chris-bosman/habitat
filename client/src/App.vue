@@ -72,7 +72,7 @@ function hideText(viewWidth) {
     var smallWindow = true;
     store.dispatch("registerWindowWidth", smallWindow);
   }
-};
+}
 
 export default {
   name: "Home",
@@ -80,6 +80,10 @@ export default {
     Background: Background,
     SideNav: SideNav,
     TopNav: TopNav
+  },
+  mounted() {
+    hideText(viewWidth);
+    viewWidth.addListener(hideText);
   }
 };
 </script>

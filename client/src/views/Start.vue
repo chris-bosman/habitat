@@ -1,7 +1,7 @@
 <!-- Pug Template -->
 <template lang="pug">
 .gs
-  Modal(v-show="isModalVisible" @close="closeModal" id="Modal")
+  Upload(v-show="isModalVisible" @close="closeModal" id="Modal")
   .gs-head
     include:markdown-it ../data/text/gs.md
   .cards
@@ -56,7 +56,7 @@
 
 <!-- Javascript-->
 <script>
-import Modal from "@/components/Upload";
+import Upload from "@/components/modals/Upload";
 import Card from "@/components/Card";
 
 import orgCardText from "raw-loader!@/data/text/orgCard.txt";
@@ -67,7 +67,7 @@ import analyzeCardText from "raw-loader!@/data/text/analyzeCard.txt";
 export default {
   name: "Start",
   components: {
-    Modal: Modal,
+    Upload: Upload,
     Card: Card
   },
   data() {
