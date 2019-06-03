@@ -4,7 +4,7 @@ stages:
   - deploy
 
 build:server:
-  image: circleci/node
+  image: node:stretch
   stage: build
   cache: 
     key: ${CI_COMMIT_REF_SLUG}
@@ -26,7 +26,7 @@ build:server:
       - server/*
 
 build:client:
-  image: circleci/node
+  image: node:stretch
   stage: build
   cache:
     key: ${CI_COMMIT_REF_SLUG}
@@ -57,7 +57,7 @@ build:infrastructure:
       - infrastructure/*
 
 test:sonar:
-  image: cicleci/node
+  image: node:stretch
   stage: test
   cache:
     key: ${CI_COMMIT_REF_SLUG}
@@ -73,12 +73,14 @@ test:sonar:
     - sonar-scanner -Dproject.home=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=chris-bosman-github_habitat -Dsonar.projectName=habitat -Dsonar.projectVersion=$SOFTWARE_VERSION.$CI_JOB_ID -Dsonar.sources=server/src -Dsonar.inclusions=client/src -Dsonar.organization=chris-bosman-github -Dsonar.login=$SONAR_API_KEY
 
 deploy:server:
-  image: circleci/python
+  image: python:3
   stage: deploy
   before_script:
+    - mkdir /home/gitlab
+    - cd /home/gitlab
     - pip3 install awscli --upgrade --user
     - pip3 install awsebcli --upgrade --user
-    - echo 'export PATH="/home/circleci/.local/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
+    - echo 'export PATH="/home/gitlab/.local/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
   script:
     - aws s3 sync server/packages s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID
     - aws s3 cp s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip s3://$AWS_EB_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip
