@@ -70,7 +70,8 @@ test:sonar:
     - cd ~/sonarscanner
     - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip
     - unzip sonar-scanner-cli-3.3.0.1492-linux.zip
-    - sonar-scanner -Dproject.home=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=chris-bosman-github_habitat -Dsonar.projectName=habitat -Dsonar.projectVersion=$SOFTWARE_VERSION.$CI_JOB_ID -Dsonar.sources=server/src -Dsonar.inclusions=client/src -Dsonar.organization=chris-bosman-github -Dsonar.login=$SONAR_API_KEY
+    - chmod +x sonar-scanner-3.3.0.1492-linux/bin/sonar-scanner
+    - sonar-scanner-3.3.0.1492-linux/bin/sonar-scanner -Dproject.home=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=chris-bosman-github_habitat -Dsonar.projectName=habitat -Dsonar.projectVersion=$SOFTWARE_VERSION.$CI_JOB_ID -Dsonar.sources=server/src -Dsonar.inclusions=client/src -Dsonar.organization=chris-bosman-github -Dsonar.login=$SONAR_API_KEY
 
 deploy:server:
   image: python:3
