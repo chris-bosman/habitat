@@ -1,7 +1,7 @@
 import codes from "../../data/json/customResponseCodes.json";
 import store from "../../store";
 
-var requestResult, requestSuccess, i;
+var requestResult, requestSuccess;
 var customResponses = codes.responseCodes.map(a => a.code);
 
 function errorHandler(error) {
@@ -10,10 +10,9 @@ function errorHandler(error) {
   var errorMessage = error.message;
   var errorNumber = errorMessage.substring(errorMessage.lastIndexOf(" ") + 1);
   var errorCode = Number(errorNumber);
-  console.log(errorCode); 
 
   if (customResponses.indexOf(errorCode) !== -1) {
-    for (i = 0; i < codes.responseCodes.length; i++) {
+    for (var i = 0; i < codes.responseCodes.length; i++) {
       if (codes.responseCodes[i].code == errorCode) {
         requestResult = new Error(codes.responseCodes[i].response);
         requestSuccess = false;
@@ -31,7 +30,7 @@ function responseHandler(response) {
   console.log(response);
 
   if (customResponses.indexOf(response.status) !== -1) {
-    for (i = 0; i < codes.responseCodes.length; i++) {
+    for (var i = 0; i < codes.responseCodes.length; i++) {
       if (codes.responseCodes[i].code == response.status) {
         if (response.status > 399) {
           requestResult = new Error(codes.responseCodes[i].response);

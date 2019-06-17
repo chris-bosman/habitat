@@ -2,16 +2,26 @@
 <template lang="pug">
 .home
   .home-text
-    h2 Welcome to your Habitat!
-    p(v-if="this.$store.state.authenticated").
-      Why waste any time? #[router-link(to="/Start") Get Started Now!]
-    p(v-else).
-      Please #[a(to="javascript:void()" @click="login()") Login now]
+    .authHome(v-if="this.$store.state.authenticated")
+      h2 Welcome to Your Habitat!
+      p.
+        Why waste any time? #[router-link(to="/Start") Get Started Now!]
+    .unAuthHome(v-else)
+      center
+        Header
+      p.
+        Please #[a(to="javascript:void()" @click="login()") Login now]
 </template>
 
 <!-- SCSS Styling -->
 <style lang="scss">
 .home-text {
+  & .authHome {
+    margin-left: 0vw;
+  }
+  & .unAuthHome {
+    margin-left: -5vw;
+  }
   & p {
     padding: 2vh 0;
   }
@@ -31,8 +41,13 @@
 
 <!-- Javascript -->
 <script>
+import Header from "@/components/Header";
+
 export default {
   name: "Home",
+  components: {
+    Header: Header
+  },
   methods: {
     login() {
       this.$auth.loginRedirect("/");

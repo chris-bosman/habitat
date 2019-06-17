@@ -5,9 +5,6 @@ img(src="@/assets/header.svg" class="header")
 
 <!-- SCSS Styling-->
 <style lang="scss">
-img {
-  width: 8vw;
-}
 </style>
 
 <!-- Javascript-->

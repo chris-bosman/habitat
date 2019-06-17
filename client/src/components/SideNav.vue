@@ -46,6 +46,9 @@
       margin-bottom: 8vh;
       display: flex;
       justify-content: center;
+      & img {
+        width: 8vw;
+      }
     }
     & .items {
       & a {

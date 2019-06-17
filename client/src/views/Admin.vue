@@ -6,127 +6,35 @@
     include:markdown-it ../data/text/config.md
   .form
     .settings(v-if="this.$store.state.orgExists")
-      h3 Organization Name
-      .org
-        span Organization:
-        span(style="margin-left:50px;") {{ this.$store.state.orgName }}
-      button(@click="deleteOrgName()" class="delete-org-button") Delete Organization
+      OrgSettings
     .setup(v-else)
-      h3 Organization Name
-      form-create(ref="fc" v-model="fApi" :rule="rule" :option="option")
+      OrgCreate
 </template>
 
 <!-- SCSS Styling-->
 <style lang="scss">
 .form {
   margin-top: 7vh;
-  & .settings {
-    & .org {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      margin: 5.75vh 1.55vw 4vh 1.55vw;
-    }
-    & .delete-org-button {
-      background-color: rgba(30, 32, 29, 0.8);
-      box-shadow: 0.25px rgba(190, 189, 184, 0.3);
-      color: rgb(190, 189, 184);
-      border-radius: 4px;
-      text-align: left;
-      border-style: solid;
-      border-width: 0.5px;
-      border-color: rgb(190, 189, 184);
-      height: 4vh;
-      cursor: pointer;
-      transition: transform 0.1s;
-      &:hover {
-        color: rgb(190, 189, 184);
-        transform: scale(1.04);
-      }
-    }
-  }
-  & .setup {
-    & .ivu-form-item {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-    }
-    & .ivu-btn {
-      margin-top: 4vh;
-      background-color: rgba(30, 32, 29, 0.8);
-      box-shadow: 0.25px rgba(190, 189, 184, 0.3);
-      color: rgb(190, 189, 184);
-      border-radius: 4px;
-      text-align: left;
-      border-style: solid;
-      border-width: 0.5px;
-      border-color: rgb(190, 189, 184);
-      height: 4vh;
-      cursor: pointer;
-      transition: transform 0.1s;
-      &:hover {
-        color: rgb(190, 189, 184);
-        transform: scale(1.04);
-      }
-    }
-  }
 }
 </style>
 
 <!-- Javascript-->
 <script>
-import store from "../store";
-import { maker } from "form-create";
-
 import Loading from "@/components/modals/Loading";
-import { createOrg, deleteOrg } from "@/scripts/webRequests/serverInterface";
+import OrgCreate from "@/components/orgPages/OrgCreate";
+import OrgSettings from "@/components/orgPages/OrgSettings";
 
 export default {
   name: "Admin",
   components: {
-    Loading: Loading
+    Loading: Loading,
+    OrgCreate: OrgCreate,
+    OrgSettings: OrgSettings
   },
   data() {
     return {
       useLoadingModal: null,
-      color: "#ebeae5",
-      orgExists: null,
-      orgName: null,
-      fApi: {},
-      model: {},
-      rule: [maker.input("Organization:", "orgName", "e.g. 'Contoso, Inc.'")],
-      option: {
-        onSubmit: function(formData) {
-          this.orgName = formData.orgName;
-
-          var orgExists = true;
-          var orgName = this.orgName;
-
-          createOrg(orgName);
-          store.dispatch("registerOrg", { orgExists, orgName });
-        },
-        submitBtn: {
-          innerText: "Create Organization"
-        },
-        form: {
-          labelWidth: 50
-        }
-      }
-    };
-  },
-  methods: {
-    deleteOrgName() {
-      this.orgName = null;
-
-      var orgExists = false;
-      var orgName = this.orgName;
-
-      deleteOrg();
-      store.dispatch("registerOrg", { orgExists, orgName });
     }
-  },
-  mounted() {
-    this.model = this.fApi.model();
   }
 };
 </script>
