@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as multer from 'multer';
 import { createResource } from './functions/resourceFunctions';
-import { orgFunctions } from './functions/orgFunctions';
+import { orgCreate, orgDelete } from './functions/orgFunctions';
 
 const upload = multer();
 const router = express.Router();
@@ -18,23 +18,21 @@ router.get('/api/v1/health', (req, res, next) => {
 });
 
 router.post('/api/v1/organizations/create', (req, res, next) => {
-    var operation = "create";
     var orgName = req.body.organization;
-    var newOrg = orgFunctions(req, operation);
+    var newOrg = orgCreate(req);
     newOrg.then(newOrg => {
         res.status(201).json({'message': `Organization "${orgName}" successfully created!`});
     }).catch(err => {
-        res.status(400).send(err.message);
+        res.status(400).send(err);
     });
 });
 
 router.post('/api/v1/organizations/delete', (req, res, next) => {
-    var operation = "delete";
-    var deleteOrg = orgFunctions(req, operation);
+    var deleteOrg = orgDelete(req);
     deleteOrg.then(deleteOrg => {
-        res.status(200).json({'message': 'Deleted'});
+        res.status(200).json({'message': `The organization has been successfully deleted.`});
     }).catch(err => {
-        res.status(400).send(err.message);
+        res.status(400).send(err);
     });
 });
 
@@ -43,7 +41,7 @@ router.post('/api/v1/tfstate', upload.none(), (req, res, next) => {
     newResource.then(newResource => {
         res.status(200).json({'message': 'Success'});
     }).catch(err => {
-        res.status(400).send(err.message);
+        res.status(400).send(err);
     });
 });
 

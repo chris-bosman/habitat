@@ -45,15 +45,18 @@ import { deleteOrg } from "@/scripts/webRequests/serverInterface";
 export default {
   name: "OrgSettings",
   methods: {
-    deleteOrgMethod() {
+    async deleteOrgMethod() {
       this.orgName = null;
 
       var orgExists = false;
       var orgName = this.orgName;
 
-      deleteOrg();
-      store.dispatch("registerOrg", { orgExists, orgName });
+      await deleteOrg().then(() => {
+        if (store.state.requestSuccess) {
+          store.dispatch("registerOrg", { orgExists, orgName });
+        }
+      });
     }
   }
-}
+};
 </script>

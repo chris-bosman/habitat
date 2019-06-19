@@ -49,18 +49,21 @@ export default {
       orgName: null,
       fApi: {},
       model: {},
-      rule: [
-        maker.input("Organization:", "orgName", "e.g. 'Contoso, Inc.'")
-      ],
+      rule: [maker.input("Organization:", "orgName", "e.g. 'Contoso, Inc.'")],
       option: {
-        onSubmit: function(formData) {
+        onSubmit: async function(formData) {
           this.orgName = formData.orgName;
 
           var orgExists = true;
           var orgName = this.orgName;
 
-          createOrg(orgName);
-          store.dispatch("registerOrg", { orgExists, orgName });
+          await createOrg(orgName)
+            .then(() => {
+              if(store.state.requestSuccess) {
+                store.dispatch("registerOrg", { orgExists, orgName });
+              }
+            });
+          
         },
         submitBtn: {
           innerText: "Create Organization"
@@ -74,5 +77,5 @@ export default {
   mounted() {
     this.model = this.fApi.model();
   }
-}
+};
 </script>

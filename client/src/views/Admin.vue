@@ -2,6 +2,7 @@
 <template lang="pug">
 .config
   Loading(v-show="this.$store.state.useLoadingModal")
+  Result(v-show="this.$store.state.useResultModal")
   .config-head
     include:markdown-it ../data/text/config.md
   .form
@@ -20,6 +21,7 @@
 
 <!-- Javascript-->
 <script>
+import Result from "@/components/modals/Result";
 import Loading from "@/components/modals/Loading";
 import OrgCreate from "@/components/orgPages/OrgCreate";
 import OrgSettings from "@/components/orgPages/OrgSettings";
@@ -27,6 +29,7 @@ import OrgSettings from "@/components/orgPages/OrgSettings";
 export default {
   name: "Admin",
   components: {
+    Result: Result,
     Loading: Loading,
     OrgCreate: OrgCreate,
     OrgSettings: OrgSettings
@@ -34,6 +37,7 @@ export default {
   data() {
     return {
       useLoadingModal: null,
+      useResultModal: null
     }
   }
 };

@@ -31,6 +31,10 @@ axiosInstance.interceptors.response.use(
   response => {
     var useLoadingModal = false;
     store.dispatch("registerLoading", useLoadingModal);
+
+    var useResultModal = true;
+    store.dispatch("triggerResults", useResultModal);
+
     if (response) {
       responseHandler(response);
     }
@@ -38,6 +42,10 @@ axiosInstance.interceptors.response.use(
   error => {
     var useLoadingModal = false;
     store.dispatch("registerLoading", useLoadingModal);
+
+    var useResultModal = true;
+    store.dispatch("triggerResults", useResultModal);
+
     if (error) {
       errorHandler(error);
     }
