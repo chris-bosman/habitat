@@ -21,27 +21,32 @@ router.post('/api/v1/organizations/create', (req, res, next) => {
     var orgName = req.body.organization;
     var newOrg = orgCreate(req);
     newOrg.then(newOrg => {
-        res.status(201).json({'message': `Organization "${orgName}" successfully created!`});
+        if (newOrg.data.profile.organization == orgName) {
+            res.status(200).json({'message': `Organization "${orgName}" successfully created!`});
+        } else {
+            throw Error(`There was an error in creating the organization: ${res.statusMessage}`);
+        }
     }).catch(err => {
-        res.status(400).send(err);
+        res.status(400).send(err.statusMessage);
     });
 });
 
 router.post('/api/v1/organizations/delete', (req, res, next) => {
-    var deleteOrg = orgDelete(req);
+    var deleteOrg = orgDelete();
     deleteOrg.then(deleteOrg => {
         res.status(200).json({'message': `The organization has been successfully deleted.`});
     }).catch(err => {
-        res.status(400).send(err);
+        res.status(400).send(err.statusMessage);
     });
 });
 
 router.post('/api/v1/tfstate', upload.none(), (req, res, next) => {
     var newResource = createResource(req);
     newResource.then(newResource => {
+        console.log(newResource);
         res.status(200).json({'message': 'Success'});
     }).catch(err => {
-        res.status(400).send(err);
+        res.status(400).send(err.statusMessage);;
     });
 });
 

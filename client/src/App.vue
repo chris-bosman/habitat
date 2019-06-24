@@ -81,9 +81,34 @@ export default {
     SideNav: SideNav,
     TopNav: TopNav
   },
+  data() {
+    return {
+      list: [],
+      timer: null
+    };
+  },
+  methods: {
+    fetchEventsList() {
+      this.$http
+        .get("events", function(events) {
+          this.list = events;
+        })
+        .bind(this);
+    }
+  },
+  created() {
+    this.fetchEventsList();
+    this.timer = setInterval(this.fetchEventsList, 300000);
+  },
   mounted() {
     hideText(viewWidth);
     viewWidth.addListener(hideText);
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
+  },
+  destroyed() {
+    clearInterval(this.timer);
   }
 };
 </script>

@@ -57,13 +57,11 @@ export default {
           var orgExists = true;
           var orgName = this.orgName;
 
-          await createOrg(orgName)
-            .then(() => {
-              if(store.state.requestSuccess) {
-                store.dispatch("registerOrg", { orgExists, orgName });
-              }
-            });
-          
+          await createOrg(orgName).then(() => {
+            if (store.state.requestSuccess) {
+              store.dispatch("registerOrg", { orgExists, orgName });
+            }
+          });
         },
         submitBtn: {
           innerText: "Create Organization"
