@@ -88,27 +88,17 @@ export default {
     };
   },
   methods: {
-    fetchEventsList() {
-      this.$http
-        .get("events", function(events) {
-          this.list = events;
-        })
-        .bind(this);
+    async checkAuth() {
+      const authenticated = await this.$auth.isAuthenticated()
+      if (authenticated != true) {
+        this.$forceUpdate();
+      }
     }
   },
-  created() {
-    this.fetchEventsList();
-    this.timer = setInterval(this.fetchEventsList, 300000);
-  },
-  mounted() {
-    hideText(viewWidth);
-    viewWidth.addListener(hideText);
-  },
-  beforeDestroy() {
-    clearInterval(this.timer);
-  },
-  destroyed() {
-    clearInterval(this.timer);
+  ready() {
+    setInterval(function() {
+      checkAuth();
+    }.bind(this), 360000);
   }
 };
 </script>

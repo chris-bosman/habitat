@@ -131,6 +131,7 @@
 <!-- Javascript-->
 <script>
 import { parser } from "@/scripts/fileParsing/genericParser";
+import { clearResponseState } from "@/scripts/stateManagement/clearResponseState";
 
 const STATUS_INITIAL = 0,
   STATUS_SAVING = 1,
@@ -160,13 +161,14 @@ export default {
   methods: {
     close() {
       this.$emit("close");
+      clearResponseState();
     },
     reset() {
       this.currentStatus = STATUS_INITIAL;
       this.dragging = false;
       this.uploadResponse = null;
       this.fileCount = null;
-      this.$store.state.requestSuccess = false;
+      clearResponseState();
     },
     filesChange(event) {
       this.fileCount = event.target.files.length;

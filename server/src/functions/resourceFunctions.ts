@@ -1,4 +1,4 @@
-import { Resource } from '../models/resource';
+import { ResourceModel } from '../interfaces/resource';
 
 async function createResource(req) {
     try {
@@ -14,7 +14,7 @@ async function createResource(req) {
         const resource = type + "." + name;
 
         if (data && id && resource && type && name && provider && attributes && dependencies && serial && lineage) {
-            var newResource = new Resource({
+            var newResource = new ResourceModel({
                 _id: id,
                 resource: resource,
                 resourceType: type,
@@ -29,7 +29,7 @@ async function createResource(req) {
             var query = { _id: id }
             var options = { new: true, upsert: true, runValidators: true }
         
-            return Resource.findOneAndUpdate(query, newResource, options);
+            return ResourceModel.findOneAndUpdate(query, newResource, options);
         } else {
             throw new Error('Unable to validate provided data.')
         }    

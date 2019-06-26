@@ -50,14 +50,13 @@
 
 <!-- Javascript-->
 <script>
-import store from "../../store";
+import { clearResponseState } from "@/scripts/stateManagement/clearResponseState";
 
 export default {
   name: "Result",
   methods: {
     close() {
-      var useResultModal = false;
-      store.dispatch("triggerResults", useResultModal);
+      clearResponseState();
     }
   }
 };
