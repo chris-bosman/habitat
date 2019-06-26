@@ -11,6 +11,7 @@ build:server:
     paths:
       - server/node_modules/
   script:
+    - apt-get update && apt-get install zip -y
     - cd server
     - npm i
     - npm run pack
