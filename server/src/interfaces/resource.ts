@@ -1,6 +1,6 @@
-import { prop, Typegoose, ModelType, InstanceType } from 'typegoose';
+import { arrayProp, prop, Typegoose, ModelType, InstanceType, Ref } from 'typegoose';
 
-class ResourceDependency {
+class ResourceDependency extends Typegoose {
     @prop()
     resourceDependencies?: string;
 }
@@ -24,8 +24,8 @@ class Resource extends Typegoose {
     @prop({ required: true })
     resourceAttributes: any;
 
-    @prop({ ref: ResourceDependency, required: true })
-    resourceDependencies: ResourceDependency;
+    @arrayProp({ itemsRef: ResourceDependency, required: false })
+    resourceDependencies: Ref<ResourceDependency>;
 
     @prop({ required: true })
     resourceSerial: number;
