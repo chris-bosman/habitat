@@ -14,16 +14,22 @@ const isHandlerEnabled = (config = {}) => {
 };
 
 const requestHandler = async request => {
-  var useLoadingModal = true;
-  const accessToken = await Vue.prototype.$auth.getAccessToken();
+  var authorized = Vue.prototype.$auth.isAuthenticated();
 
-  store.dispatch("registerLoading", useLoadingModal);
+  if (authorized) {
+    var useLoadingModal = true;
+    const accessToken = await Vue.prototype.$auth.getAccessToken();
 
-  if (isHandlerEnabled(request)) {
-    request.headers.Authorization = `Bearer ${accessToken}`;
+    store.dispatch("registerLoading", useLoadingModal);
+
+    if (isHandlerEnabled(request)) {
+      request.headers.Authorization = `Bearer ${accessToken}`;
+    }
+
+    return request;
+  } else {
+    Vue.prototype.$forceUpdate();
   }
-
-  return request;
 };
 
 axiosInstance.interceptors.request.use(request => requestHandler(request));

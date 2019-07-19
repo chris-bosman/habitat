@@ -13,6 +13,8 @@ async function createResource(req) {
         const id = type + "." + name + "." + lineage + ".v" + serial;
         const resource = type + "." + name;
 
+        console.log(dependencies);
+
         if (data && id && resource && type && name && provider && attributes && dependencies && serial && lineage) {
             var newResource = new ResourceModel({
                 _id: id,

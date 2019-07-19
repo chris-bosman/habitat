@@ -24,6 +24,16 @@ let router = new Router({
       component: Home
     },
     {
+      path: "/Home",
+      name: "Home",
+      component: Home
+    },
+    {
+      path: "/SignUp",
+      name: "SignUp",
+      component: () => import("@/views/SignUp.vue")
+    },
+    {
       path: "/implicit/callback",
       component: Auth.handleCallback()
     },

@@ -1,37 +1,32 @@
 import { arrayProp, prop, Typegoose, ModelType, InstanceType, Ref } from 'typegoose';
 
-class ResourceDependency extends Typegoose {
-    @prop()
-    resourceDependencies?: string;
-}
-
 class Resource extends Typegoose {
     @prop({ required: true, unique: true })
     _id?: string;
 
     @prop({ required: true })
-    resource: string;
+    resource?: string;
 
     @prop({ required: true })
-    resourceType: string;
+    resourceType?: string;
 
     @prop({ required: true })
-    resourceName: string;
+    resourceName?: string;
     
     @prop({ required: true })
-    resourceProvider: string;
+    resourceProvider?: string;
 
     @prop({ required: true })
-    resourceAttributes: any;
+    resourceAttributes?: any;
 
-    @arrayProp({ itemsRef: ResourceDependency, required: false })
-    resourceDependencies: Ref<ResourceDependency>;
-
-    @prop({ required: true })
-    resourceSerial: number;
+    @arrayProp({ items: String, required: false })
+    resourceDependencies?: string[];
 
     @prop({ required: true })
-    resourceLineage: string;
+    resourceSerial?: number;
+
+    @prop({ required: true })
+    resourceLineage?: string;
 }
 
 export const ResourceModel = new Resource().getModelForClass(Resource);

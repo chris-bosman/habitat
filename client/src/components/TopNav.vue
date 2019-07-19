@@ -1,9 +1,11 @@
 <!-- Pug Template -->
 <template lang="pug">
 .topnav
+  .items
+    router-link(to="/SignUp" id="signup-button") Sign Up
     button(v-if="authenticated" @click="logout()" id="logout-button") Logout
     button(v-else @click="login()" id="login-button") Login
-    router-link(to="/") Home
+    router-link(to="/Home") Home
     router-link(to="/Docs") Documentation
     a(href="https://github.com/chris-bosman/habitat.git" @click.prevent="openNewWindow($event)") GitHub
     router-link(to="/Test") Test
@@ -12,32 +14,73 @@
 <!-- SCSS Styling-->
 <style lang="scss">
 .topnav {
-  top: 0;
-  margin: 0 1vw 0 0;
-  padding: 0;
+  // appearance attributes
   background: transparent;
-  min-width: 95%;
+
+  //content attributes
+  justify-content: right;
+
+  // location attributes
+  top: 0;
+
+  // size attributes
   height: 8vh;
-  & button {
-    color: rgb(190, 189, 184);
-    background: transparent;
-    border: none;
-    font-family: "Raleway", sans-serif;
-    font-weight: lighter;
-    font-size: 0.8vw;
-    cursor: pointer;
-  }
-  & a,
-  button {
-    float: right;
-    text-align: center;
-    padding: 2vh 1vw;
-    text-decoration: none;
-    border-radius: 4px;
-    &:hover {
+  width: 100vw;
+  & .items {
+    // appearance attributes
+    margin: 0.25vh 1vw;
+
+    // container attributes
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row-reverse;
+
+    // content attributes
+    vertical-align: middle;
+    & button {
+      // appearance attributes
+      background: transparent;
+      border: none;
+      color: rgb(190, 189, 184);
+      cursor: pointer;
+      font-size: calc(5px + 0.5vw);
+      font-family: "Raleway", sans-serif;
+      font-weight: lighter;
+
+      // container attributes
+      box-sizing: inherit;
+    }
+    & a,
+    button {
+      // appearance attributes
+      border-radius: 4px;
+      padding: 2vh 1vw;
+
+      // container attributes
+      box-sizing: inherit;
+
+      // content attributes
+      text-decoration: none;
+      &:hover {
+        // appearance attributes
+        background-color: rgb(190, 189, 184);
+        color: black;
+        opacity: 0.8;
+      }
+    }
+    & #signup-button {
+      // appearance attributes
       background-color: rgb(190, 189, 184);
-      opacity: 0.8;
       color: black;
+      opacity: 0.8;
+
+      // container attributes
+      box-sizing: inherit;
+      &:hover {
+        // appearance attributes
+        background-color: rgb(98, 112, 179);
+        opacity: 0.8;
+      }
     }
   }
 }
@@ -78,7 +121,7 @@ export default {
       await this.$auth.logout();
       await this.isAuthenticated();
 
-      this.$router.go({ path: "/" });
+      this.$router.go({ path: "/Home" });
     }
   }
 };

@@ -81,24 +81,8 @@ export default {
     SideNav: SideNav,
     TopNav: TopNav
   },
-  data() {
-    return {
-      list: [],
-      timer: null
-    };
-  },
-  methods: {
-    async checkAuth() {
-      const authenticated = await this.$auth.isAuthenticated()
-      if (authenticated != true) {
-        this.$forceUpdate();
-      }
-    }
-  },
-  ready() {
-    setInterval(function() {
-      checkAuth();
-    }.bind(this), 360000);
+  created() {
+    hideText(viewWidth);
   }
 };
 </script>
