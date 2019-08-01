@@ -3,10 +3,10 @@
 span Mapping Dummy Data
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss"></style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 export default {
   name: "Mapping"

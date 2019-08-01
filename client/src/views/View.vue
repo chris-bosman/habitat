@@ -15,7 +15,7 @@
     ListViz(v-if="isList")
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss">
 #Modal {
   z-index: 5;
@@ -63,7 +63,7 @@
 }
 </style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 import Upload from "@/components/modals/Upload";
 import List from "@/components/visualizations/List";

@@ -5,7 +5,7 @@
   form-create(ref="fc" v-model="fApi" :rule="rule" :option="option")
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss">
 .orgSettings {
   & .ivu-form-item {
@@ -34,7 +34,7 @@
 }
 </style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 import store from "@/store";
 import { maker } from "form-create";

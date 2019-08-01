@@ -6,7 +6,7 @@
   RingLoader(class="loader" :color="color" :loading="loading")
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss">
 .modal-wrapper {
   position: fixed;
@@ -27,7 +27,7 @@
 }
 </style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 import { RingLoader } from "@saeris/vue-spinners";
 

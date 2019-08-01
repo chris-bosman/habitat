@@ -8,7 +8,7 @@
       p {{ this.$store.state.requestResult }}
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss">
 .result {
   position: fixed;
@@ -48,7 +48,7 @@
 }
 </style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 import { clearResponseState } from "@/scripts/stateManagement/clearResponseState";
 

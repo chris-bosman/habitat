@@ -5,12 +5,12 @@
   Background
   TopNav
   SideNav(v-show="this.$store.state.authenticated")
-  .body(:class="this.$store.state.menuCollapsed ? 'collapsed' : ''")
+  .body(:class="[{ collapsed: this.$store.state.collapsed}, { noAuth: !this.$store.state.authenticated }]")
     .content
       router-view
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss">
 @charset "utf-8";
 @import url("https://fonts.googleapis.com/css?family=Raleway|IBM+Plex+Mono");
@@ -41,6 +41,9 @@ body {
   & .body {
     margin: 0 5vw 0 14vw;
     transition: 0.5s;
+    &.noAuth {
+      margin: 0 7vw;
+    }
     &.collapsed {
       margin: 0 7vw;
     }
@@ -58,11 +61,11 @@ body {
 }
 </style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 import Background from "@/components/Background";
-import SideNav from "@/components/SideNav";
-import TopNav from "@/components/TopNav";
+import SideNav from "@/components/navigation/SideNav";
+import TopNav from "@/components/navigation/TopNav";
 import store from "./store";
 
 var viewWidth = window.matchMedia("(max-width:700px)");

@@ -1,8 +1,8 @@
 <!-- Pug Template -->
 <template lang="pug"></template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss"></style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script></script>

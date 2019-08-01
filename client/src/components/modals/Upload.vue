@@ -9,7 +9,7 @@
     .modal-body
       slot(name="body")
         .container(v-if="isInitial || isSaving || isSuccess || isFailed || isServerResponse")
-          div(@dragover="dragging=true" @dragleave="dragging=false" @click="reset()" :class="['upload-box', dragging ? 'upload-box-over' : '']")
+          div(@dragover="dragging=true" @dragleave="dragging=false" @click="reset()" :class="['upload-box', { 'upload-box-over': dragging }]")
             .text
               span
                 template(v-if="isInitial")
@@ -32,7 +32,7 @@
             input(v-if="isInitial" type="file" multiple id="upload-button" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event)" accept=".tfstate" class="input-file")                                           
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss">
 .modal-wrapper {
   position: fixed;
@@ -128,7 +128,7 @@
 }
 </style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 import { parser } from "@/scripts/fileParsing/genericParser";
 import { clearResponseState } from "@/scripts/stateManagement/clearResponseState";

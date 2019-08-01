@@ -3,10 +3,10 @@
 img(src="@/assets/header.svg" class="header")
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss"></style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 export default {
   name: "Header"

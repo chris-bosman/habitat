@@ -3,7 +3,7 @@
 .background
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss">
 .background {
   position: fixed;
@@ -20,5 +20,5 @@
 }
 </style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script></script>

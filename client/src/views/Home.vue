@@ -16,12 +16,6 @@
 <!-- SCSS Styling -->
 <style lang="scss">
 .home-text {
-  & .authHome {
-    margin-left: 0vw;
-  }
-  & .unAuthHome {
-    margin-left: -5vw;
-  }
   & p {
     padding: 2vh 0;
   }

@@ -1,6 +1,6 @@
 <!-- Pug Template -->
 <template lang="pug">
-.sidenav(:class="this.$store.state.menuCollapsed ? 'collapsed' : ''")
+.sidenav(:class="{ collapsed: this.$store.state.menuCollapsed }")
     button(class="menubttn", id="menubttn", @click="menuToggle()") &#9776;
     .menu
       .spacer
@@ -14,7 +14,7 @@
               span(v-show="!$store.state.menuCollapsed || item.hovering") {{ item.text }}
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss">
 .sidenav {
   z-index: 1;
@@ -131,10 +131,10 @@
 }
 </style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 import Header from "@/components/Header";
-import store from "../store";
+import store from "@/store";
 
 let menuCollapsed = false;
 

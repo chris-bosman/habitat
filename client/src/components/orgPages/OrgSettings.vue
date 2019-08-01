@@ -8,7 +8,7 @@
   button(@click="deleteOrgMethod()" class="delete-org-button") Delete Organization
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss">
 .orgSettings {
   & .org {
@@ -37,7 +37,7 @@
 }
 </style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 import store from "@/store";
 import { deleteOrg } from "@/scripts/webRequests/serverInterface";

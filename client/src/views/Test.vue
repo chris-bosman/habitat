@@ -6,10 +6,10 @@
   button(@click="testServer") Test Server
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss"></style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 import { axiosInstance } from "@/scripts/webRequests/axiosInstance";
 import Loading from "@/components/modals/Loading";

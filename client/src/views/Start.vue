@@ -18,7 +18,7 @@
         Card(id="analyzeCard" v-for="(item, index) in analyzeCard" :key="item.title" :cardtitle="item.title" :cardtext="item.text" :cardicon="item.icon")
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss">
 #Modal {
   z-index: 5;
@@ -54,10 +54,10 @@
 }
 </style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 import Upload from "@/components/modals/Upload";
-import Card from "@/components/Card";
+import Card from "@/components/clickables/Card";
 
 import orgCardText from "raw-loader!@/data/text/orgCard.txt";
 import importCardText from "raw-loader!@/data/text/importCard.txt";

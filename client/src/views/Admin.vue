@@ -12,14 +12,14 @@
       OrgCreate
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss">
 .form {
   margin-top: 7vh;
 }
 </style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 import Result from "@/components/modals/Result";
 import Loading from "@/components/modals/Loading";
@@ -38,7 +38,7 @@ export default {
     return {
       useLoadingModal: null,
       useResultModal: null
-    }
+    };
   }
 };
 </script>

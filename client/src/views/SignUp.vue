@@ -4,61 +4,79 @@
   .su-head
     center
       Header
-    h2 Create your Habitat
-  .su-cards
-      .column(@click="orgModal")
-        Card(v-for="(item, index) in orgCard" :key="item.title" :cardtitle="item.title" :cardtext="item.text" :cardicon="item.icon")
-      .column(@click="userModal")
-        Card(v-for="(item, index) in userCard" :key="item.title" :cardtitle="item.title" :cardtext="item.text" :cardicon="item.icon")
+    h2 Form Your Habitat
+    h4 Get started by creating your Organization, your administrators, and inviting additional users.
+  .su-steps
+    .org-step
+      i(class="fas fa-building")
+        span Create Organization
+    .admin-step
+      i(class="fas fa-user-cog")
+        span Create Administrators
+    .user-step
+      i(class="fas fa-users")
+        span Invite Users
 </template>
 
-<!-- SCSS Styling-->
+<!-- SCSS Styling -->
 <style lang="scss">
 .signup {
-  & .su-cards {
-    box-sizing: border-box;
+  & .su-steps {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     margin-top: 5vh;
-    & .column {
-      box-sizing: inherit;
-      margin: 0 10vw;
-      & Card {
-        width: 20vw;
+    & i {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      padding: 0 1vw;
+      margin: 0 3vw;
+      width: 10vw;
+      height: 6vh;
+      border: 0.5px solid rgba(190, 189, 184, 0.6);
+      border-radius: 6px;
+      cursor: pointer;
+      & span {
+        font-family: "Raleway", sans-serif;
+        font-weight: lighter;
+      }
+      &:hover {
+        color: rgb(190, 189, 184);
+        background-color: rgba(30, 32, 29, 0.6);
       }
     }
   }
 }
 </style>
 
-<!-- Javascript-->
+<!-- Javascript -->
 <script>
 import Header from "@/components/Header";
-import Card from "@/components/Card";
+import Card from "@/components/clickables/Card";
 
 export default {
-    name: "SignUp",
-    components: {
-      Header: Header,
-      Card: Card
-    },
-    data() {
-      return {
-        orgCard: [
-            {
-            title: "Create your Organization",
-            text: "What organization are you creating a Habitat for?",
-            icon: "far fa-building"
-            }
-        ],
-        userCard: [
-            {
-                title: "Create yourself",
-                text: "Who are you?",
-                icon: "far fa-user"
-            }
-        ]
-      }
-    }
-}
+  name: "SignUp",
+  components: {
+    Header: Header,
+    Card: Card
+  },
+  data() {
+    return {
+      orgCard: [
+        {
+          title: "Create your Organization",
+          text: "What organization are you creating a Habitat for?",
+          icon: "far fa-building"
+        }
+      ],
+      userCard: [
+        {
+          title: "Create yourself",
+          text: "Who are you?",
+          icon: "far fa-user"
+        }
+      ]
+    };
+  }
+};
 </script>
