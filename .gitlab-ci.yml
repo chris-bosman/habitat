@@ -66,6 +66,7 @@ test:sonar:
       - server/node_modules/
       - client/node_modules/
   script:
+    - grep -iR "Habitat" .
     - apt install -y wget unzip
     - mkdir ~/sonarscanner
     - cd ~/sonarscanner
