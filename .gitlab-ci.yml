@@ -70,7 +70,7 @@ test:sonar:
     - mkdir ./sonarscanner
     - cd ./sonarscanner
     - SONAR_URL=https://binaries.sonarsource.com/Distribution/sonar-scanner-cli
-    - SONAR_VERSIONS=$(curl $SONAR_URL | grep linux | grep -v .asc | cut -d \" -f 2 | cut -d "-" -f 4 | tail -r)
+    - SONAR_VERSIONS=$(curl $SONAR_URL | grep linux | grep -v .asc | cut -d \" -f 2 | cut -d "-" -f 4 | tac)
     - IFS=' ' read -r -a VERSION_ARRAY <<< $SONAR_VERSIONS
     - SONAR_VERSION="${VERSION_ARRAY[0]}"
     - wget $SONAR_URL/sonar-scanner-cli-$SONAR_VERSION-linux.zip
