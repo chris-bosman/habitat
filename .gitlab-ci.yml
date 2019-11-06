@@ -69,16 +69,15 @@ test:sonar:
     - apt install -y wget unzip
     - mkdir ./sonarscanner
     - cd ./sonarscanner
-    - SONAR_URL=https://binaries.sonarsource.com/Distribution/sonar-scanner-cli
+    - SONAR_URL=https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/
     - SONAR_VERSIONS=$(curl $SONAR_URL | grep linux | grep -v .asc | cut -d \" -f 2 | cut -d "-" -f 4 | tac)
     - IFS=' ' read -r -a VERSION_ARRAY <<< $SONAR_VERSIONS
     - SONAR_VERSION="${VERSION_ARRAY[0]}"
-    - wget $SONAR_URL/sonar-scanner-cli-$SONAR_VERSION-linux.zip
+    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_VERSION-linux.zip
     - unzip sonar-scanner-cli-$SONAR_VERSION-linux.zip
     - chmod +x sonar-scanner-$SONAR_VERSION-linux/bin/sonar-scanner
     - export PATH="$(pwd)/sonar-scanner-$SONAR_VERSION-linux/bin/sonar-scanner:$PATH"
-    - cd ..
-    - cd client && npm i && cd ../server && npm i && cd ..
+    - cd ../client && npm i && cd ../server && npm i && cd ..
     - sonar-scanner-$SONAR_VERSION-linux/bin/sonar-scanner -Dsonar.projectVersion=$SOFTWARE_VERSION.$CI_JOB_ID -Dsonar.login=$SONAR_API_KEY
 
 deploy:server:
