@@ -70,8 +70,8 @@ import store from "./store";
 
 var viewWidth = window.matchMedia("(max-width:700px)");
 
-function hideText(viewWidth) {
-  if (viewWidth.matches) {
+function hideText(width) {
+  if (width.matches) {
     var smallWindow = true;
     store.dispatch("registerWindowWidth", smallWindow);
   }

@@ -3,11 +3,14 @@ stages:
   - test
   - deploy
 
+variables:
+  VERSION: "$SOFTWARE_VERSION.$CI_JOB_ID"
+
 build:server:
   image: node:stretch
   stage: build
   cache: 
-    key: ${CI_COMMIT_REF_SLUG}
+    key: $CI_COMMIT_REF_SLUG
     paths:
       - server/node_modules/
   script:
@@ -30,7 +33,7 @@ build:client:
   image: node:stretch
   stage: build
   cache:
-    key: ${CI_COMMIT_REF_SLUG}
+    key: $CI_COMMIT_REF_SLUG
     paths:
       - client/node_modules/
   script:
@@ -61,7 +64,7 @@ test:sonar:
   image: node:stretch
   stage: test
   cache:
-    key: ${CI_COMMIT_REF_SLUG}
+    key: $CI_COMMIT_REF_SLUG
     paths:
       - server/node_modules/
       - client/node_modules/
@@ -78,8 +81,7 @@ test:sonar:
     - chmod +x sonar-scanner-$SONAR_VERSION-linux/bin/sonar-scanner
     - export PATH="$(pwd)/sonar-scanner-$SONAR_VERSION-linux/bin:$PATH"
     - cd ../client && npm i && cd ../server && npm i && cd ..
-    - VERSION="$SOFTWARE_VERSION.$CI_JOB_ID"
-    - sonar-scanner -Dsonar.projectVersion=$VERSION -Dsonar.login=${SONAR_API_KEY}
+    - sonar-scanner -Dsonar.projectVersion=$VERSION -Dsonar.login=$SONAR_API_KEY
 
 deploy:server:
   image: python:3
@@ -91,11 +93,11 @@ deploy:server:
     - pip3 install awsebcli --upgrade --user
     - echo 'export PATH="/home/gitlab/.local/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
   script:
-    - aws s3 sync server/packages s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID
-    - aws s3 cp s3://$AWS_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip s3://$AWS_EB_S3_BUCKET/$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip
-    - aws elasticbeanstalk create-application-version --application-name $AWS_EB_APP_NAME --version-label $SOFTWARE_VERSION.$CI_JOB_ID --source-bundle S3Bucket="$AWS_EB_S3_BUCKET",S3Key="$SOFTWARE_VERSION.$CI_JOB_ID/habitat.zip" --auto-create-application
+    - aws s3 sync server/packages s3://$AWS_S3_BUCKET/$VERSION
+    - aws s3 cp s3://$AWS_S3_BUCKET/$VERSION/habitat.zip s3://$AWS_EB_S3_BUCKET/$VERSION/habitat.zip
+    - aws elasticbeanstalk create-application-version --application-name $AWS_EB_APP_NAME --version-label $VERSION --source-bundle S3Bucket="$AWS_EB_S3_BUCKET",S3Key="$VERSION/habitat.zip" --auto-create-application
     - eb use $AWS_EB_ENV_NAME
-    - eb deploy --version $SOFTWARE_VERSION.$CI_JOB_ID
+    - eb deploy --version $VERSION
     - eb setenv DB_PASS=$atlas_pw
     - eb setenv OKTA_CLIENT_ID=$OKTA_CLIENT_ID
     - eb setenv OKTA_JWT_KEY=$OKTA_JWT_KEY

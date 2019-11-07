@@ -1,16 +1,10 @@
 const axios = require('axios');
 
-const oktaHeaders = {
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-    "Authorization": `SSWS ${process.env.OKTA_API_TOKEN}`
-};
-
-async function getUser(oktaHeaders) {
+async function getUser(headers) {
     const user = await axios({
         url: `https://${process.env.OKTA_DOMAIN}/api/v1/users/me`,
         method: 'GET',
-        headers: oktaHeaders
+        headers: headers
     });
     
     const userId = user.data.id;
@@ -18,31 +12,31 @@ async function getUser(oktaHeaders) {
     return userId;
 }
 
-async function getOrg(oktaHeaders) {
+async function getOrg(headers) {
     const currentUser = await axios({
         url: `https://${process.env.OKTA_DOMAIN}/api/v1/users/me`,
         method: 'GET',
-        headers: oktaHeaders
+        headers: headers
     });
 
     var orgName = currentUser.data.profile.organization;
     return orgName;
 }
 
-async function getOrgUsers(oktaHeaders) {
-    const orgName = await getOrg(oktaHeaders);
+async function getOrgUsers(headers) {
+    const orgName = await getOrg(headers);
 
     const orgUsers = await axios({
         url: `https://${process.env.OKTA_DOMAIN}/api/v1/users?search=profile.organization+eq+\"${orgName}\"`,
         method: 'GET',
-        headers: oktaHeaders
+        headers: headers
     });
 
     return orgUsers;
 }
 
-async function orgCreate(req) {
-    const oktaUserId = await getUser(oktaHeaders);
+async function orgCreate(req, headers) {
+    const oktaUserId = await getUser(headers);
     const orgName = req.body.organization;
     const profile = {
         "profile": {
@@ -53,17 +47,15 @@ async function orgCreate(req) {
     const newOrg = await axios({
         url: `https://${process.env.OKTA_DOMAIN}/api/v1/users/${oktaUserId}`,
         method: 'POST',
-        headers: oktaHeaders,
+        headers: headers,
         data: profile
     });
-
-    
 
     return newOrg;
 }
 
-async function orgDelete() {
-    const allUsers = await getOrgUsers(oktaHeaders);
+async function orgDelete(headers) {
+    const allUsers = await getOrgUsers(headers);
 
     const profile = {
         "profile": {
@@ -75,22 +67,21 @@ async function orgDelete() {
 
     for (var i = 0; i < users.length; i++) {
         var oktaUserId = users[i].id;
-        const deleteOrg = await postToOkta(oktaHeaders, profile, oktaUserId);
-        return deleteOrg;
+        postToOkta(headers, profile, oktaUserId);
     }
 
-    const confirmDelete = await getOrg(oktaHeaders);
+    const confirmDelete = await getOrg(headers);
 
     if (confirmDelete != null) {
         throw Error("Error while deleting organization.")
     }
 }
 
-async function postToOkta(oktaHeaders, profile, oktaUserId) {
+async function postToOkta(headers, profile, oktaUserId) {
     await axios({
         url: `https://${process.env.OKTA_DOMAIN}/api/v1/users/${oktaUserId}`,
         method: 'POST',
-        headers: oktaHeaders,
+        headers: headers,
         data: profile
     });
 }
