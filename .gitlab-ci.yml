@@ -78,7 +78,7 @@ test:sonar:
     - chmod +x sonar-scanner-$SONAR_VERSION-linux/bin/sonar-scanner
     - export PATH="$(pwd)/sonar-scanner-$SONAR_VERSION-linux/bin:$PATH"
     - cd ../client && npm i && cd ../server && npm i && cd ..
-    - VERSION=$SOFTWARE_VERSION.$CI_JOB_ID
+    - VERSION="$SOFTWARE_VERSION.$CI_JOB_ID"
     - sonar-scanner -Dsonar.projectVersion=$VERSION -Dsonar.login=$SONAR_API_KEY
 
 deploy:server:
