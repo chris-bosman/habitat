@@ -76,7 +76,7 @@ test:sonar:
     - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_VERSION-linux.zip
     - unzip sonar-scanner-cli-$SONAR_VERSION-linux.zip
     - chmod +x sonar-scanner-$SONAR_VERSION-linux/bin/sonar-scanner
-    - export PATH="$(pwd)/sonar-scanner-$SONAR_VERSION-linux/bin/sonar-scanner:$PATH"
+    - export PATH="$(pwd)/sonar-scanner-$SONAR_VERSION-linux/bin:$PATH"
     - cd ../client && npm i && cd ../server && npm i && cd ..
     - sonar-scanner -Dsonar.projectVersion=$SOFTWARE_VERSION.$CI_JOB_ID -Dsonar.login=$SONAR_API_KEY
 
