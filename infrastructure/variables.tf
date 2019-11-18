@@ -1,0 +1,11 @@
+variable "ORG_NAME" {}
+variable "ENV" {}
+variable "REGION" {}
+variable "ENVIRONMENT" {}
+variable "FUNCTION" {}
+variable "atlas_username" {}
+variable "atlas_api_key" {}
+variable "atlas_org_id" {}
+variable "atlas_org_name" {}
+variable "atlas_provider" {}
+variable "atlas_region" {}

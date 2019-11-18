@@ -1,23 +1,3 @@
-variable "atlas_username" {}
-variable "atlas_api_key" {}
-variable "atlas_org_id" {}
-variable "atlas_org_name" {}
-variable "atlas_provider" {}
-variable "atlas_region" {}
-
-terraform {
-    backend "s3" {
-        bucket  = "habitat-tf-state"
-        key     = "tfstate"
-        region  = "us-east-1"
-    }
-}
-
-provider "mongodbatlas" {
-    username    = "${var.atlas_username}"
-    api_key     = "${var.atlas_api_key}"
-}
-
 resource "mongodbatlas_project" "deployment" {
     org_id  = "${var.atlas_org_id}"
     name    = "${var.atlas_org_name}"
