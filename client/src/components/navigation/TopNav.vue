@@ -2,13 +2,71 @@
 <template lang="pug">
 .topnav
   .topnav-container
-    ButtonTopNav(v-if="!authenticated" v-for="(item, index) in signup" :key="item.text" :isLink="item.isLink" :isInternal="item.isInternal" :link="item.link" :text="item.text")
-    ButtonTopNav(v-if="authenticated" @click="logout()" v-for="(item, index) in logoutCard" :key="item.text" :isLink="item.isLink" :isInternal="item.isInternal" :link="item.link" :text="item.text")
-    ButtonTopNav(v-if="!authenticated" @click="login()" v-for="(item, index) in loginCard" :key="item.text" :isLink="item.isLink" :isInternal="item.isInternal" :link="item.link" :text="item.text")
-    ButtonTopNav(v-for="(item, index) in home"  :key="item.text" :isLink="item.isLink" :isInternal="item.isInternal" :link="item.link" :text="item.text")
-    ButtonTopNav(v-for="(item, index) in docs"  :key="item.text" :isLink="item.isLink" :isInternal="item.isInternal" :link="item.link" :text="item.text")
-    ButtonTopNav(@click.prevent="openNewWindow($event)" v-for="(item, index) in github"  :key="item.text" :isLink="item.isLink" :isInternal="item.isInternal" :link="item.link" :text="item.text")
-    ButtonTopNav(v-for="(item, index) in test"  :key="item.text" :isLink="item.isLink" :isInternal="item.isInternal" :link="item.link" :text="item.text")
+    ButtonTopNav(
+      v-if="!authenticated" 
+      v-for="(item, index) in signup" 
+      :key="item.text" 
+      :isLink="item.isLink" 
+      :isInternal="item.isInternal" 
+      :link="item.link" :text="item.text"
+    )
+
+    ButtonTopNav(
+      v-if="authenticated" 
+      @click="logout()" 
+      v-for="(item, index) in logoutCard" 
+      :key="item.text" 
+      :isLink="item.isLink" 
+      :isInternal="item.isInternal" 
+      :link="item.link" 
+      :text="item.text"
+    )
+
+    ButtonTopNav(
+      v-if="!authenticated" 
+      @click="login()" 
+      v-for="(item, index) in loginCard" 
+      :key="item.text" 
+      :isLink="item.isLink" 
+      :isInternal="item.isInternal" 
+      :link="item.link" 
+      :text="item.text"
+    )
+
+    ButtonTopNav(
+      v-for="(item, index) in home"  
+      :key="item.text" 
+      :isLink="item.isLink" 
+      :isInternal="item.isInternal" 
+      :link="item.link" :text="item.text"
+    )
+
+    ButtonTopNav(
+      v-for="(item, index) in docs"  
+      :key="item.text" 
+      :isLink="item.isLink" 
+      :isInternal="item.isInternal" 
+      :link="item.link" :text="item.text"
+    )
+
+    ButtonTopNav(
+      @click.prevent="openNewWindow($event)" 
+      v-for="(item, index) in github"  
+      :key="item.text" 
+      :isLink="item.isLink" 
+      :isInternal="item.isInternal" 
+      :link="item.link" 
+      :text="item.text"
+    )
+
+    ButtonTopNav(
+      v-for="(item, index) in test"  
+      :key="item.text" 
+      :isLink="item.isLink" 
+      :isInternal="item.isInternal" 
+      :link="item.link" 
+      :text="item.text"
+    )
 </template>
 
 <!-- SCSS Styling -->

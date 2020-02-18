@@ -9,24 +9,31 @@
 <style lang="scss">
 .orgSettings {
   & .ivu-form-item {
+    // container attributes
     display: flex;
+
+    // content attributes
     align-items: center;
     justify-content: flex-start;
   }
   & .ivu-btn {
-    margin-top: 4vh;
+    // appearance attributes
     background-color: rgba(30, 32, 29, 0.8);
-    box-shadow: 0.25px rgba(190, 189, 184, 0.3);
-    color: rgb(190, 189, 184);
+    border-color: rgb(190, 189, 184);
     border-radius: 4px;
-    text-align: left;
     border-style: solid;
     border-width: 0.5px;
-    border-color: rgb(190, 189, 184);
-    height: 4vh;
+    box-shadow: 0.25px rgba(190, 189, 184, 0.3);
+    color: rgb(190, 189, 184);
     cursor: pointer;
+    margin-top: 4vh;
+    text-align: left;
     transition: transform 0.1s;
+
+    // size attributes
+    height: 4vh;
     &:hover {
+      // appearance attributes
       color: rgb(190, 189, 184);
       transform: scale(1.04);
     }

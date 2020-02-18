@@ -22,44 +22,56 @@
 }
 
 .tabs {
-  margin: 4vh 0 0 0;
-  text-align: left;
+  // appearance attributes
   list-style: none;
+  margin: 4vh 0 0 0;
   padding: 0;
+  text-align: left;
   & ul {
+    // appearance attributes
     margin: 0 0 -0.1vh 0;
   }
   & li {
-    display: inline-block;
-    position: relative;
-    margin: 0 0.1vw;
-    padding: 0.5vh 2vw;
+    // appearance attributes
     border: 0.5px solid rgba(190, 189, 184, 0.6);
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     cursor: pointer;
+    display: inline-block;
+    margin: 0 0.1vw;
+    padding: 0.5vh 2vw;
+
+    // position attributes
+    position: relative;
   }
   & a {
-    text-decoration: none;
+    // appearance attributes
     color: rgb(190, 189, 184);
+    text-decoration: none;
     & .selected {
+      // appearance attributes
       background-color: rgba(95, 95, 92, 0.4);
     }
   }
 }
 
 .viz {
-  box-sizing: border-box;
-  display: flex;
-  height: 70vh;
-  width: 100%;
-  border-style: solid;
-  border-width: 0.5px;
+  // appearance attributes
+  background-color: rgba(80, 80, 80, 0.4);
   border-color: rgba(190, 189, 184, 0.8);
   border-radius: 24px;
+  border-style: solid;
+  border-width: 0.5px;
   box-shadow: inset 0 0 10vw 0 rgb(0, 0, 0);
+  box-sizing: border-box;
   padding: 16px;
-  background-color: rgba(80, 80, 80, 0.4);
+
+  // container attributes
+  display: flex;
+
+  // size attributes
+  height: 70vh;
+  width: 100%;
 }
 </style>
 

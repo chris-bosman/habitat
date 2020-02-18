@@ -16,44 +16,59 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway|IBM+Plex+Mono");
 
 html {
+  // appearance attributes
   background-image: linear-gradient(black, rgb(30, 32, 29));
   color: rgb(235, 234, 229);
   font-family: "Raleway", sans-serif;
-  font-weight: lighter;
   font-size: calc(5px + 0.5vw);
-  width: 100%;
-  height: 100%;
+  font-weight: lighter;
   overflow-x: hidden;
+
+  // position attributes
   z-index: -3;
+
+  // size attributes
+  height: 100%;
+  width: 100%;
 }
 
 body {
+  // appearance attributes
   margin: 0;
-  height: 100%;
-  width: 100%;
-  min-height: 100%;
-  max-height: 100%;
   transition: margin-left 0.5s;
+
+  // size attributes
+  height: 100%;
+  max-height: 100%;
+  min-height: 100%;
+  width: 100%;
 }
 
 .app {
+  // size attributes
   height: 100%;
   & .body {
+    // appearance attributes
     margin: 0 5vw 0 14vw;
     transition: 0.5s;
     &.noAuth {
+      // appearance attributes
       margin: 0 7vw;
     }
     &.collapsed {
+      // appearance attributes
       margin: 0 7vw;
     }
     & .content {
+      // position attributes
       position: relative;
     }
   }
   & a {
+    // appearance attributes
     color: rgb(190, 189, 184);
     &.router-link-active {
+      // appearance attributes
       background-color: rgb(98, 112, 179);
       opacity: 0.8;
     }

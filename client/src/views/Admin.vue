@@ -15,6 +15,7 @@
 <!-- SCSS Styling -->
 <style lang="scss">
 .form {
+  // appearance attributes
   margin-top: 7vh;
 }
 </style>

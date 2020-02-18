@@ -35,93 +35,154 @@
 <!-- SCSS Styling -->
 <style lang="scss">
 .modal-wrapper {
-  position: fixed;
-  top: 0;
+  // appearance attributes
+  background-color: rgba(0, 0, 0, 0.5);
+
+  // container attributes
+  display: flex;
+
+  // content attributes
+  align-items: center;
+  justify-content: center;
+
+  // position attributes
   bottom: 0;
   left: 0;
+  position: fixed;
   right: 0;
-  width: 100%;
+  top: 0;
+
+  // size attributes
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
   & .modal {
-    box-sizing: border-box;
+    // appearance attributes
     background-color: rgb(30, 32, 29);
-    width: 40vw;
-    height: 40vh;
     border-radius: 8px;
+    box-sizing: border-box;
+
+    // container attributes
     display: flex;
+
+    // content attributes
     flex-direction: column;
+
+    // size attributes
+    height: 40vh;
+    width: 40vw;
     & .modal-header {
+      // content attributes
       justify-content: flex-end;
+
+      // size attributes
       height: 5%;
       & .close-button {
-        margin: -4vh -2vw;
-        float: right;
-        font-size: 3.5vw;
+        // appearance attributes
         cursor: pointer;
+        font-size: 3.5vw;
+        margin: -4vh -2vw;
+
+        // position attributes
+        float: right;
       }
     }
     & .modal-body {
-      display: flex;
+      // container attributes
       box-sizing: inherit;
-      position: relative;
+      display: flex;
+
+      // content attributes
       justify-content: center;
-      width: 100%;
+
+      // position attributes
+      position: relative;
+
+      // size attributes
       height: 100%;
+      width: 100%;
       &:hover #clickable {
+        // appearance attributes
         text-decoration: underline;
       }
       & .container {
+        // container attributes
         box-sizing: inherit;
         display: flex;
-        width: 100%;
-        height: 100%;
-        justify-content: center;
+
+        // content attributes
         align-content: center;
+        justify-content: center;
+
+        // size attributes
+        height: 100%;
+        width: 100%;
         & .upload-box {
-          box-sizing: inherit;
-          display: flex;
-          outline: 2px dashed rgb(235, 234, 229);
+          // appearance attributes
           background: transparent;
           cursor: pointer;
-          width: 95%;
+          outline: 2px dashed rgb(235, 234, 229);
+
+          // container attributes
+          box-sizing: inherit;
+          display: flex;
+
+          // size attributes
           height: 95%;
+          width: 95%;
         }
         & .upload-box-over {
+          // appearance attributes
           background-color: dimgray;
         }
         & .text {
+          // appearance attributes
           cursor: pointer;
+
+          // container attributes
           box-sizing: inherit;
-          width: 100%;
-          height: 100%;
-          position: absolute;
           display: flex;
+
+          // content attributes
           align-items: center;
           justify-content: center;
+
+          // position attributes
+          position: absolute;
+
+          // size attributes
+          height: 100%;
+          width: 100%;
           & .error {
+            // appearance attributes
             font-family: "IBM Plex Mono", monospace;
             word-break: break-all;
+
+            // size attributes
             max-width: 34vw;
           }
           & button:active {
-            transform: translateY(2px);
+            // appearance attributes
             background-color: rgb(235, 234, 229);
+            transform: translateY(2px);
           }
         }
       }
       & input {
+        // appearance attributes
+        cursor: pointer;
+        opacity: 0;
+
+        // container attributes
         box-sizing: inherit;
         display: flex;
-        justify-content: center;
+
+        // content attributes
         align-items: center;
-        opacity: 0;
-        width: 100%;
+        justify-content: center;
+
+        // size attributes
         height: 100%;
-        cursor: pointer;
+        width: 100%;
       }
     }
   }

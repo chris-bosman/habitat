@@ -11,38 +11,56 @@
 <!-- SCSS Styling -->
 <style lang="scss">
 .result {
-  position: fixed;
-  top: 0;
+  // appearance attributes
+  background: transparent;
+
+  // container attributes
+  display: flex;
+
+  // content attributes
+  align-items: center;
+  justify-content: center;
+
+  // position attributes
   bottom: 0;
   left: 0;
+  position: fixed;
   right: 0;
-  width: 100%;
+  top: 0;
+
+  // size attributes
   height: 100%;
-  background: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
   & .result-window {
-    margin-top: -20vh;
-    box-sizing: border-box;
+    // appearance attributes
     background-color: rgba(30, 32, 29, 0.9);
-    width: 20vw;
-    height: 15vh;
     border-radius: 8px;
     box-shadow: 0 0 0 1.5px rgba(235, 234, 229, 0.9);
+    box-sizing: border-box;
+    margin-top: -20vh;
+
+    // size attributes
+    height: 15vh;
+    width: 20vw;
     & .close-button {
-      margin: -4vh -2vw;
-      float: right;
-      font-size: 2.5vw;
+      // appearance attributes
       cursor: pointer;
+      font-size: 2.5vw;
+      margin: -4vh -2vw;
+
+      // position attributes
+      float: right;
     }
     & .result-box {
-      box-sizing: inherit;
-      height: 90%;
-      display: flex;
-      justify-content: center;
+      // container attributes
       align-items: center;
+      box-sizing: inherit;
+      display: flex;
       flex-direction: column;
+      justify-content: center;
+
+      // size attributes
+      height: 90%;
     }
   }
 }

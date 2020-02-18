@@ -12,24 +12,33 @@
 <style lang="scss">
 .orgSettings {
   & .org {
+    // appearance attributes
+    margin: 5.75vh 1.55vw 4vh 1.55vw;
+
+    // container attributes
     display: flex;
+
+    // content attributes
     align-items: center;
     justify-content: flex-start;
-    margin: 5.75vh 1.55vw 4vh 1.55vw;
   }
   & .delete-org-button {
+    // appearance attributes
     background-color: rgba(30, 32, 29, 0.8);
-    box-shadow: 0.25px rgba(190, 189, 184, 0.3);
-    color: rgb(190, 189, 184);
+    border-color: rgb(190, 189, 184);
     border-radius: 4px;
-    text-align: left;
     border-style: solid;
     border-width: 0.5px;
-    border-color: rgb(190, 189, 184);
-    height: 4vh;
+    box-shadow: 0.25px rgba(190, 189, 184, 0.3);
+    color: rgb(190, 189, 184);
     cursor: pointer;
+    text-align: left;
     transition: transform 0.1s;
+
+    // size attributes
+    height: 4vh;
     &:hover {
+      // appearance attributes
       color: rgb(190, 189, 184);
       transform: scale(1.04);
     }

@@ -1,4 +1,4 @@
-import { arrayProp, prop, Typegoose, ModelType, InstanceType, Ref } from 'typegoose';
+import { arrayProp, prop, Typegoose, ModelType, InstanceType, Ref } from '@typegoose/typegoose';
 
 class Resource extends Typegoose {
     @prop({ required: true, unique: true })

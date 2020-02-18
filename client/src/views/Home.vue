@@ -17,17 +17,20 @@
 <style lang="scss">
 .home-text {
   & p {
+    // appearance attributes
     padding: 2vh 0;
   }
   & a {
+    // appearance attributes
     color: rgb(122, 122, 119);
     text-decoration: none;
     &:hover {
-      color: rgb(30, 32, 29);
+      // appearance attributes
       background-color: rgb(235, 234, 229);
       border-radius: 2px;
-      opacity: 0.4;
+      color: rgb(30, 32, 29);
       cursor: pointer;
+      opacity: 0.4;
     }
   }
 }

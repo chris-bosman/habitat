@@ -9,19 +9,29 @@
 <!-- SCSS Styling -->
 <style lang="scss">
 .modal-wrapper {
-  position: fixed;
-  top: 0;
+  // appearance attributes
+  background-color: rgba(0, 0, 0, 0.5);
+
+  // container attributes
+  display: flex;
+  flex-direction: column;
+
+  // content attributes
+  align-items: center;
+  justify-content: center;
+
+  // position attributes
   bottom: 0;
   left: 0;
+  position: fixed;
   right: 0;
-  width: 100%;
+  top: 0;
+
+  // size attributes
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  width: 100%;
   & .label {
+    // appearance attributes
     margin: -20vh 0 4vh 2vw;
   }
 }

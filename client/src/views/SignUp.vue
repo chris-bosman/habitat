@@ -22,27 +22,41 @@
 <style lang="scss">
 .signup {
   & .su-steps {
-    display: flex;
-    justify-content: flex-start;
+    // appearance attributes
     margin-top: 5vh;
+
+    // container attributes
+    display: flex;
+
+    // content attributes
+    justify-content: flex-start;
     & i {
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
-      padding: 0 1vw;
-      margin: 0 3vw;
-      width: 10vw;
-      height: 6vh;
+      // appearance attributes
       border: 0.5px solid rgba(190, 189, 184, 0.6);
       border-radius: 6px;
       cursor: pointer;
+      margin: 0 3vw;
+      padding: 0 1vw;
+
+      // container attributes
+      display: flex;
+
+      // content attributes
+      align-items: center;
+      justify-content: space-evenly;
+
+      // size attributes
+      height: 6vh;
+      width: 10vw;
       & span {
+        // appearance attributes
         font-family: "Raleway", sans-serif;
         font-weight: lighter;
       }
       &:hover {
-        color: rgb(190, 189, 184);
+        // appearance attributes
         background-color: rgba(30, 32, 29, 0.6);
+        color: rgb(190, 189, 184);
       }
     }
   }

@@ -30,22 +30,32 @@
 
 .gs {
   & a {
-    text-decoration: none;
-    color: rgb(235, 234, 229);
+    // appearance attributes
     box-sizing: inherit;
+    color: rgb(235, 234, 229);
+    text-decoration: none;
   }
   & .cards {
+    // appearance attributes
     box-sizing: border-box;
-    display: flex;
-    justify-content: center;
     margin: 7vh 0 0 7vw;
+
+    // container attributes
+    display: flex;
+
+    // content attributes
+    justify-content: center;
     &:after {
-      display: table;
-      clear: both;
+      // appearance attributes
       content: "";
+      clear: both;
+      display: table;
     }
     & .column {
+      // container attributes
       box-sizing: inherit;
+
+      // size attributes
       height: 30vh;
       max-height: 400px;
       width: 25vw;

@@ -4,7 +4,8 @@ require('dotenv').config();
 
 const connString = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true`;
 const dbConfig: mongoose.ConnectionOptions = {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 };
 
 (<any>mongoose).Promise = Promise;
