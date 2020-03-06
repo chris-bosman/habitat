@@ -9,7 +9,7 @@
       .items
         ButtonSideNav(
           v-for="(item, index) in start"
-          :key="item.text"
+          :key="item.link"
           :link="item.link"
           :icon="item.icon"
           :text="item.text"
@@ -17,7 +17,7 @@
 
         ButtonSideNav(
           v-for="(item, index) in view"
-          :key="item.text"
+          :key="item.link"
           :link="item.link"
           :icon="item.icon"
           :text="item.text"
@@ -25,7 +25,7 @@
 
         ButtonSideNav(
           v-for="(item, index) in analyze"
-          :key="item.text"
+          :key="item.link"
           :link="item.link"
           :icon="item.icon"
           :text="item.text"
@@ -33,7 +33,7 @@
 
         ButtonSideNav(
           v-for="(item, index) in admin"
-          :key="item.text"
+          :key="item.link"
           :link="item.link"
           :icon="item.icon"
           :text="item.text"

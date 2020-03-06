@@ -7,15 +7,39 @@
   .cards
     .column
       a(href='Admin')
-        Card(v-for="(item, index) in orgCard" :key="item.title" :cardtitle="item.title" :cardtext="item.text" :cardicon="item.icon")
+        Card(
+          cardtitle="Configure" 
+          cardtext=""
+          cardicon="fas fa-cogs"
+        )
     .column(@click="showModal")
-      Card(id="uploadCard" v-for="(item,index) in importCard" :key="item.title" :cardtitle="item.title" :cardtext="item.text" :cardicon="item.icon")
+      Card(
+        id="uploadCard"
+        v-for="(item,index) in importCard"
+          :key="item.title"
+          :cardtitle="item.title" 
+          :cardtext="item.text" 
+          :cardicon="item.icon"
+      )
     .column
       a(href='View')
-        Card(v-for="(item, index) in vizCard" :key="item.title" :cardtitle="item.title" :cardtext="item.text" :cardicon="item.icon")
+        Card(
+          v-for="(item, index) in vizCard"
+            :key="item.title"
+            :cardtitle="item.title" 
+            :cardtext="item.text" 
+            :cardicon="item.icon"
+        )
     .column
       a(href='Analyze')
-        Card(id="analyzeCard" v-for="(item, index) in analyzeCard" :key="item.title" :cardtitle="item.title" :cardtext="item.text" :cardicon="item.icon")
+        Card(
+          id="analyzeCard"
+          v-for="(item, index) in analyzeCard" 
+            :key="item.title" 
+            :cardtitle="item.title" 
+            :cardtext="item.text" 
+            :cardicon="item.icon"
+        )
 </template>
 
 <!-- SCSS Styling -->
@@ -83,13 +107,7 @@ export default {
   data() {
     return {
       isModalVisible: false,
-      orgCard: [
-        {
-          title: "Configure",
-          text: orgCardText,
-          icon: "fas fa-cogs"
-        }
-      ],
+      orgCardText: orgCardText,
       importCard: [
         {
           title: "Import",

@@ -42,6 +42,7 @@
       & li {
         // appearance attributes
         border-radius: 4px;
+        padding-right: 0.5vw;
 
         // container attributes
         box-sizing: inherit;
