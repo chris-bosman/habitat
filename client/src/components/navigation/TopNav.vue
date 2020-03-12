@@ -1,72 +1,38 @@
 <!-- Pug Template -->
 <template lang="pug">
 .topnav
-  .topnav-container
-    ButtonTopNav(
-      v-if="!authenticated" 
-      v-for="(item, index) in signup" 
-      :key="item.text" 
-      :isLink="item.isLink" 
-      :isInternal="item.isInternal" 
-      :link="item.link" :text="item.text"
-    )
+  .buttonbox
+    HabitatButton(v-if="!authenticated")
+      router-link(to="/SignUp") Sign Up
 
-    ButtonTopNav(
-      v-if="authenticated" 
-      @click="logout()" 
-      v-for="(item, index) in logoutCard" 
-      :key="item.text" 
-      :isLink="item.isLink" 
-      :isInternal="item.isInternal" 
-      :link="item.link" 
-      :text="item.text"
-    )
+    HabitatButton(v-if="authenticated")
+      router-link(
+        @click="logout()"
+        class="authbutton"
+        to=""
+      ) Logout
 
-    ButtonTopNav(
-      v-if="!authenticated" 
-      @click="login()" 
-      v-for="(item, index) in loginCard" 
-      :key="item.text" 
-      :isLink="item.isLink" 
-      :isInternal="item.isInternal" 
-      :link="item.link" 
-      :text="item.text"
-    )
+    HabitatButton(v-if="!authenticated")
+      router-link(
+        @click="login()"
+        class="authbutton"
+        to=""
+      ) Login
 
-    ButtonTopNav(
-      v-for="(item, index) in home"  
-      :key="item.text" 
-      :isLink="item.isLink" 
-      :isInternal="item.isInternal" 
-      :link="item.link" :text="item.text"
-    )
+    HabitatButton(v-if="authenticated")
+      router-link(to="/Home") Home
 
-    ButtonTopNav(
-      v-for="(item, index) in docs"  
-      :key="item.text" 
-      :isLink="item.isLink" 
-      :isInternal="item.isInternal" 
-      :link="item.link" :text="item.text"
-    )
+    HabitatButton
+      router-link(to="/Docs") Documentation
 
-    ButtonTopNav(
-      @click.prevent="openNewWindow($event)" 
-      v-for="(item, index) in github"  
-      :key="item.text" 
-      :isLink="item.isLink" 
-      :isInternal="item.isInternal" 
-      :link="item.link" 
-      :text="item.text"
-    )
+    HabitatButton
+      a(
+        @click.prevent="openNewWindow($event)"
+        href="https://github.com/chris-bosman/habitat.git"
+      ) GitHub
 
-    ButtonTopNav(
-      v-for="(item, index) in test"  
-      :key="item.text" 
-      :isLink="item.isLink" 
-      :isInternal="item.isInternal" 
-      :link="item.link" 
-      :text="item.text"
-    )
+    HabitatButton(v-if="authenticated")
+      router-link(to="/Test") Test
 </template>
 
 <!-- SCSS Styling -->
@@ -77,9 +43,10 @@
 
   // container attributes
   box-sizing: border-box;
+  display: flex;
 
-  //content attributes
-  justify-content: right;
+  // content attributes
+  justify-content: flex-end;
 
   // location attributes
   top: 0;
@@ -87,34 +54,55 @@
   // size attributes
   height: 8vh;
   width: 100vw;
-  & .topnav-container {
-    // appearance attributes
-    margin: 0vh 1vw;
 
+  & .buttonbox {
     // container attributes
     box-sizing: inherit;
     display: flex;
-    flex-direction: row-reverse;
 
-    // content attributes
-    vertical-align: middle;
+    //content attributes
+    flex-direction: row-reverse;
 
     // size attributes
     height: 100%;
-    width: 98%;
+    width: 40%;
+
+    & .habitatbutton {
+      // appearance attributes
+      margin: 1.5vh 1vw 0 1vw;
+
+      // size attributes
+      height: 70%;
+
+      & a {
+        justify-content: center;
+      }
+
+      & .authbutton.router-link-active {
+        // appearance attributes
+        background: transparent;
+
+        &:hover {
+          // appearance attributes
+          background-color: rgb(190, 189, 184);
+          color: black;
+          opacity: 0.8;
+        }
+      }
+    }
   }
 }
 </style>
 
 <!-- Javascript -->
 <script>
-import ButtonTopNav from "@/components/clickables/ButtonTopNav";
+import HabitatButton from "@/components/clickables/HabitatButton";
 import store from "@/store";
 
 export default {
   name: "TopNav",
   components: {
-    ButtonTopNav: ButtonTopNav
+    HabitatButton: HabitatButton
   },
   data() {
     return {

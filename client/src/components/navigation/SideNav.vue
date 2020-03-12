@@ -38,6 +38,10 @@
           :icon="item.icon"
           :text="item.text"
         )
+
+        HabitatButton
+          router-link(to="Test")
+            i(class="fas fa-cogs") Test
 </template>
 
 <!-- SCSS Styling -->
@@ -79,6 +83,17 @@
 
     // size attributes
     height: 100%;
+
+    & .items {
+      // container attributes
+      box-sizing: inherit;
+
+      & .habitatbutton {
+        // content attributes
+        box-sizing: inherit;
+      }
+    }
+
     & .spacer {
       // appearance attributes
       margin-bottom: 8vh;
@@ -146,6 +161,7 @@
 <!-- Javascript -->
 <script>
 import ButtonSideNav from "@/components/clickables/ButtonSideNav";
+import HabitatButton from "@/components/clickables/HabitatButton";
 import Header from "@/components/Header";
 import store from "@/store";
 
@@ -154,6 +170,7 @@ let menuCollapsed = false;
 export default {
   name: "SideNav",
   components: {
+    HabitatButton: HabitatButton,
     Header: Header,
     ButtonSideNav: ButtonSideNav
   },
