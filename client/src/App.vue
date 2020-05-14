@@ -20,7 +20,7 @@ html {
   background-image: linear-gradient(black, rgb(30, 32, 29));
   color: rgb(235, 234, 229);
   font-family: "Raleway", sans-serif;
-  font-size: calc(5px + 0.5vw);
+  font-size: calc(11px + 0.2vw);
   font-weight: lighter;
   overflow-x: hidden;
 
@@ -51,6 +51,13 @@ body {
     // appearance attributes
     margin: 0 5vw 0 14vw;
     transition: 0.5s;
+
+    // container attributes
+    box-sizing: inherit;
+
+    // size attributes
+    height: 100%;
+
     &.noAuth {
       // appearance attributes
       margin: 0 7vw;
@@ -60,8 +67,14 @@ body {
       margin: 0 7vw;
     }
     & .content {
+      // container attributes
+      box-sizing: inherit;
+
       // position attributes
       position: relative;
+
+      // size attributes
+      height: 100%;
     }
   }
   & a {

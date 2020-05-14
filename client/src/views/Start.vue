@@ -5,41 +5,26 @@
   .gs-head
     include:markdown-it ../data/text/gs.md
   .cards
-    .column
-      a(href='Admin')
-        Card(
-          cardtitle="Configure" 
-          cardtext=""
-          cardicon="fas fa-cogs"
-        )
-    .column(@click="showModal")
-      Card(
-        id="uploadCard"
-        v-for="(item,index) in importCard"
-          :key="item.title"
-          :cardtitle="item.title" 
-          :cardtext="item.text" 
-          :cardicon="item.icon"
-      )
-    .column
-      a(href='View')
-        Card(
-          v-for="(item, index) in vizCard"
-            :key="item.title"
-            :cardtitle="item.title" 
-            :cardtext="item.text" 
-            :cardicon="item.icon"
-        )
-    .column
-      a(href='Analyze')
-        Card(
-          id="analyzeCard"
-          v-for="(item, index) in analyzeCard" 
-            :key="item.title" 
-            :cardtitle="item.title" 
-            :cardtext="item.text" 
-            :cardicon="item.icon"
-        )
+      HabitatCard
+        router-link(to="/Admin")
+          h3 Configure
+          p {{ orgCardText }}
+          i(class="fas fa-cogs")
+      HabitatCard(id="uploadCard")
+        div(@click="showModal")
+          h3 Import
+          p {{ importCardText }}
+          i(class="fas fa-file-upload")
+      HabitatCard
+        router-link(to="/View")
+          h3 Visualize
+          p {{ vizCardText }}
+          i(class="fas fa-tv")
+      HabitatCard
+        router-link(to="/Analyze")
+          h3 Analyze
+          p {{ analyzeCardText }}
+          i(class="fas fa-flask")
 </template>
 
 <!-- SCSS Styling -->
@@ -56,33 +41,49 @@
   & a {
     // appearance attributes
     box-sizing: inherit;
-    color: rgb(235, 234, 229);
     text-decoration: none;
   }
-  & .cards {
-    // appearance attributes
-    box-sizing: border-box;
-    margin: 7vh 0 0 7vw;
 
+  & .gs-head {
+    padding-bottom: 6vh;
+  }
+
+  & .cards {
     // container attributes
-    display: flex;
+    display: grid;
 
     // content attributes
-    justify-content: center;
-    &:after {
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: 100%;
+
+    // size attributes
+    height: 15vh;
+
+    & .HabitatCard {
       // appearance attributes
-      content: "";
-      clear: both;
-      display: table;
-    }
-    & .column {
+      margin: 0 7.5%;
+      padding: 5% 10%;
+
       // container attributes
       box-sizing: inherit;
+      display: flex;
 
-      // size attributes
-      height: 30vh;
-      max-height: 400px;
-      width: 25vw;
+      & h3 {
+        // appearance attributes
+        margin: 0;
+      }
+
+      & a,
+      div {
+        // container attributes
+        box-sizing: inherit;
+        display: flex;
+        flex-direction: column;
+
+        // content attributes
+        align-items: center;
+        justify-content: space-evenly;
+      }
     }
   }
 }
@@ -91,7 +92,7 @@
 <!-- Javascript -->
 <script>
 import Upload from "@/components/modals/Upload";
-import Card from "@/components/clickables/Card";
+import HabitatCard from "@/components/clickables/HabitatCard";
 
 import orgCardText from "raw-loader!@/data/text/orgCard.txt";
 import importCardText from "raw-loader!@/data/text/importCard.txt";
@@ -102,33 +103,15 @@ export default {
   name: "Start",
   components: {
     Upload: Upload,
-    Card: Card
+    HabitatCard: HabitatCard
   },
   data() {
     return {
       isModalVisible: false,
       orgCardText: orgCardText,
-      importCard: [
-        {
-          title: "Import",
-          text: importCardText,
-          icon: "fas fa-file-upload"
-        }
-      ],
-      vizCard: [
-        {
-          title: "Visualize",
-          text: vizCardText,
-          icon: "fas fa-tv"
-        }
-      ],
-      analyzeCard: [
-        {
-          title: "Analyze",
-          text: analyzeCardText,
-          icon: "fas fa-flask"
-        }
-      ]
+      importCardText: importCardText,
+      vizCardText: vizCardText,
+      analyzeCardText: analyzeCardText
     };
   },
   methods: {

@@ -7,41 +7,25 @@
         transition(name="slide" mode="out-in")
           Header(v-show="!this.$store.state.menuCollapsed")
       .items
-        ButtonSideNav(
-          v-for="(item, index) in start"
-          :key="item.link"
-          :link="item.link"
-          :icon="item.icon"
-          :text="item.text"
-        )
-
-        ButtonSideNav(
-          v-for="(item, index) in view"
-          :key="item.link"
-          :link="item.link"
-          :icon="item.icon"
-          :text="item.text"
-        )
-
-        ButtonSideNav(
-          v-for="(item, index) in analyze"
-          :key="item.link"
-          :link="item.link"
-          :icon="item.icon"
-          :text="item.text"
-        )
-
-        ButtonSideNav(
-          v-for="(item, index) in admin"
-          :key="item.link"
-          :link="item.link"
-          :icon="item.icon"
-          :text="item.text"
-        )
+        HabitatButton
+          router-link(to="/Start")
+            i(class="fas fa-power-off")
+            div S T A R T
 
         HabitatButton
-          router-link(to="Test")
-            i(class="fas fa-cogs") Test
+          router-link(to="/View")
+            i(class="fas fa-tv")
+            div V I E W
+
+        HabitatButton
+          router-link(to="/Analyze")
+            i(class="fas fa-flask")
+            div A N A L Y Z E
+
+        HabitatButton
+          router-link(to="/Admin")
+            i(class="fas fa-cogs")
+            div A D M I N
 </template>
 
 <!-- SCSS Styling -->
@@ -60,8 +44,10 @@
 
   // size attributes
   height: 100%;
+  min-width: 125px;
   width: 10vw;
-  & button {
+
+  & .menubttn {
     // appearance attribuges
     background: transparent;
     border: none;
@@ -89,8 +75,22 @@
       box-sizing: inherit;
 
       & .habitatbutton {
-        // content attributes
-        box-sizing: inherit;
+        // size attributes
+        min-height: 50px;
+        height: 3vh;
+
+        & a {
+          // appearance attributes
+          font-size: calc(12px + 0.2vw);
+
+          // content attributes
+          float: left;
+
+          & i {
+            // appearance attributes
+            padding: 0 0.5vw;
+          }
+        }
       }
     }
 
@@ -115,20 +115,53 @@
   }
   &.collapsed {
     // size attributes
+    min-width: 0;
     width: 4vw;
     & .menu .items {
       // appearance attributes
       transition: 0.5s all;
-      & a {
-        & ul {
-          &:hover {
+
+      // container attributes
+      display: flex;
+      flex-direction: column;
+
+      // content attributes
+      align-items: center;
+      & .habitatbutton {
+        // container attributes
+        box-sizing: inherit;
+        display: flex;
+
+        // size attributes
+        min-width: 2.5vw;
+        & a {
+          // container attributes
+          display: flex;
+
+          // content attributes
+          justify-content: center;
+        }
+
+        &.active {
+          // position attributes
+          position: relative;
+          left: 2vw;
+        }
+
+        &.inactive {
+          & div {
             // appearance attributes
-            animation: slideout 0.2s linear 0s 1 normal forwards running;
+            display: none;
           }
+        }
+
+        &:hover {
+          // appearance attributes
+          animation: slideout 0.2s linear 0s 1 normal forwards running;
         }
       }
     }
-    & button {
+    & .menubttn {
       // position attributes
       right: 1vw;
     }
@@ -142,6 +175,7 @@
   }
   to {
     // size attributes
+    min-width: 125px;
     width: 11vw;
   }
 }
@@ -160,7 +194,6 @@
 
 <!-- Javascript -->
 <script>
-import ButtonSideNav from "@/components/clickables/ButtonSideNav";
 import HabitatButton from "@/components/clickables/HabitatButton";
 import Header from "@/components/Header";
 import store from "@/store";
@@ -171,47 +204,13 @@ export default {
   name: "SideNav",
   components: {
     HabitatButton: HabitatButton,
-    Header: Header,
-    ButtonSideNav: ButtonSideNav
+    Header: Header
   },
   methods: {
     menuToggle() {
       menuCollapsed = !menuCollapsed;
       store.dispatch("registerMenuChange", menuCollapsed);
     }
-  },
-  data() {
-    return {
-      hovering: null,
-      start: [
-        {
-          link: "/Start",
-          icon: "fas fa-power-off",
-          text: "S T A R T"
-        }
-      ],
-      view: [
-        {
-          link: "/View",
-          icon: "fas fa-tv",
-          text: "V I E W"
-        }
-      ],
-      analyze: [
-        {
-          link: "/Analyze",
-          icon: "fas fa-flask",
-          text: "A N A L Y Z E"
-        }
-      ],
-      admin: [
-        {
-          link: "/Admin",
-          icon: "fas fa-cogs",
-          text: "A D M I N"
-        }
-      ]
-    };
   }
 };
 </script>

@@ -1,6 +1,10 @@
 <!-- Pug Template -->
 <template lang="pug">
-.habitatbutton
+.habitatbutton(
+  @mouseover="hovering = true"
+  @mouseleave="hovering = false"
+  :class="{ active: hovering, inactive: !hovering }"
+)
   button(class="HabitatButton")
     slot
 </template>
@@ -58,6 +62,11 @@
 <!-- Javascript -->
 <script>
 export default {
-  name: "HabitatButton"
+  name: "HabitatButton",
+  data() {
+    return {
+      hovering: false
+    };
+  }
 };
 </script>

@@ -52,7 +52,7 @@
   top: 0;
 
   // size attributes
-  height: 8vh;
+  height: 6vh;
   width: 100vw;
 
   & .buttonbox {
@@ -61,6 +61,7 @@
     display: flex;
 
     //content attributes
+    align-items: center;
     flex-direction: row-reverse;
 
     // size attributes
@@ -69,12 +70,16 @@
 
     & .habitatbutton {
       // appearance attributes
-      margin: 1.5vh 1vw 0 1vw;
+      margin: 1.5vh 1vw;
 
       // size attributes
-      height: 70%;
+      height: 60%;
 
       & a {
+        // appearance attributes
+        font-size: calc(11px + 0.2vw);
+
+        // content attributes
         justify-content: center;
       }
 

@@ -66,31 +66,11 @@
 <!-- Javascript -->
 <script>
 import Header from "@/components/Header";
-import Card from "@/components/clickables/Card";
 
 export default {
   name: "SignUp",
   components: {
-    Header: Header,
-    Card: Card
-  },
-  data() {
-    return {
-      orgCard: [
-        {
-          title: "Create your Organization",
-          text: "What organization are you creating a Habitat for?",
-          icon: "far fa-building"
-        }
-      ],
-      userCard: [
-        {
-          title: "Create yourself",
-          text: "Who are you?",
-          icon: "far fa-user"
-        }
-      ]
-    };
+    Header: Header
   }
 };
 </script>
