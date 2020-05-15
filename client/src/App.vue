@@ -57,7 +57,7 @@ body {
   height: 100%;
   & .body {
     // appearance attributes
-    margin: 0 5vw 0 14vw;
+    margin: 0 5vw 0 16vw;
     transition: 0.5s;
 
     // container attributes
@@ -70,10 +70,12 @@ body {
       // appearance attributes
       margin: 0 7vw;
     }
+
     &.collapsed {
       // appearance attributes
-      margin: 0 7vw;
+      margin: 0 10vw;
     }
+
     & .content {
       // container attributes
       box-sizing: inherit;
@@ -85,9 +87,18 @@ body {
       height: 100%;
       width: 100%;
     }
+
     & .header p {
       // appearance attributes
       padding: 2vh 0;
+
+      & a:hover {
+        // appearance attributes
+        background-color: rgba(235, 234, 229, 0.6);
+        border-radius: 4px;
+        color: rgb(30, 32, 29);
+        cursor: pointer;
+      }
     }
   }
   & a {
@@ -100,14 +111,6 @@ body {
       background-color: rgb(98, 112, 179);
       opacity: 0.8;
     }
-
-    &:hover {
-      // appearance attributes
-      background-color: rgba(235, 234, 229, 0.6);
-      border-radius: 4px;
-      color: rgb(30, 32, 29);
-      cursor: pointer;
-    }
   }
 }
 </style>
@@ -115,8 +118,10 @@ body {
 <!-- Javascript -->
 <script>
 import Background from "@/components/Background";
+
 import SideNav from "@/components/navigation/SideNav";
 import TopNav from "@/components/navigation/TopNav";
+
 import store from "./store";
 
 var viewWidth = window.matchMedia("(max-width:700px)");

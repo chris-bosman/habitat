@@ -43,10 +43,12 @@
 
 <!-- Javascript -->
 <script>
+import { createOrg } from "@/scripts/webRequests/serverInterface";
+
 import HabitatInput from "@/components/modules/HabitatInput";
 import PageButton from "@/components/modules/PageButton";
+
 import store from "@/store";
-import { createOrg } from "@/scripts/webRequests/serverInterface";
 
 export default {
   name: "OrgCreate",

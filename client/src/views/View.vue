@@ -78,6 +78,7 @@
 <!-- Javascript -->
 <script>
 import Upload from "@/components/modals/Upload";
+
 import List from "@/components/visualizations/List";
 import Mapping from "@/components/visualizations/Mapping";
 import Tree from "@/components/visualizations/Tree";

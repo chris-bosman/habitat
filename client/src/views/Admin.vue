@@ -17,8 +17,9 @@
 
 <!-- Javascript -->
 <script>
-import Result from "@/components/modals/Result";
 import Loading from "@/components/modals/Loading";
+import Result from "@/components/modals/Result";
+
 import OrgCreate from "@/components/orgPages/OrgCreate";
 import OrgSettings from "@/components/orgPages/OrgSettings";
 

@@ -5,26 +5,26 @@
   .header
     include:markdown-it ../data/text/gs.md
   .cards
-      Card
-        router-link(to="/Admin")
-          h3 Configure
-          p {{ orgCardText }}
-          i(class="fas fa-cogs")
-      Card(id="uploadCard")
-        div(@click="showModal")
-          h3 Import
-          p {{ importCardText }}
-          i(class="fas fa-file-upload")
-      Card
-        router-link(to="/View")
-          h3 Visualize
-          p {{ vizCardText }}
-          i(class="fas fa-tv")
-      Card
-        router-link(to="/Analyze")
-          h3 Analyze
-          p {{ analyzeCardText }}
-          i(class="fas fa-flask")
+    Card
+      router-link(to="/Admin")
+        h3 Configure
+        p {{ orgCardText }}
+        i(class="fas fa-cogs")
+    Card(id="uploadCard")
+      div(@click="showModal")
+        h3 Import
+        p {{ importCardText }}
+        i(class="fas fa-file-upload")
+    Card
+      router-link(to="/View")
+        h3 Visualize
+        p {{ vizCardText }}
+        i(class="fas fa-tv")
+    Card
+      router-link(to="/Analyze")
+        h3 Analyze
+        p {{ analyzeCardText }}
+        i(class="fas fa-flask")
 </template>
 
 <!-- SCSS Styling -->
@@ -42,13 +42,20 @@
   box-sizing: inherit;
   display: grid;
 
+  // content attributes
+  justify-content: center;
+
   // response attributes - landscape
   @media only screen and (min-width: 1001px) {
     grid-template:
       [row1-start] "row1 row1 row1 row1" 25% [row1-end]
       / auto;
     gap: 7.5%;
-    height: 50%;
+
+    & .Card {
+      min-height: 22vh;
+      max-width: 12vw;
+    }
   }
 
   // responsive attributes - portrait
@@ -60,9 +67,11 @@
       / auto;
     gap: 7.5%;
 
-    // size attributes
-    height: 50vh;
-    width: 50vw;
+    & .Card {
+      // size attributes
+      min-height: 20vh;
+      max-width: 18vw;
+    }
   }
 
   & .Card {

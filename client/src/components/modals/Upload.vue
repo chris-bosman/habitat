@@ -192,6 +192,7 @@
 <!-- Javascript -->
 <script>
 import { parser } from "@/scripts/fileParsing/genericParser";
+
 import { clearResponseState } from "@/scripts/stateManagement/clearResponseState";
 
 const STATUS_INITIAL = 0,

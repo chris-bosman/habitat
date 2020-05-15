@@ -8,7 +8,7 @@
 <style lang="scss">
 .Card {
   // appearance attributes
-  background-color: rgba(30, 32, 29, 0.8);
+  background-color: rgb(30, 32, 29);
   border-color: rgb(190, 189, 184);
   border-radius: 16px;
   border-style: solid;
@@ -21,10 +21,8 @@
   //container attributes
   box-sizing: border-box;
 
-  &:hover a {
+  &:hover {
     // appearance attributes
-    background-color: transparent;
-    color: rgb(190, 189, 184);
     transform: scale(1.02);
   }
 }

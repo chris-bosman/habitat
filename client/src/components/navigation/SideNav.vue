@@ -196,8 +196,10 @@
 
 <!-- Javascript -->
 <script>
-import MenuButton from "@/components/modules/MenuButton";
 import Header from "@/components/Header";
+
+import MenuButton from "@/components/modules/MenuButton";
+
 import store from "@/store";
 
 let menuCollapsed = false;

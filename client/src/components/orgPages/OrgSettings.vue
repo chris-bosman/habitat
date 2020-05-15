@@ -48,8 +48,9 @@
 
 <!-- Javascript -->
 <script>
-import store from "@/store";
 import { deleteOrg } from "@/scripts/webRequests/serverInterface";
+
+import store from "@/store";
 
 export default {
   name: "OrgSettings",

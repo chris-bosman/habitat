@@ -37,6 +37,14 @@
     height: 100%;
     width: 100%;
 
+    &:hover {
+      // appearance attributes
+      background-color: rgba(235, 234, 229, 0.6);
+      border-radius: 4px;
+      color: rgb(30, 32, 29);
+      cursor: pointer;
+    }
+
     & a {
       // appearance attributes
       border-radius: 4px;
@@ -46,8 +54,11 @@
       box-sizing: inherit;
       display: flex;
 
+      // content attributes
+      align-items: center;
+
       // size attributes
-      height: 80%;
+      height: 100%;
       width: 100%;
     }
   }
