@@ -1,13 +1,21 @@
 <!-- Pug Template -->
 <template lang="pug">
 .app
-  link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous")
+  meta(
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  )
+  link(
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+    crossorigin="anonymous"
+  )
   Background
   TopNav
   SideNav(v-show="this.$store.state.authenticated")
-  .body(:class="[{ collapsed: this.$store.state.collapsed}, { noAuth: !this.$store.state.authenticated }]")
-    .content
-      router-view
+  .body(:class="[{ collapsed: this.$store.state.menuCollapsed}, { noAuth: !this.$store.state.authenticated }]")
+    router-view
 </template>
 
 <!-- SCSS Styling -->
@@ -75,15 +83,30 @@ body {
 
       // size attributes
       height: 100%;
+      width: 100%;
+    }
+    & .header p {
+      // appearance attributes
+      padding: 2vh 0;
     }
   }
   & a {
     // appearance attributes
     color: rgb(190, 189, 184);
+    text-decoration: none;
+
     &.router-link-active {
       // appearance attributes
       background-color: rgb(98, 112, 179);
       opacity: 0.8;
+    }
+
+    &:hover {
+      // appearance attributes
+      background-color: rgba(235, 234, 229, 0.6);
+      border-radius: 4px;
+      color: rgb(30, 32, 29);
+      cursor: pointer;
     }
   }
 }

@@ -7,22 +7,22 @@
         transition(name="slide" mode="out-in")
           Header(v-show="!this.$store.state.menuCollapsed")
       .items
-        HabitatButton
+        MenuButton
           router-link(to="/Start")
             i(class="fas fa-power-off")
             div S T A R T
 
-        HabitatButton
+        MenuButton
           router-link(to="/View")
             i(class="fas fa-tv")
             div V I E W
 
-        HabitatButton
+        MenuButton
           router-link(to="/Analyze")
             i(class="fas fa-flask")
             div A N A L Y Z E
 
-        HabitatButton
+        MenuButton
           router-link(to="/Admin")
             i(class="fas fa-cogs")
             div A D M I N
@@ -74,7 +74,7 @@
       // container attributes
       box-sizing: inherit;
 
-      & .habitatbutton {
+      & .menubutton {
         // size attributes
         min-height: 50px;
         height: 3vh;
@@ -127,7 +127,7 @@
 
       // content attributes
       align-items: center;
-      & .habitatbutton {
+      & .menubutton {
         // container attributes
         box-sizing: inherit;
         display: flex;
@@ -139,13 +139,8 @@
           display: flex;
 
           // content attributes
+          align-items: center;
           justify-content: center;
-        }
-
-        &.active {
-          // position attributes
-          position: relative;
-          left: 2vw;
         }
 
         &.inactive {
@@ -157,7 +152,7 @@
 
         &:hover {
           // appearance attributes
-          animation: slideout 0.2s linear 0s 1 normal forwards running;
+          animation: slideout 0.15s linear 0s 1 normal forwards running;
         }
       }
     }
@@ -170,10 +165,17 @@
 
 @keyframes slideout {
   from {
+    // position attributes
+    left: 0;
+
     // size attributes
     width: 5vw;
   }
   to {
+    // position attributes
+    position: relative;
+    left: 3vw;
+
     // size attributes
     min-width: 125px;
     width: 11vw;
@@ -194,7 +196,7 @@
 
 <!-- Javascript -->
 <script>
-import HabitatButton from "@/components/clickables/HabitatButton";
+import MenuButton from "@/components/modules/MenuButton";
 import Header from "@/components/Header";
 import store from "@/store";
 
@@ -203,7 +205,7 @@ let menuCollapsed = false;
 export default {
   name: "SideNav",
   components: {
-    HabitatButton: HabitatButton,
+    MenuButton: MenuButton,
     Header: Header
   },
   methods: {

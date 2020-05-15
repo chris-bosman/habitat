@@ -1,6 +1,6 @@
 <!-- Pug Template -->
 <template lang="pug">
-.test
+.content
   Loading(v-show="this.$store.state.useLoadingModal")
   Result(v-show="this.$store.state.useResultModal")
   button(@click="testServer") Test Server

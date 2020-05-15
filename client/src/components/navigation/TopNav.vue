@@ -2,36 +2,35 @@
 <template lang="pug">
 .topnav
   .buttonbox
-    HabitatButton(v-if="!authenticated")
+    MenuButton(v-if="!authenticated")
       router-link(to="/SignUp") Sign Up
 
-    HabitatButton(v-if="authenticated")
-      router-link(
-        @click="logout()"
-        class="authbutton"
-        to=""
-      ) Logout
+    MenuButton(
+      v-if="authenticated"
+      class="authbutton"
+      @click="logout()"
+    ) Logout
 
-    HabitatButton(v-if="!authenticated")
+    MenuButton(v-if="!authenticated")
       router-link(
         @click="login()"
         class="authbutton"
         to=""
       ) Login
 
-    HabitatButton(v-if="authenticated")
+    MenuButton(v-if="authenticated")
       router-link(to="/Home") Home
 
-    HabitatButton
+    MenuButton
       router-link(to="/Docs") Documentation
 
-    HabitatButton
+    MenuButton
       a(
         @click.prevent="openNewWindow($event)"
         href="https://github.com/chris-bosman/habitat.git"
       ) GitHub
 
-    HabitatButton(v-if="authenticated")
+    MenuButton(v-if="authenticated")
       router-link(to="/Test") Test
 </template>
 
@@ -68,7 +67,7 @@
     height: 100%;
     width: 40%;
 
-    & .habitatbutton {
+    & .menubutton {
       // appearance attributes
       margin: 1.5vh 1vw;
 
@@ -76,23 +75,17 @@
       height: 60%;
 
       & a {
-        // appearance attributes
-        font-size: calc(11px + 0.2vw);
-
         // content attributes
+        align-items: center;
         justify-content: center;
       }
 
-      & .authbutton.router-link-active {
+      &:hover {
         // appearance attributes
-        background: transparent;
-
-        &:hover {
-          // appearance attributes
-          background-color: rgb(190, 189, 184);
-          color: black;
-          opacity: 0.8;
-        }
+        background-color: rgba(235, 234, 229, 0.6);
+        border-radius: 4px;
+        color: rgb(30, 32, 29);
+        cursor: pointer;
       }
     }
   }
@@ -101,73 +94,17 @@
 
 <!-- Javascript -->
 <script>
-import HabitatButton from "@/components/clickables/HabitatButton";
+import MenuButton from "@/components/modules/MenuButton";
 import store from "@/store";
 
 export default {
   name: "TopNav",
   components: {
-    HabitatButton: HabitatButton
+    MenuButton: MenuButton
   },
   data() {
     return {
-      authenticated: false,
-      signup: [
-        {
-          isLink: true,
-          isInternal: true,
-          link: "/SignUp",
-          text: "Sign Up"
-        }
-      ],
-      logoutCard: [
-        {
-          isLink: false,
-          isInternal: true,
-          link: "",
-          text: "Logout"
-        }
-      ],
-      loginCard: [
-        {
-          isLink: false,
-          isInternal: true,
-          link: "",
-          text: "Login"
-        }
-      ],
-      home: [
-        {
-          isLink: true,
-          isInternal: true,
-          link: "/Home",
-          text: "Home"
-        }
-      ],
-      docs: [
-        {
-          isLink: true,
-          isInternal: true,
-          link: "/Docs",
-          text: "Documentation"
-        }
-      ],
-      test: [
-        {
-          isLink: true,
-          isInternal: true,
-          link: "/Test",
-          text: "Test"
-        }
-      ],
-      github: [
-        {
-          isLink: true,
-          isInternal: false,
-          link: "https://github.com/chris-bosman/habitat.git",
-          text: "GitHub"
-        }
-      ]
+      authenticated: false
     };
   },
   created() {

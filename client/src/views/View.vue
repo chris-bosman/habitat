@@ -1,8 +1,8 @@
 <!-- Pug Template -->
 <template lang="pug">
-.view
+.content
   Modal(v-show="isModalVisible" @close="closeModal" id="Modal")
-  .head
+  .header
     include:markdown-it ../data/text/view.md
   .tabs
     ul

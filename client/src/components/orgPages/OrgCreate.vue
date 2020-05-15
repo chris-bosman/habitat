@@ -1,41 +1,41 @@
 <!-- Pug Template -->
 <template lang="pug">
 .orgSettings
-  h3 Organization Name
-  form-create(ref="fc" v-model="fApi" :rule="rule" :option="option")
+  h3 Organization Settings
+  .orgName
+    h4 Organization Name:
+    HabitatInput(v-model="orgName" placeholder="e.g. Contoso, Inc.")
+  .submit
+    PageButton
+      div Submit
 </template>
 
 <!-- SCSS Styling -->
 <style lang="scss">
 .orgSettings {
-  & .ivu-form-item {
+  // container attributes
+  box-sizing: inherit;
+
+  // size attributes
+  height: 100%;
+  width: 100%;
+
+  & .orgName {
     // container attributes
     display: flex;
 
     // content attributes
     align-items: center;
-    justify-content: flex-start;
-  }
-  & .ivu-btn {
-    // appearance attributes
-    background-color: rgba(30, 32, 29, 0.8);
-    border-color: rgb(190, 189, 184);
-    border-radius: 4px;
-    border-style: solid;
-    border-width: 0.5px;
-    box-shadow: 0.25px rgba(190, 189, 184, 0.3);
-    color: rgb(190, 189, 184);
-    cursor: pointer;
-    margin-top: 4vh;
-    text-align: left;
-    transition: transform 0.1s;
+    justify-content: space-between;
 
-    // size attributes
-    height: 4vh;
-    &:hover {
-      // appearance attributes
-      color: rgb(190, 189, 184);
-      transform: scale(1.04);
+    // size settings
+    max-width: 275px;
+    width: 25vw;
+  }
+  & .submit {
+    & .pagebutton {
+      // size attributes
+      height: 10vh;
     }
   }
 }
@@ -43,20 +43,22 @@
 
 <!-- Javascript -->
 <script>
+import HabitatInput from "@/components/modules/HabitatInput";
+import PageButton from "@/components/modules/PageButton";
 import store from "@/store";
-import { maker } from "form-create";
 import { createOrg } from "@/scripts/webRequests/serverInterface";
 
 export default {
   name: "OrgCreate",
+  components: {
+    HabitatInput: HabitatInput,
+    PageButton: PageButton
+  },
   data() {
     return {
       color: "#ebeae5",
       orgExists: null,
       orgName: null,
-      fApi: {},
-      model: {},
-      rule: [maker.input("Organization:", "orgName", "e.g. 'Contoso, Inc.'")],
       option: {
         onSubmit: async function(formData) {
           this.orgName = formData.orgName;
@@ -78,9 +80,6 @@ export default {
         }
       }
     };
-  },
-  mounted() {
-    this.model = this.fApi.model();
   }
 };
 </script>

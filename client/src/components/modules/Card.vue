@@ -1,12 +1,12 @@
 <!-- Pug Template -->
 <template lang="pug">
-.HabitatCard
+.Card
   slot
 </template>
 
 <!-- SCSS Styling -->
 <style lang="scss">
-.HabitatCard {
+.Card {
   // appearance attributes
   background-color: rgba(30, 32, 29, 0.8);
   border-color: rgb(190, 189, 184);
@@ -21,8 +21,9 @@
   //container attributes
   box-sizing: border-box;
 
-  &:hover {
+  &:hover a {
     // appearance attributes
+    background-color: transparent;
     color: rgb(190, 189, 184);
     transform: scale(1.02);
   }
@@ -32,6 +33,6 @@
 <!-- Javascript -->
 <script>
 export default {
-  name: "HabitatCard"
+  name: "Card"
 };
 </script>

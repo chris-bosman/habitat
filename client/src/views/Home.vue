@@ -1,7 +1,7 @@
 <!-- Pug Template -->
 <template lang="pug">
-.home
-  .home-text
+.content
+  .header
     .authHome(v-if="this.$store.state.authenticated")
       h2 Welcome to Your Habitat!
       p.
@@ -14,27 +14,7 @@
 </template>
 
 <!-- SCSS Styling -->
-<style lang="scss">
-.home-text {
-  & p {
-    // appearance attributes
-    padding: 2vh 0;
-  }
-  & a {
-    // appearance attributes
-    color: rgb(122, 122, 119);
-    text-decoration: none;
-    &:hover {
-      // appearance attributes
-      background-color: rgb(235, 234, 229);
-      border-radius: 2px;
-      color: rgb(30, 32, 29);
-      cursor: pointer;
-      opacity: 0.4;
-    }
-  }
-}
-</style>
+<style lang="scss"></style>
 
 <!-- Javascript -->
 <script>

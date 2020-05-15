@@ -1,32 +1,37 @@
 <!-- Pug Template -->
 <template lang="pug">
-.habitatbutton(
+.menubutton(
   @mouseover="hovering = true"
   @mouseleave="hovering = false"
   :class="{ active: hovering, inactive: !hovering }"
 )
-  button(class="HabitatButton")
+  button(class="MenuButton")
     slot
 </template>
 
 <!-- SCSS Styling -->
 <style lang="scss">
-.habitatbutton {
+.menubutton {
   // container attributes
   box-sizing: border-box;
   display: flex;
   flex-grow: 1;
 
-  & button {
+  & .MenuButton {
     // appearance attributes
     background: transparent;
     border: none;
+    border-radius: 4px;
     color: rgb(190, 189, 184);
     cursor: pointer;
+    font-size: calc(11px + 0.2vw);
     padding: 0;
 
     // container attributes
     box-sizing: inherit;
+
+    // content attributes
+    align-items: center;
 
     // size attributes
     height: 100%;
@@ -41,19 +46,9 @@
       box-sizing: inherit;
       display: flex;
 
-      // content attributes
-      align-items: center;
-
       // size attributes
       height: 80%;
       width: 100%;
-
-      &:hover {
-        // appearance attributes
-        background-color: rgb(190, 189, 184);
-        color: black;
-        opacity: 0.8;
-      }
     }
   }
 }
@@ -62,7 +57,7 @@
 <!-- Javascript -->
 <script>
 export default {
-  name: "HabitatButton",
+  name: "MenuButton",
   data() {
     return {
       hovering: false

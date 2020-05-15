@@ -1,6 +1,6 @@
 <!-- Pug Template -->
 <template lang="pug">
-.analyze
+.content
   span Analyze Dummy Data
 </template>
 

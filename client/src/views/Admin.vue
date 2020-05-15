@@ -1,9 +1,9 @@
 <!-- Pug Template -->
 <template lang="pug">
-.config
+.content
   Loading(v-show="this.$store.state.useLoadingModal")
   Result(v-show="this.$store.state.useResultModal")
-  .config-head
+  .header
     include:markdown-it ../data/text/config.md
   .form
     .settings(v-if="this.$store.state.orgExists")
@@ -13,12 +13,7 @@
 </template>
 
 <!-- SCSS Styling -->
-<style lang="scss">
-.form {
-  // appearance attributes
-  margin-top: 7vh;
-}
-</style>
+<style lang="scss"></style>
 
 <!-- Javascript -->
 <script>
