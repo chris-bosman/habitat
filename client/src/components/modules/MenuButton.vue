@@ -60,6 +60,11 @@
       // size attributes
       height: 100%;
       width: 100%;
+
+      &:hover {
+        // appearance attributes
+        color: rgb(30, 32, 29);
+      }
     }
   }
 }

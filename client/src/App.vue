@@ -110,6 +110,10 @@ body {
       // appearance attributes
       background-color: rgb(98, 112, 179);
       opacity: 0.8;
+
+      &:hover {
+        background-color: transparent;
+      }
     }
   }
 }

@@ -72,6 +72,7 @@
 
       // size attributes
       height: 60%;
+      max-height: 50px;
 
       & a {
         // content attributes

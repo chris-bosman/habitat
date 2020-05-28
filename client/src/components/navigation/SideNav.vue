@@ -86,6 +86,9 @@
           // content attributes
           float: left;
 
+          // size attributes
+          max-height: 40px;
+
           & i {
             // appearance attributes
             padding: 0 0.5vw;
